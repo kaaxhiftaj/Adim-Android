@@ -1,0 +1,123 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_app_bg"
+    android:orientation="vertical"
+    tools:context="com.adim.techease.fragments.AboutusFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="About the Ada di Igbo nma pageant"
+        android:textColor="#FFF"
+        android:layout_marginTop="40dp"
+        android:textSize="25dp"
+        android:id="@+id/aboutPegant"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        />
+
+
+    <View
+        android:layout_width="104dp"
+        android:layout_height="1dp"
+        android:background="#fff"
+        android:layout_gravity="center"
+        />
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="WHAT IS A BEAUTY PAGEANT?"
+        android:textColor="#FFF"
+        android:textSize="25dp"
+        android:id="@+id/whatIsPeageant"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+    <View
+        android:layout_width="70dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:background="#fff" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="THE PROJECT"
+        android:textColor="#FFF"
+        android:id="@+id/aboutProject"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="25dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+    <View
+        android:layout_width="70dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:background="#fff" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="805dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:text="COOKIES POLICIES"
+            android:layout_marginLeft="30dp"
+            android:id="@+id/cookies"
+            android:textColor="#FFF"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:id="@+id/privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="PRIVACY POLICIES"
+            android:textColor="#FFF"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+    </FrameLayout>
+</LinearLayout>

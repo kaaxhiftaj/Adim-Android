@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/LinearNews"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="210sp"
+        android:clickable="true"
+        card_view:cardCornerRadius="5dp"
+        card_view:cardElevation="0dp"
+        card_view:cardBackgroundColor="#9E9E9E"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="true"
+        android:id="@+id/cardView">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200sp"
+        android:src="@drawable/main_app_logo"
+        android:id="@+id/ivCustomNews"/>
+
+    </android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/customNewsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="45sp"
+        android:text="Title"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:background="@drawable/videobackground"
+        />
+
+</LinearLayout>

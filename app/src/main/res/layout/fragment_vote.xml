@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    tools:context="com.adim.techease.fragments.VoteFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VOTE HERE TO LET OTHER KNOW"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="5sp"
+       android:layout_gravity="center"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="5sp"
+        android:id="@+id/rvVote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2sp">
+    </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="5sp"
+        android:layout_width="match_parent"
+       android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.2">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SHARE YOUR FAVOURITE TO VOTE"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_gravity="center" />
+        <View
+            android:layout_width="250sp"
+            android:layout_height="3sp"
+            android:layout_gravity="center"
+            android:background="#eee"
+            android:layout_marginTop="5sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2sp"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="70sp"
+                android:layout_height="30sp"
+                android:text="Share"
+                android:textSize="17sp"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/btnripple"
+                android:id="@+id/btnShareVote"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

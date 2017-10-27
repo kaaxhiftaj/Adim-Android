@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.adim.techease.fragments.NewsDetailsFragment">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:id="@+id/ivNewsDetails"
+            android:scaleType="fitXY"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50sp"
+            android:id="@+id/tvImageItitleNewsDetials"
+            android:text="Adam noor"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="#fff"
+            android:textColor="#000"/>
+
+    </FrameLayout>
+<TextView
+    android:id="@+id/tvNewsDetailsDescription"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10sp"
+    android:text="Description"
+    android:padding="15sp"/>
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

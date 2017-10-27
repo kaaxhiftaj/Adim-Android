@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/nav_gallery"
+            android:title="Gallery" />
+
+        <item
+            android:id="@+id/nav_Tv"
+            android:icon="@drawable/television"
+            android:title="Adim TV" />
+
+        <item
+            android:id="@+id/nav_vote"
+            android:icon="@drawable/nav_gallery"
+            android:title="Vote" />
+        <item
+            android:id="@+id/nav_News"
+            android:icon="@drawable/news"
+            android:title="News"/>
+
+        <item
+            android:id="@+id/nav_sponsors"
+            android:icon="@drawable/nav_spnosors"
+            android:title="Sponsors" />
+
+        <item
+            android:id="@+id/nav_auditions"
+            android:icon="@drawable/nav_auditions"
+            android:title="Auditions" />
+        <item
+            android:id="@+id/nav_team"
+            android:title="Our Team"
+            android:icon="@drawable/group"
+            />
+
+        <item
+            android:id="@+id/nav_aboutus"
+            android:title="About us"
+            android:icon="@drawable/nav_aboutus"/>
+
+        <item
+            android:id="@+id/action_Logout"
+            android:title="Logout"
+            android:icon="@drawable/back_icon"
+            />
+    </group>
+
+
+
+</menu>

@@ -1,0 +1,138 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#eee"
+    tools:context="com.adim.techease.fragments.SponsorsFragment"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#eee">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="2sp"
+        android:background="#424242"
+        >
+
+        <ImageView
+            android:id="@+id/ivSponser1"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:scaleType="fitXY"
+            android:layout_marginTop="3sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:src="@drawable/sponsor1"/>
+
+        <ImageView
+            android:id="@+id/ivSponser2"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:layout_height="200sp"
+            android:scaleType="fitXY"
+            android:layout_marginTop="3sp"
+            android:src="@drawable/sponsor2"
+            />
+        <ImageView
+            android:id="@+id/ivSponser3"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:layout_marginTop="3sp"
+            android:scaleType="fitXY"
+            android:src="@drawable/sponsor3"/>
+
+        <ImageView
+            android:id="@+id/ivSponser4"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:layout_marginTop="3sp"
+            android:src="@drawable/sponsor6"/>
+
+        <ImageView
+            android:id="@+id/ivSponser5"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:layout_marginTop="3sp"
+            android:src="@drawable/sponsor5"
+            />
+
+
+
+        <ImageView
+            android:id="@+id/ivSponser6"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:layout_marginTop="3sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:scaleType="fitXY"
+            android:src="@drawable/sponsor7"/>
+
+        <ImageView
+            android:id="@+id/ivSponser7"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:scaleType="fitXY"
+            android:layout_marginTop="3sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:src="@drawable/sponsor8"/>
+
+        <ImageView
+            android:id="@+id/ivSponser8"
+            android:layout_width="match_parent"
+            android:layout_height="200sp"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:layout_marginTop="3sp"
+            android:src="@drawable/sponsor9"
+            />
+        <ImageView
+            android:id="@+id/ivSponser9"
+            android:layout_width="match_parent"
+            android:layout_marginTop="3sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:layout_height="200sp"
+            android:scaleType="fitXY"
+            android:src="@drawable/sponsor11"/>
+
+        <ImageView
+            android:id="@+id/ivSponser10"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:layout_height="200sp"
+            android:layout_marginTop="3sp"
+            android:scaleType="fitXY"
+            android:src="@drawable/sponsor10"/>
+
+
+            />
+
+    </LinearLayout>
+    </ScrollView>
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/wvSponser"
+        android:layout_marginBottom="10sp"
+        />
+</LinearLayout>

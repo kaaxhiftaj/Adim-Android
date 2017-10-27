@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="E:\AndroidProjects\Adim\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="E:\AndroidProjects\Adim\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_36c7bfc8ee8d1f92f94840be323a156ea11df6bb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\AndroidProjects\Adim\app\libs\YouTubeAndroidPlayerApi.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3c4f96ff493456651cc7bdb0b47e10eb25545a16">
+        <dex dex="E:\AndroidProjects\Adim\app\build\intermediates\transforms\dex\debug\folders\1000\2\YouTubeAndroidPlayerApi_5fe216a03d86cd9c0bcbf93fdb6a83c3dc0789db\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\AndroidProjects\Adim\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="a8a6b1514fb1be53322285ca906d6b8436e1a16d">
+        <dex dex="E:\AndroidProjects\Adim\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_7ff3d4567f3ce737b6d4a19abe72dd275e200f1e\classes.dex" />
+    </item>
+
+</items>
