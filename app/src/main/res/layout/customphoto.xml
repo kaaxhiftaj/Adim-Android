@@ -3,12 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_marginLeft="5sp"
+    android:layout_marginRight="5sp"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/ivPhotofrag"
+        android:background="@drawable/background_with_shadow"
         android:layout_width="match_parent"
-        android:layout_height="200sp"
+        android:layout_height="300sp"
         android:scaleType="fitXY"
         android:layout_margin="5sp"/>
 

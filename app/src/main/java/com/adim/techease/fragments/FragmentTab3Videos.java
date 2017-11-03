@@ -47,12 +47,14 @@ public  class FragmentTab3Videos extends Fragment{
     String getId;
     Button btnShare;
     Typeface typeface;
+    String GetId;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_fragment_tab3_videos, container, false);
         btnShare=(Button)v.findViewById(R.id.btnShareVideo);
+        GetId=getArguments().getString("id");
         typeface=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
         btnShare.setTypeface(typeface);
         btnShare.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +90,7 @@ public  class FragmentTab3Videos extends Fragment{
         pDialog.setTitleText("Loading");
         pDialog.setCancelable(false);
         pDialog.show();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/getvideos/8"
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/getvideos/"+GetId
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

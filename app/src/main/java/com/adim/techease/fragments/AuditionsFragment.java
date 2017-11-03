@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -53,9 +54,9 @@ public class AuditionsFragment extends Fragment {
     String strName, strEmail, strState , strCity,strLoc,strAge,strPhone;
     final int CAMERA_CAPTURE = 1;
     final int RESULT_LOAD_IMAGE = 2;
-    File f;
+    File file;
     Button sendButton;
-
+    Typeface typeface;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,14 +64,21 @@ public class AuditionsFragment extends Fragment {
 
 
         View v = inflater.inflate(R.layout.fragment_auditions, container, false);
+        typeface=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
         name = (EditText) v.findViewById(R.id.et_name);
         email = (EditText) v.findViewById(R.id.et_email_audition);
         age=(EditText)v.findViewById(R.id.etAgeAudition);
-       // loc=(EditText)v.findViewById(R.id.etLocAudition);
         phone=(EditText)v.findViewById(R.id.etPhoneAudition);
         state = (EditText) v.findViewById(R.id.et_stateofRegion);
         image = (ImageView) v.findViewById(R.id.image);
         sendButton = (Button)v.findViewById(R.id.sendButton);
+        sendButton.setTypeface(typeface);
+        name.setTypeface(typeface);
+        email.setTypeface(typeface);
+        age.setTypeface(typeface);
+        phone.setTypeface(typeface);
+        state.setTypeface(typeface);
+
 
         city = (MaterialSpinner) v.findViewById(R.id.city);
 
@@ -123,8 +131,7 @@ public class AuditionsFragment extends Fragment {
         strName = name.getText().toString();
         strState = name.getText().toString();
         strCity = city.getText().toString();
-        strAge=age.getText().toString();
-        strLoc=loc.getText().toString();
+        strAge= age.getText().toString();
         strPhone=phone.getText().toString();
 
         if ((!android.util.Patterns.EMAIL_ADDRESS.matcher(strEmail).matches())) {
@@ -135,16 +142,13 @@ public class AuditionsFragment extends Fragment {
             state.setError("Please enter your State");
         } else if (name.equals("")) {
             name.setError("Please Select your City");
-        }else if(loc.equals(""))
-        {
-            loc.setError("Please enter your location");
-        }else if(phone.equals("")){
+        } else if(phone.equals("")){
             phone.setError("Please enter your number");
         }else if(age.equals("")){
             age.setError("Please enter your age");
         }
         else {
-            DialogUtils.showProgressSweetDialog(getActivity(), " Submiiting your Application");
+            DialogUtils.showProgressSweetDialog(getActivity(), " Submiting your Application");
             apiCall();
         }
     }
@@ -156,8 +160,13 @@ public class AuditionsFragment extends Fragment {
             @Override
             public void onResponse(NetworkResponse response) {
                 DialogUtils.sweetAlertDialog.dismiss();
-                Log.d("zma response", String.valueOf(response.statusCode));
+                Log.d("zma response", String.valueOf(Configuration.USER_URL+ "App/audition"+"\n"+response));
                 if (response.statusCode == 200) {
+                    email.setText("");
+                    name.setText("");
+                     age.setText("");
+                    phone.setText("");
+                    image.setImageDrawable(null);
                     Toast.makeText(getActivity(), "Documents Uploaded", Toast.LENGTH_SHORT).show();
 
                 }
@@ -223,9 +232,9 @@ public class AuditionsFragment extends Fragment {
                 Map<String, DataPart> params = new HashMap<>();
                 // file name could found file base or direct access from real path
                 // for now just get bitmap data from ImageView
-                String mimeType = getMimeTypeofFile(f);
-                params.put("files", new DataPart("files", GeneralUtils.getByteArrayFromFile(f), mimeType));
-
+                String mimeType = getMimeTypeofFile(file);
+                params.put("files", new DataPart("files", GeneralUtils.getByteArrayFromFile(file), mimeType));
+                Log.d("zma photo params", file.getPath());
                 return params;
             }
         };
@@ -264,7 +273,8 @@ public class AuditionsFragment extends Fragment {
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
-            f = new File(GeneralUtils.getRealPathFromURI(getApplicationContext(), selectedImage));
+            file = new File(GeneralUtils.getRealPathFromURI(getApplicationContext(), selectedImage));
+            Log.d("zma file", file.getPath());
             cursor.close();
             image.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 
@@ -273,8 +283,8 @@ public class AuditionsFragment extends Fragment {
             image.setImageBitmap(photo);
 
             Uri tempUri = GeneralUtils.getImageUri(getApplicationContext(), photo);
-            f = new File(GeneralUtils.getRealPathFromURI(getApplicationContext(), tempUri));
-
+            file = new File(GeneralUtils.getRealPathFromURI(getApplicationContext(), tempUri));
+            Log.d("zma file", file.getPath());
         }
     }
 }

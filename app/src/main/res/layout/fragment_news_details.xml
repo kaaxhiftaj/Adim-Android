@@ -28,7 +28,7 @@
             android:textSize="20sp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:background="#fff"
+            android:background="#88FFFFFF"
             android:textColor="#000"/>
 
     </FrameLayout>

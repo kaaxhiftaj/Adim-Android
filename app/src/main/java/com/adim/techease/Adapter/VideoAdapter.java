@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.adim.techease.R;
 import com.adim.techease.controllers.VideoModel;
+import com.google.android.youtube.player.YouTubeApiServiceUtil;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
@@ -77,7 +79,6 @@ public class VideoAdapter  extends RecyclerView.Adapter<VideoAdapter.MyViewHolde
 
             @Override
             public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-                Toast.makeText(context, "Thumbnail not loaded", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -108,8 +109,17 @@ public class VideoAdapter  extends RecyclerView.Adapter<VideoAdapter.MyViewHolde
 
         @Override
         public void onClick(View v) {
-            Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, Key,Id_s);
-            context.startActivity(intent);
+            if(YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS)){
+                //This means that your device has the Youtube API Service (the app) and you are safe to launch it.
+                Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, Key,Id_s);
+                context.startActivity(intent);
+
+            }else{
+                Toast.makeText(context, "Please download youtube app", Toast.LENGTH_SHORT).show();
+               context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.youtube")));
+
+            }
+
         }
     }
 }

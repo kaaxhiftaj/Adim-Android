@@ -13,12 +13,14 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" >
+        >
 
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         >
     <TextView
@@ -26,10 +28,9 @@
         android:layout_height="wrap_content"
         android:text="About the Ada di Igbo nma pageant"
         android:textColor="#FFF"
-        android:layout_marginTop="40dp"
-        android:textSize="25dp"
+        android:layout_marginTop="20sp"
+        android:textSize="20dp"
         android:id="@+id/aboutPegant"
-        android:layout_gravity="center"
         android:layout_marginBottom="20dp"
         android:gravity="center"
         />
@@ -49,12 +50,11 @@
         android:layout_height="wrap_content"
         android:text="WHAT IS A BEAUTY PAGEANT?"
         android:textColor="#FFF"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:id="@+id/whatIsPeageant"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_gravity="center"
-        android:gravity="center"
+        android:textAlignment="center"
         />
 
     <View
@@ -72,8 +72,7 @@
         android:id="@+id/aboutProject"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:textSize="25dp"
-        android:layout_gravity="center"
+        android:textSize="20dp"
         android:gravity="center"
         />
 
@@ -83,15 +82,15 @@
         android:layout_gravity="center"
         android:background="#fff" />
 
-    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="805dp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_vertical"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:weightSum="2"
+        android:layout_marginTop="100sp"
+        android:layout_marginBottom="10sp"
+        android:layout_gravity="bottom"
         >
 
         <Button
@@ -118,6 +117,7 @@
             />
 
     </LinearLayout>
-
+    </LinearLayout>
+</ScrollView>
     </FrameLayout>
 </LinearLayout>

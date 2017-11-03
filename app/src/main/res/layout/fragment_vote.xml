@@ -21,53 +21,38 @@
         android:layout_marginTop="5sp"
        android:layout_gravity="center"
         />
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="5sp"
-        android:id="@+id/rvVote"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2sp">
-    </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="5sp"
-        android:layout_width="match_parent"
-       android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_gravity="bottom"
-        android:layout_weight="0.2">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SHARE YOUR FAVOURITE TO VOTE"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:textColor="@color/colorPrimary"
-            android:layout_gravity="center" />
-        <View
-            android:layout_width="250sp"
-            android:layout_height="3sp"
-            android:layout_gravity="center"
-            android:background="#eee"
-            android:layout_marginTop="5sp"/>
-
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2sp"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The contestant with the highest number of votes on our mobile app, will win and
+become Miss Photogenic. She automatically progress to the final stage of the
+competition alongside other (4) contestant for the Judges question. Voters can
+only vote once a day and for only one contestant. Voting ends by 12 noon on the
+day of the contest."
+            android:textSize="15sp"
             android:gravity="center"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="70sp"
-                android:layout_height="30sp"
-                android:text="Share"
-                android:textSize="17sp"
-                android:textColor="@color/colorPrimary"
-                android:background="@drawable/btnripple"
-                android:id="@+id/btnShareVote"/>
-        </LinearLayout>
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="5sp"
+            android:layout_gravity="center"
+            />
 
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvVote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:padding="2sp"></android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </LinearLayout>

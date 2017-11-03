@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity
 
     FragmentTransaction fragmentTransaction;
     Fragment fragment;
+    FragmentManager fragmentManager;
     private static final int MENU_ITEMS = 6;
     private final ArrayList<View> mMenuItems = new ArrayList<>(MENU_ITEMS);
     Typeface typeface;
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity
 
         sharedprefs = this.getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
         editor = sharedprefs.edit();
-        name=sharedprefs.getString("name","");
+        name=sharedprefs.getString("fullname","");
         email=sharedprefs.getString("email","");
         typeface=Typeface.createFromAsset(getAssets(),"myfont.ttf");
         if (name!=null)
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity
         }
         fragment = new HomeFragment();
         getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).commit();
+//        fragmentManager.popBackStack();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -80,6 +83,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+//        if(getFragmentManager().getBackStackEntryCount() == 0) {
+//            super.onBackPressed();
+//        }
+//        else {
+//            getFragmentManager().popBackStack();
+//        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -106,48 +115,78 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
             fragment = new HomeFragment();
-
+            getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
+            item.setChecked(true);
+            setTitle(item.getTitle());
 
 
         } else if (id == R.id.nav_gallery) {
 
             fragment = new GalleryFragment();
+            getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
+            item.setChecked(true);
+            setTitle(item.getTitle());
 
 
         } else if (id == R.id.nav_sponsors) {
 
             fragment = new SponsorsFragment();
+            getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
+            item.setChecked(true);
+            setTitle(item.getTitle());
 
 
         } else if (id == R.id.nav_auditions) {
 
             fragment = new AuditionsFragment();
+            getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
+            item.setChecked(true);
+            setTitle(item.getTitle());
         }
         else if (id == R.id.nav_vote) {
             fragment = new VoteFragment();
+            getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
+            item.setChecked(true);
+            setTitle(item.getTitle());
 
         }
         else if(id==R.id.nav_News){
                 fragment=new NewsFragment();
+            getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
+            item.setChecked(true);
+            setTitle(item.getTitle());
             }
             else if(id==R.id.nav_team)
             {
                 fragment=new OurTeamFragment();
+                getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
+                item.setChecked(true);
+                setTitle(item.getTitle());
             }
             else
                 if(id==R.id.nav_Tv){
                     fragment=new AdimTvFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
+                    item.setChecked(true);
+                    setTitle(item.getTitle());
                 }
                 else
                 if(id==R.id.action_Logout){
                     editor.clear().commit();
                     startActivity(new Intent(MainActivity.this,SplashScreen.class));
+                    getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
+                    item.setChecked(true);
+                    setTitle(item.getTitle());
                     finish();
                 }else  if (id == R.id.nav_aboutus) {
                     fragment = new AboutusFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
+                    item.setChecked(true);
+                    setTitle(item.getTitle());
                 }
 
-        getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).commit();
+
+        getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
         item.setChecked(true);
         setTitle(item.getTitle());
 

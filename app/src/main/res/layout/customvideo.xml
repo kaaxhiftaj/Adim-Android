@@ -17,7 +17,6 @@
         card_view:cardCornerRadius="5dp"
         card_view:cardElevation="0dp"
         android:layout_marginTop="10dp"
-        card_view:cardBackgroundColor="@android:color/black"
         card_view:cardPreventCornerOverlap="false"
         card_view:cardUseCompatPadding="true"
         android:id="@+id/cardView">
@@ -52,6 +51,8 @@
             android:text="Title"
             android:textAlignment="center"
             android:textSize="18sp"
+            android:background="#000"
+            android:textColor="#fff"
             android:gravity="center"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true" />

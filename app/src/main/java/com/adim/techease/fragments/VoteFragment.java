@@ -51,25 +51,7 @@ public class VoteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_vote, container, false);
-        btnShare=(Button)view.findViewById(R.id.btnShareVote);
         typeface=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
-        btnShare.setTypeface(typeface);
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Adim");
-                    String sAux = "\nLet me recommend you this application\n\n";
-                    sAux = sAux + "https://play.google.com/store/apps/details?id=com.adim.techease \n\n";
-                    intent.putExtra(Intent.EXTRA_TEXT, sAux);
-                    startActivity(Intent.createChooser(intent, "choose one"));
-                } catch(Exception e) {
-                    //e.toString();
-                }
-            }
-        });
         recyclerViewVote=(RecyclerView)view.findViewById(R.id.rvVote);
         recyclerViewVote.setLayoutManager(new LinearLayoutManager(getActivity()));
         apicall();

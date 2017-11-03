@@ -5,19 +5,21 @@ package com.adim.techease.controllers;
  */
 
 public class Gallery {
+
+
+    private String Id;
     private String Title;
     private String link;
     private String Type;
-    private String Thumbnail;
 
-    public String getThumbnail() {
-        return Thumbnail;
+
+    public String getId() {
+        return Id;
     }
 
-    public void setThumbnail(String thumbnail) {
-        Thumbnail = thumbnail;
+    public void setId(String id) {
+        Id = id;
     }
-
 
 
     public String getTitle() {

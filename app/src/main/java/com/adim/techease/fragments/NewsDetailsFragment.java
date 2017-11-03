@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.adim.techease.R;
 import com.adim.techease.utils.Configuration;
@@ -77,7 +76,6 @@ public class NewsDetailsFragment extends Fragment {
                             JSONObject temp = jsonArr.getJSONObject(i);
                             name.setText(String.valueOf(temp.getString("title")));
                             description.setText(String.valueOf(temp.getString("description")));
-                            Toast.makeText(getActivity(), String.valueOf(temp.getString("image")), Toast.LENGTH_SHORT).show();
                             Glide.with(getActivity()).load("http://adadigbomma.com/panel/images/"+temp.getString("image")).into(imageView);
                             pDialog.dismiss();
                         }

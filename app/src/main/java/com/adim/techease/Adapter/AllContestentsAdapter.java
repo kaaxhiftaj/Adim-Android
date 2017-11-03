@@ -53,27 +53,15 @@ public class AllContestentsAdapter extends RecyclerView.Adapter<AllContestentsAd
         holder.llItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (position==0)
-                {
+
                     String id=contest.getContestentId().toString();
                     Fragment fragment = new BioContestent();
                     Bundle bundle=new Bundle();
                     bundle.putString("id",id);
                     fragment.setArguments(bundle);
                     Activity activity = (MainActivity) context;
-                    activity.getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).commit();
-                }
-                else
-                    if (position==1)
-                    {
-                        String id=contest.getContestentId().toString();
-                        Fragment fragment = new BioContestent();
-                        Bundle bundle=new Bundle();
-                        bundle.putString("id",id);
-                        fragment.setArguments(bundle);
-                        Activity activity = (MainActivity) context;
-                        activity.getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).commit();
-                    }
+                    activity.getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("").commit();
+
 
             }
         });

@@ -1,15 +1,15 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_app_bg"
     tools:context="com.adim.techease.activities.SplashScreen">
 
-<ImageView
-    android:layout_width="249dp"
-    android:layout_height="270dp"
-    android:src="@drawable/main_app_logo"
-    android:layout_gravity="center"
-    />
+    <ImageView
+        android:layout_width="398dp"
+        android:layout_height="270dp"
+        android:layout_gravity="center"
+        android:foregroundGravity="center"
+        android:src="@drawable/main_app_logo" />
 
-</FrameLayout>
+</LinearLayout>

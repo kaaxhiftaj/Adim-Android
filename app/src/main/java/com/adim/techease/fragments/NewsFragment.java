@@ -52,6 +52,7 @@ public class NewsFragment extends Fragment {
         newsAdapter=new NewsAdapter(getActivity(),newsModels);
         recyclerView.setAdapter(newsAdapter);
         return view;
+
     }
 
     private void apicall() {

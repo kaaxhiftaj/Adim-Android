@@ -10,17 +10,13 @@
     <ImageView
         android:id="@+id/iv_photo"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300sp"
         android:visibility="gone"
         android:scaleType="fitXY"
+        android:layout_margin="5sp"
 
         />
 
-    <LinearLayout
-        android:id="@+id/newsVideo"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:orientation="vertical"/>
     <FrameLayout
         android:id="@+id/Frame"
         android:layout_width="fill_parent"

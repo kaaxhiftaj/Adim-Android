@@ -32,8 +32,8 @@ import java.util.Map;
 
 public class FragmentTab4Social extends Fragment {
 
-    ImageButton Fb,Tw,Linkedin,Mail;
-    String getId,Face,Tweet,Link;
+    ImageButton Fb,Tw,instagram,Mail;
+    String getId,Face,Tweet,insta;
     WebView webiew;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +43,7 @@ public class FragmentTab4Social extends Fragment {
 
         Fb=(ImageButton)v.findViewById(R.id.btnfb);
         Tw=(ImageButton)v.findViewById(R.id.btnTw);
-        Linkedin=(ImageButton)v.findViewById(R.id.btnInsta);
+        instagram =(ImageButton)v.findViewById(R.id.btnInsta);
         Mail=(ImageButton)v.findViewById(R.id.btnMail);
         getId=getArguments().getString("id");
         webiew=(WebView)v.findViewById(R.id.wv);
@@ -53,7 +53,7 @@ public class FragmentTab4Social extends Fragment {
     }
 
     private void apicall() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/getsocial/9"
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/getsocial/"+getId
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -66,15 +66,16 @@ public class FragmentTab4Social extends Fragment {
 
                          Face=jsonObj.getString("facebook");
                          Tweet=jsonObj.getString("twitter");
-                         Link=jsonObj.getString("linkedin");
-//                        Toast.makeText(getActivity(), "Link"+Face, Toast.LENGTH_SHORT).show();
+                         insta=jsonObj.getString("instagram");
+
+//
 
                             Fb.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     webiew.getSettings().setJavaScriptEnabled(true);
                                     webiew.getSettings().setPluginState(WebSettings.PluginState.ON);
-                                    webiew.loadUrl("http://"+Face);
+                                    webiew.loadUrl(Face);
                                     webiew.setWebChromeClient(new WebChromeClient());
                                 }
                             });
@@ -83,16 +84,17 @@ public class FragmentTab4Social extends Fragment {
                                 public void onClick(View v) {
                                     webiew.getSettings().setJavaScriptEnabled(true);
                                     webiew.getSettings().setPluginState(WebSettings.PluginState.ON);
-                                    webiew.loadUrl("http://"+Tweet);
+                                    webiew.loadUrl(Tweet);
                                     webiew.setWebChromeClient(new WebChromeClient());
                                 }
                             });
-                            Linkedin.setOnClickListener(new View.OnClickListener() {
+
+                            instagram.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     webiew.getSettings().setJavaScriptEnabled(true);
                                     webiew.getSettings().setPluginState(WebSettings.PluginState.ON);
-                                    webiew.loadUrl("http://"+Link);
+                                    webiew.loadUrl(insta);
                                     webiew.setWebChromeClient(new WebChromeClient());
                                 }
                             });

@@ -105,10 +105,12 @@ public class FragmentTab1bio extends Fragment {
                         String id=jsonObj.getString("id");
                         String age = jsonObj.getString("age");
                         String des=jsonObj.getString("description");
+                        String height=jsonObj.getString("height");
                         pDialog.dismiss();
                         Age.setText(age);
                         Description.setText(des);
                         Dob.setText(dob);
+                        Height.setText(height);
 
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -4,45 +4,39 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8sp"
-    android:background="#eee">
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="210sp"
-        android:clickable="true"
-        card_view:cardCornerRadius="5dp"
-        card_view:cardElevation="0dp"
-        android:layout_marginTop="10dp"
-        card_view:cardBackgroundColor="#9E9E9E"
-        card_view:cardPreventCornerOverlap="false"
-        card_view:cardUseCompatPadding="true"
-        android:id="@+id/cardView">
+    android:layout_margin="5sp"
+>
 
     <ImageView
         android:id="@+id/ivPicTeam"
         android:layout_width="match_parent"
-        android:layout_height="200sp"
-        android:layout_gravity="right"
+        android:layout_height="350sp"
         android:scaleType="fitXY"
+        android:background="@drawable/background_with_shadow"
         android:src="@drawable/main_app_bg"
        />
-    </android.support.v7.widget.CardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#eee"
+        android:orientation="vertical">
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvTeamName"
         android:text="Name"
         android:layout_gravity="center"
         android:textSize="20sp"
+        android:textAlignment="center"
         android:layout_marginTop="5sp"
         android:textColor="@color/colorPrimary"
         />
     <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvDesig"
                 android:text="Designation"
+                android:textAlignment="center"
                 android:textSize="20sp"
                 android:layout_marginTop="10sp"
                 android:layout_gravity="center"
@@ -54,7 +48,10 @@
         android:layout_height="wrap_content"
         android:text="This is Adim Android app for nigerian models"
         android:textSize="17sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginBottom="5sp"
         android:layout_marginLeft="10sp"
         android:layout_marginTop="10sp"/>
+    </LinearLayout>
 
 </LinearLayout>

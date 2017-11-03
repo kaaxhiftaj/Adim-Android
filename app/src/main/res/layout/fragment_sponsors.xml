@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#eee"
+    android:layout_margin="10sp"
     tools:context="com.adim.techease.fragments.SponsorsFragment"
     android:orientation="vertical">
 
@@ -17,68 +18,67 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="2sp"
-        android:background="#424242"
+        android:padding="10sp"
+        android:gravity="center"
+        android:background="#eee"
         >
 
         <ImageView
             android:id="@+id/ivSponser1"
-            android:layout_width="match_parent"
+            android:layout_width="250sp"
             android:layout_height="200sp"
             android:scaleType="fitXY"
             android:layout_marginTop="3sp"
-            android:layout_marginLeft="2sp"
-            android:layout_marginRight="2sp"
             android:src="@drawable/sponsor1"/>
 
         <ImageView
             android:id="@+id/ivSponser2"
-            android:layout_width="match_parent"
+            android:layout_width="250sp"
+            android:layout_height="200sp"
             android:layout_marginLeft="2sp"
             android:layout_marginRight="2sp"
-            android:layout_height="200sp"
             android:scaleType="fitXY"
-            android:layout_marginTop="3sp"
+            android:layout_marginTop="6sp"
             android:src="@drawable/sponsor2"
             />
         <ImageView
             android:id="@+id/ivSponser3"
-            android:layout_width="match_parent"
+            android:layout_width="250sp"
             android:layout_height="200sp"
             android:layout_marginLeft="2sp"
             android:layout_marginRight="2sp"
-            android:layout_marginTop="3sp"
+            android:layout_marginTop="6sp"
             android:scaleType="fitXY"
             android:src="@drawable/sponsor3"/>
 
         <ImageView
             android:id="@+id/ivSponser4"
-            android:layout_width="match_parent"
+            android:layout_width="250sp"
             android:layout_height="200sp"
             android:scaleType="fitXY"
             android:layout_marginLeft="2sp"
             android:layout_marginRight="2sp"
-            android:layout_marginTop="3sp"
+            android:layout_marginTop="6sp"
             android:src="@drawable/sponsor6"/>
 
-        <ImageView
-            android:id="@+id/ivSponser5"
-            android:layout_width="match_parent"
-            android:layout_height="200sp"
-            android:scaleType="fitXY"
-            android:layout_marginLeft="2sp"
-            android:layout_marginRight="2sp"
-            android:layout_marginTop="3sp"
-            android:src="@drawable/sponsor5"
-            />
+        <!--<ImageView-->
+            <!--android:id="@+id/ivSponser5"-->
+            <!--android:layout_width="250sp"-->
+            <!--android:layout_height="200sp"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:layout_marginLeft="2sp"-->
+            <!--android:layout_marginRight="2sp"-->
+            <!--android:layout_marginTop="6sp"-->
+            <!--android:src="@drawable/sponsor5"-->
+            <!--/>-->
 
 
 
         <ImageView
             android:id="@+id/ivSponser6"
-            android:layout_width="match_parent"
+            android:layout_width="250sp"
             android:layout_height="200sp"
-            android:layout_marginTop="3sp"
+            android:layout_marginTop="6sp"
             android:layout_marginLeft="2sp"
             android:layout_marginRight="2sp"
             android:scaleType="fitXY"
@@ -86,46 +86,53 @@
 
         <ImageView
             android:id="@+id/ivSponser7"
-            android:layout_width="match_parent"
+            android:layout_width="250sp"
             android:layout_height="200sp"
             android:scaleType="fitXY"
-            android:layout_marginTop="3sp"
+            android:layout_marginTop="6sp"
             android:layout_marginLeft="2sp"
             android:layout_marginRight="2sp"
             android:src="@drawable/sponsor8"/>
 
-        <ImageView
-            android:id="@+id/ivSponser8"
-            android:layout_width="match_parent"
-            android:layout_height="200sp"
-            android:scaleType="fitXY"
-            android:layout_marginLeft="2sp"
-            android:layout_marginRight="2sp"
-            android:layout_marginTop="3sp"
-            android:src="@drawable/sponsor9"
-            />
+        <!--<ImageView-->
+            <!--android:id="@+id/ivSponser8"-->
+            <!--android:layout_width="250sp"-->
+            <!--android:layout_height="200sp"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:layout_marginLeft="2sp"-->
+            <!--android:layout_marginRight="2sp"-->
+            <!--android:layout_marginTop="6sp"-->
+            <!--android:src="@drawable/sponsor9"-->
+            <!--/>-->
+
         <ImageView
             android:id="@+id/ivSponser9"
-            android:layout_width="match_parent"
-            android:layout_marginTop="3sp"
+            android:layout_marginTop="6sp"
             android:layout_marginLeft="2sp"
             android:layout_marginRight="2sp"
+            android:layout_width="250sp"
             android:layout_height="200sp"
             android:scaleType="fitXY"
             android:src="@drawable/sponsor11"/>
 
         <ImageView
             android:id="@+id/ivSponser10"
-            android:layout_width="match_parent"
+            android:layout_width="250sp"
+            android:layout_height="200sp"
             android:layout_marginLeft="2sp"
             android:layout_marginRight="2sp"
-            android:layout_height="200sp"
-            android:layout_marginTop="3sp"
+            android:layout_marginTop="6sp"
             android:scaleType="fitXY"
             android:src="@drawable/sponsor10"/>
-
-
-            />
+        <ImageView
+            android:id="@+id/ivsponser11"
+            android:layout_width="250sp"
+            android:layout_height="200sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:layout_marginTop="6sp"
+            android:scaleType="fitXY"
+            android:src="@drawable/sponser11"/>
 
     </LinearLayout>
     </ScrollView>

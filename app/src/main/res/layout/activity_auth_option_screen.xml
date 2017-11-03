@@ -39,14 +39,14 @@
             android:foregroundGravity="center" />
 
 
-        <com.twitter.sdk.android.core.identity.TwitterLoginButton
-            android:id="@+id/twitter_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:foregroundGravity="center"
-            android:layout_marginBottom="15dp"
-             />
+        <!--<com.twitter.sdk.android.core.identity.TwitterLoginButton-->
+            <!--android:id="@+id/twitter_button"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:foregroundGravity="center"-->
+            <!--android:layout_marginBottom="15dp"-->
+             <!--/>-->
 
         <ImageButton
             android:id="@+id/email_button"

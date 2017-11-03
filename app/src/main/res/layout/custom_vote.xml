@@ -1,75 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:id="@+id/llVote"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
->
-    <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-    <ImageView
-        android:padding="1sp"
-        android:layout_width="match_parent"
-        android:layout_height="200sp"
-        android:id="@+id/ivVote"
-        android:scaleType="fitXY"
-        android:background="@drawable/background_with_shadow"
-        />
-
+    android:layout_margin="5sp"
+    android:orientation="vertical">
     <TextView
         android:id="@+id/tvVoteImageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
-        android:textSize="17sp"
-        android:textColor="#fff"
-        android:textStyle="bold"
-        android:layout_marginTop="20sp"
         android:layout_marginLeft="20sp"
-        />
+        android:background="@drawable/btnripple"
+        android:text="Title"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/ivVote"
+            android:layout_width="match_parent"
+            android:layout_height="300sp"
+            android:background="@drawable/background_with_shadow"
+            android:padding="1sp"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="bottom"
-            android:weightSum="1"
-            android:layout_marginBottom="10sp">
-    <TextView
-        android:id="@+id/tvVote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:layout_weight="0.2"
-        android:textColor="#fff"
-        android:text="0%"
-        android:textStyle="bold"
-        android:layout_marginLeft="20sp"
-       />
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <Button
-                android:layout_width="60sp"
-                android:layout_height="30sp"
-                android:text="Vote"
-                android:id="@+id/btnVote"
+                android:id="@+id/tvVote"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5sp"
+                android:layout_weight="1"
+                android:text="0.00%"
+                android:layout_marginRight="2dp"
+                android:background="#B3FFFFFF"
                 android:textColor="#000"
-                android:textSize="17sp"
-                android:layout_weight="0."
-                android:textAlignment="center"
-                android:background="@drawable/btnripple"
-                android:layout_gravity="center"/>
+                android:textSize="17sp" />
+
+            <Button
+                android:id="@+id/btnVote"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5sp"
+                android:layout_weight="1"
+                android:text="Vote"
+                android:layout_marginRight="2dp"
+                android:background="#B3FFFFFF"
+                android:textColor="#000"
+                android:textSize="17sp" />
+
             <Button
                 android:id="@+id/btnShare"
-                android:layout_width="75sp"
-                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
                 android:text="Share"
-                android:layout_gravity="right"
-                android:textSize="17sp"
-             android:layout_marginLeft="50sp"
-                android:background="@drawable/btnripple"/>
+                android:layout_marginLeft="2dp"
+                android:background="#B3ffffff"
+                android:textSize="17sp" />
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

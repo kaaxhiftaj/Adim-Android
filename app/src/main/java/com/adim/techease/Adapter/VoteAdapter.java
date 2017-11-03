@@ -1,10 +1,16 @@
 package com.adim.techease.Adapter;
 
+import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adim.techease.R;
+import com.adim.techease.activities.AuthOptionScreen;
 import com.adim.techease.controllers.VoteModel;
+import com.adim.techease.fragments.VoteFragment;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -28,6 +36,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.facebook.share.ShareApi;
+import com.facebook.share.model.ShareContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +48,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
+import static com.thefinestartist.utils.content.ContextUtil.createPackageContext;
+import static com.thefinestartist.utils.content.ContextUtil.getResources;
+import static com.thefinestartist.utils.content.ContextUtil.startActivity;
 
 /**
  * Created by kaxhiftaj on 10/22/17.
@@ -48,6 +66,7 @@ public class VoteAdapter extends  RecyclerView.Adapter<VoteAdapter.MyViewHolder>
     String picName, voteContestentId, UserId;
     SharedPreferences sharedPreferences;
     String getPercentatge;
+    SweetAlertDialog pDialog;
 
     public VoteAdapter(Context context, List<VoteModel> voteModel) {
         this.voteModel = voteModel;
@@ -66,27 +85,59 @@ public class VoteAdapter extends  RecyclerView.Adapter<VoteAdapter.MyViewHolder>
         final VoteModel model = voteModel.get(position);
         sharedPreferences = context.getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
         UserId = sharedPreferences.getString("user_Id", "");
-        voteContestentId = String.valueOf(model.getVoteContestentID());
+
         picName = String.valueOf(model.getImage());
         Glide.with(context).load("http://adadigbomma.com/panel/images/gallery/" + model.getImage()).into(holder.imageVote);
         holder.imageVote.getDrawable();
         holder.textviewTitle.setText(model.getTitle());
         holder.textviewVotes.setText(model.getVote());
+
         holder.btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                Uri screenshotUri = Uri.parse("http://adadigbomma.com/panel/images/gallery/"+model.getImage());
-                sharingIntent.setType("image/*");
-                sharingIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
-                context.startActivity(Intent.createChooser(sharingIntent, "Share image using"));
+                try {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Adim");
+                    String sAux = "\nI have voted for " + model.getTitle() + ". Vote for your favourite one here\n\n";
+                    sAux = sAux + "https://play.google.com/store/apps/details?id=com.adim.techease \n\n";
+                    intent.putExtra(Intent.EXTRA_TEXT, sAux);
+                    context.startActivity(Intent.createChooser(intent, "choose one"));
+                } catch(Exception e) {
+                    //e.toString();
+                }
             }
         });
+
         holder.btnVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    apiCall();
-                holder.textviewVotes.setText(getPercentatge);
+                if(!UserId.equals(""))
+                {
+                    voteContestentId = String.valueOf(model.getVoteContestentID());
+
+                    apiCall(voteContestentId);
+                    pDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+                    pDialog .setTitleText("Adding your vote");
+                    pDialog.show();
+                }
+                else
+                {
+                    pDialog  = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
+                           pDialog .setTitleText("Alert");
+                    pDialog.setContentText("Won't be able vote unless you Signin");
+                    pDialog.setConfirmText("Sigin/Signup");
+                    pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    context.startActivity(new Intent(context, AuthOptionScreen.class));
+                                }
+                            });
+                    pDialog.show();
+
+                }
+
+
             }
         });
 
@@ -99,7 +150,8 @@ public class VoteAdapter extends  RecyclerView.Adapter<VoteAdapter.MyViewHolder>
 
     public class MyViewHolder extends RecyclerView.ViewHolder  {
         ImageView imageVote;
-        TextView textviewTitle, textviewVotes;
+        TextView textviewTitle;
+        Button  textviewVotes;
         LinearLayout linearLayout;
         Button btnVote, btnShare;
         Typeface typeface;
@@ -109,7 +161,7 @@ public class VoteAdapter extends  RecyclerView.Adapter<VoteAdapter.MyViewHolder>
             typeface = Typeface.createFromAsset(context.getAssets(), "myfont.ttf");
             imageVote = (ImageView) itemView.findViewById(R.id.ivVote);
             textviewTitle = (TextView) itemView.findViewById(R.id.tvVoteImageTitle);
-            textviewVotes = (TextView) itemView.findViewById(R.id.tvVote);
+            textviewVotes = (Button) itemView.findViewById(R.id.tvVote);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.llVote);
             btnVote = (Button) itemView.findViewById(R.id.btnVote);
             textviewVotes.setTypeface(typeface);
@@ -117,58 +169,70 @@ public class VoteAdapter extends  RecyclerView.Adapter<VoteAdapter.MyViewHolder>
             btnVote.setTypeface(typeface);
             btnShare = (Button) itemView.findViewById(R.id.btnShare);
             btnShare.setTypeface(typeface);
-            btnShare.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    Intent intent = new Intent(Intent.ACTION_PICK,
-//                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    ((Activity)context).startActivityForResult(intent, 0);
-                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                    Uri screenshotUri = Uri.parse("http://adadigbomma.com/panel/images/gallery/"+picName);
-                    sharingIntent.setType("image/*");
-//                    sharingIntent.putExtra(Intent.EXTRA_SUBJECT,String.valueOf(textviewTitle.getText()));
-//                    String sAux =textviewTitle.getText().toString()+"\n"+textviewVotes.getText().toString();
-//                    sharingIntent.putExtra(Intent.EXTRA_TEXT, sAux);
-                    sharingIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
-                    context.startActivity(Intent.createChooser(sharingIntent, "Share image using"));
 
-                }
-            });
         }
 
 
     }
 
-    public void apiCall() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL + "App/voteher/" + UserId + "/" + voteContestentId
+    public void apiCall(final String id) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL + "App/voteher/" + UserId + "/" + id
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("zma  vote response", Configuration.USER_URL + "App/voteher/" + UserId + voteContestentId + response);
+
+                Log.d("zma url", Configuration.USER_URL + "App/voteher/" + UserId + "/" + id);
                 if (response.contains("true")) {
                     try {
+                        pDialog.dismiss();
                         JSONObject jsonObject = new JSONObject(response);
                         JSONArray jsonArr = jsonObject.getJSONArray("user");
                         for (int i = 0; i < jsonArr.length(); i++) {
                             JSONObject temp = jsonArr.getJSONObject(i);
-                            getPercentatge=temp.getString("percentage");
-                            Toast.makeText(context, String.valueOf(temp.getString("percentage")), Toast.LENGTH_SHORT).show();
+                            getPercentatge=temp.getString("votes");
+                            final  SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(context,SweetAlertDialog.SUCCESS_TYPE);
+                            sweetAlertDialog.setTitleText("Vote");
+                            sweetAlertDialog.setContentText("Your vote has been added");
+                            sweetAlertDialog.setCancelable(true);
+                            sweetAlertDialog.show();
+                            Fragment fragment = new VoteFragment();
+                            ((AppCompatActivity)context).getFragmentManager().beginTransaction().replace(R.id.mainFrame , fragment).commit();
 
                         }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        pDialog.dismiss();
+                        Log.d("zma error", String.valueOf(e.getCause()));
+                    }
+
+
+                } else {
+                    pDialog.dismiss();
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String jsonObject1 = jsonObject.getString("message");
+
+                            final  SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(context,SweetAlertDialog.WARNING_TYPE);
+                            sweetAlertDialog.setTitleText("Vote");
+                            sweetAlertDialog.setContentText(jsonObject1);
+                            sweetAlertDialog.setCancelable(true);
+                            sweetAlertDialog.show();
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Log.d("zma error", String.valueOf(e.getCause()));
                     }
 
-
-                } else {
                 }
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                pDialog.dismiss();
                 //DialogUtils.sweetAlertDialog.dismiss();
                 // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
                 Log.d("zma volley error", String.valueOf(error.getCause()));

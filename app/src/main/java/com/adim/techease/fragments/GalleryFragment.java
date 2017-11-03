@@ -74,10 +74,11 @@ public class GalleryFragment extends Fragment {
 
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 Gallery gModel = new Gallery();
+                                gModel.setId(jsonObject.getString("id"));
                                 gModel.setType(jsonObject.getString("type"));
                                 gModel.setLink(jsonObject.getString("link"));
                                 gModel.setTitle(jsonObject.getString("title"));
-                               // gModel.setThumbnail(jsonObject.getString("thumbnail"));
+
                                 galleryList.add(gModel);
                                 pDialog.dismiss();
                             }

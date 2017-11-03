@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.widget.Toast;
 
 import com.adim.techease.utils.Configuration;
 
@@ -44,6 +45,7 @@ public class GeneralUtils {
         String url = file.getAbsolutePath();
         FileNameMap fileNameMap = URLConnection.getFileNameMap();
         String mime = fileNameMap.getContentTypeFor("file://" + url);
+
         return mime;
     }
     public static byte[] getByteArrayFromFile(File file) {

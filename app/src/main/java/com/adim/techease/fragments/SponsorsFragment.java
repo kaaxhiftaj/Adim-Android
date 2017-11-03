@@ -15,7 +15,7 @@ import com.adim.techease.R;
 
 public class SponsorsFragment extends Fragment {
 
-    ImageView sponser1,sponser2,sponser3,sponser4,sponser5,sponser6,sponser7,sponser8,sponser9,sponser10;
+    ImageView sponser1,sponser2,sponser3,sponser4,sponser5,sponser6,sponser7,sponser8,sponser9,sponser10,sponser11;
     WebView webView;
 
     @Override
@@ -30,12 +30,13 @@ public class SponsorsFragment extends Fragment {
         sponser2=(ImageView)view.findViewById(R.id.ivSponser2);
         sponser3=(ImageView)view.findViewById(R.id.ivSponser3);
         sponser4=(ImageView)view.findViewById(R.id.ivSponser4);
-        sponser5=(ImageView)view.findViewById(R.id.ivSponser5);
+    //    sponser5=(ImageView)view.findViewById(R.id.ivSponser5);
         sponser6=(ImageView)view.findViewById(R.id.ivSponser6);
         sponser7=(ImageView)view.findViewById(R.id.ivSponser7);
-        sponser8=(ImageView)view.findViewById(R.id.ivSponser8);
+      //  sponser8=(ImageView)view.findViewById(R.id.ivSponser8);
         sponser9=(ImageView)view.findViewById(R.id.ivSponser9);
         sponser10=(ImageView)view.findViewById(R.id.ivSponser10);
+        sponser11=(ImageView)view.findViewById(R.id.ivsponser11);
 
         sponser1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,13 +61,15 @@ public class SponsorsFragment extends Fragment {
             }
         });
 
-        sponser5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.swisstradezu.com/"));
-                startActivity(myIntent);
-            }
-        });
+//        sponser5.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.swisstradezu.com/"));
+//                startActivity(myIntent);
+//            }
+//        });
+//
+
         sponser10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,13 +77,13 @@ public class SponsorsFragment extends Fragment {
                 startActivity(myIntent);
             }
         });
-        sponser8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.sunmark.co.uk/laser_oil.htm"));
-                startActivity(myIntent);
-            }
-        });
+//        sponser8.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.sunmark.co.uk/laser_oil.htm"));
+//                startActivity(myIntent);
+//            }
+//        });
         sponser9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +92,13 @@ public class SponsorsFragment extends Fragment {
             }
         });
 
-
+        sponser11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.sweethomebathrooms.com/home/index.php"));
+                startActivity(myIntent);
+            }
+        });
 
         return view;
     }

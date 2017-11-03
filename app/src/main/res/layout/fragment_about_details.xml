@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/main_app_bg"
     tools:context="com.adim.techease.fragments.AboutDetails">
@@ -12,8 +12,8 @@
         android:layout_height="match_parent"
         android:textColor="#FFF"
         android:id="@+id/aboutText"
+        android:padding="10sp"
         android:layout_gravity="center"
-        android:gravity="center"
         android:text="Ada Di Igbo Nma (ADIM) Pageant is intended to be a world class beauty pageant of its own kind! Our vision is to build a pageantry with a mixed blend of the unique igbo cultural heritage, devoid of any controversy whatsoever. To this end, we will constantly train and re-train our professional team to observe the industry best practices, while the ultimate choice of who emerges the winner of our competitions will be determined through a fair transparent voting system by the viewing public.
 
 The organizers of ADIM Pageant, EVENTPLUS ENTERTAINMENT CONCEPT LIMITED, is an organization that specializes in event management, corporate branding, publishing, consultancy, as well as an affiliate with notable organisations in the entertainment industry.

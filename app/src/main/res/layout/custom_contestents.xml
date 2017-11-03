@@ -9,20 +9,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:orientation="horizontal"
         android:layout_margin="5dp"
         android:id="@+id/ll_main_item"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
+        android:background="@drawable/layoutripple"
         >
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_marginRight="5dp"
             android:id="@+id/contestentImage"
             android:src="@drawable/main_app_bg"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20sp"
             app:civ_border_width="2dp"
             app:civ_border_color="#FFF"
             />
@@ -34,6 +35,7 @@
             android:textColor="#FFF"
             android:id="@+id/contestentName"
             android:textStyle="italic"
+            android:layout_gravity="center"
             android:layout_marginLeft="5dp"
             android:textSize="20dp"
             />

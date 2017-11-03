@@ -11,6 +11,16 @@ public class TvModel {
     private String ThumbnailTv;
     private String TitleTv;
 
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
+
+    private String Id;
+
     public String getTitleTv() {
         return TitleTv;
     }

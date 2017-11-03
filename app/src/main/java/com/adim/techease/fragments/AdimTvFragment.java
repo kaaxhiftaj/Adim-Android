@@ -79,6 +79,7 @@ public class AdimTvFragment extends Fragment  {
                                 modelTv.setTypeTv(jsonObject.getString("type"));
                                 modelTv.setLinkTv(jsonObject.getString("link"));
                                 modelTv.setTitleTv(jsonObject.getString("title"));
+                                modelTv.setId(jsonObject.getString("id"));
                                 tvModels.add(modelTv);
                                 pDialog.dismiss();
                             }

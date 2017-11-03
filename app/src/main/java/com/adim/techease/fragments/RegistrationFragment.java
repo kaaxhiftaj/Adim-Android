@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +29,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,6 +46,7 @@ public class RegistrationFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     ImageView ivBackToLogin;
+    Typeface typeface;
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -67,7 +68,6 @@ public class RegistrationFragment extends Fragment {
         editor = sharedPreferences.edit();
 
         ivBackToLogin = (ImageView) view.findViewById(R.id.iv_back_login);
-
         ivBackToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,12 +75,22 @@ public class RegistrationFragment extends Fragment {
             }
         });
 
+        typeface = Typeface.createFromAsset(getActivity().getAssets(), "myfont.ttf");
         etUserName = (EditText) view.findViewById(R.id.et_username);
         etEmail = (EditText) view.findViewById(R.id.et_email_signup);
         etPassword = (EditText) view.findViewById(R.id.et_password_signup);
         etConfirmPassword = (EditText) view.findViewById(R.id.et_confirm_password);
         tv_login = (TextView)view.findViewById(R.id.tv_login_here);
         btnNextSignUp = (Button) view.findViewById(R.id.btn_next_signup);
+        etUserName.setTypeface(typeface);
+        etEmail.setTypeface(typeface);
+        etPassword.setTypeface(typeface);
+        etConfirmPassword.setTypeface(typeface);
+        tv_login.setTypeface(typeface);
+        btnNextSignUp.setTypeface(typeface);
+
+
+
         btnNextSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,19 +141,18 @@ public class RegistrationFragment extends Fragment {
                 Log.d("zma  reg response", response);
                 DialogUtils.sweetAlertDialog.dismiss();
                 if (response.contains("true")) {
+
                     try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = jsonObject.getJSONArray("user");
-                        for (int i = 0; i<jsonArray.length(); i++){
-                            JSONObject temp = jsonArray.getJSONObject(i);
-                            String strApiToken = temp.getString("token_id");
+                        JSONObject jsonObject = new JSONObject(response).getJSONObject("user");
+                            String strApiToken = jsonObject.getString("token_id");
+                        Toast.makeText(getActivity(), strApiToken, Toast.LENGTH_SHORT).show();
                             editor.putString("api_token", strApiToken);
                             editor.putString("name",strUserName);
                             editor.putString("email",strEmail);
                             editor.commit();
 
 
-                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

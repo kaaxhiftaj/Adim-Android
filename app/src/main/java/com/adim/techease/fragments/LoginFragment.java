@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,6 +49,7 @@ public class LoginFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     ImageView ivBackToLogin;
+    Typeface typeface;
 
 
     public LoginFragment() {
@@ -76,6 +78,13 @@ public class LoginFragment extends Fragment {
         etPassword = (EditText) view.findViewById(R.id.et_password_login);
         tvForgetPassword = (TextView) view.findViewById(R.id.tv_forget_password);
         btnLogin = (Button) view.findViewById(R.id.btn_login);
+        typeface = Typeface.createFromAsset(getActivity().getAssets(), "myfont.ttf");
+        etEmail.setTypeface(typeface);
+        etPassword.setTypeface(typeface);
+        tvForgetPassword.setTypeface(typeface);
+        btnLogin.setTypeface(typeface);
+
+
 
         tvRegisterHere = (TextView) view.findViewById(R.id.tv_register_here);
         tvRegisterHere.setOnClickListener(new View.OnClickListener() {
@@ -134,9 +143,13 @@ public class LoginFragment extends Fragment {
                         JSONObject jsonObject = new JSONObject(response).getJSONObject("user");
                         String strApiToken = jsonObject.getString("token_id");
                         String Logged_In_User_Id=jsonObject.getString("user_id");
-                        Toast.makeText(getActivity(), Logged_In_User_Id, Toast.LENGTH_SHORT).show();
+                        String fullname = jsonObject.getString("fullname");
+                        String email = jsonObject.getString("email");
                         editor.putString("api_token", strApiToken);
-                        editor.putString("user_Id",Logged_In_User_Id).commit();
+                        editor.putString("user_Id",Logged_In_User_Id);
+                        editor.putString("fullname" , fullname);
+                        editor.putString("email" , email);
+                        editor.commit();
                         Log.d("zma user id", Logged_In_User_Id);
                         startActivity(new Intent(getActivity(), MainActivity.class));
                         getActivity().finish();

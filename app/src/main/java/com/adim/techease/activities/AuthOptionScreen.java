@@ -54,7 +54,7 @@ public class AuthOptionScreen extends AppCompatActivity {
     TextView guest;
     Typeface typeface;
     ImageButton email_button;
-    TwitterLoginButton twitter_button;
+   // TwitterLoginButton twitter_button;
     LoginButton fb_button;
     CallbackManager callbackManager;
     ProfileTracker profileTracker;
@@ -93,7 +93,7 @@ public class AuthOptionScreen extends AppCompatActivity {
         guest.setTypeface(typeface);
         fb_button = (LoginButton) findViewById(R.id.login_button);
 
-        twitter_button = (TwitterLoginButton) findViewById(R.id.twitter_button);
+       // twitter_button = (TwitterLoginButton) findViewById(R.id.twitter_button);
         email_button = (ImageButton) findViewById(R.id.email_button);
 
         fb_button.setOnClickListener(new View.OnClickListener() {
@@ -151,24 +151,24 @@ public class AuthOptionScreen extends AppCompatActivity {
 
 
 
-        twitter_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                twitter_button.setCallback(new Callback<TwitterSession>() {
-                    @Override
-                    public void success(Result<TwitterSession> result) {
-                        // Do something with result, which provides a TwitterSession for making API calls
-                        startActivity(new Intent(AuthOptionScreen.this, MainActivity.class));
-                    }
-
-                    @Override
-                    public void failure(TwitterException exception) {
-                        // Do something on failure
-                    }
-                });
-            }
-        });
+//        twitter_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                twitter_button.setCallback(new Callback<TwitterSession>() {
+//                    @Override
+//                    public void success(Result<TwitterSession> result) {
+//                        // Do something with result, which provides a TwitterSession for making API calls
+//                        startActivity(new Intent(AuthOptionScreen.this, MainActivity.class));
+//                    }
+//
+//                    @Override
+//                    public void failure(TwitterException exception) {
+//                        // Do something on failure
+//                    }
+//                });
+//            }
+//        });
 
 
 
@@ -186,6 +186,7 @@ public class AuthOptionScreen extends AppCompatActivity {
             public void onClick(View view) {
 
                 startActivity(new Intent(AuthOptionScreen.this, MainActivity.class));
+
             }
         });
     }
