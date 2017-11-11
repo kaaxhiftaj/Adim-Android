@@ -71,7 +71,7 @@ public class FragmentTab1bio extends Fragment {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, "Adim");
-                    String sAux = "\nLet me recommend you this application\n\n";
+                    String sAux = "\nHi, Download this beautiful aoo to Vote your favourite beauty Queen for Adim Pageant\n\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=com.adim.techease \n\n";
                     intent.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(intent, "choose one"));

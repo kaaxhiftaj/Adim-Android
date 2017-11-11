@@ -24,115 +24,80 @@
         >
 
         <ImageView
-            android:id="@+id/ivSponser1"
+            android:id="@+id/event_factory"
             android:layout_width="250sp"
             android:layout_height="200sp"
             android:scaleType="fitXY"
             android:layout_marginTop="3sp"
-            android:src="@drawable/sponsor1"/>
+            android:src="@drawable/eventfactory"/>
 
         <ImageView
-            android:id="@+id/ivSponser2"
-            android:layout_width="250sp"
-            android:layout_height="200sp"
-            android:layout_marginLeft="2sp"
-            android:layout_marginRight="2sp"
-            android:scaleType="fitXY"
-            android:layout_marginTop="6sp"
-            android:src="@drawable/sponsor2"
-            />
-        <ImageView
-            android:id="@+id/ivSponser3"
+            android:id="@+id/veba"
             android:layout_width="250sp"
             android:layout_height="200sp"
             android:layout_marginLeft="2sp"
             android:layout_marginRight="2sp"
             android:layout_marginTop="6sp"
             android:scaleType="fitXY"
-            android:src="@drawable/sponsor3"/>
-
-        <ImageView
-            android:id="@+id/ivSponser4"
-            android:layout_width="250sp"
-            android:layout_height="200sp"
-            android:scaleType="fitXY"
-            android:layout_marginLeft="2sp"
-            android:layout_marginRight="2sp"
-            android:layout_marginTop="6sp"
-            android:src="@drawable/sponsor6"/>
-
-        <!--<ImageView-->
-            <!--android:id="@+id/ivSponser5"-->
-            <!--android:layout_width="250sp"-->
-            <!--android:layout_height="200sp"-->
-            <!--android:scaleType="fitXY"-->
-            <!--android:layout_marginLeft="2sp"-->
-            <!--android:layout_marginRight="2sp"-->
-            <!--android:layout_marginTop="6sp"-->
-            <!--android:src="@drawable/sponsor5"-->
-            <!--/>-->
+            android:src="@drawable/veba"/>
 
 
 
         <ImageView
-            android:id="@+id/ivSponser6"
-            android:layout_width="250sp"
-            android:layout_height="200sp"
-            android:layout_marginTop="6sp"
-            android:layout_marginLeft="2sp"
-            android:layout_marginRight="2sp"
-            android:scaleType="fitXY"
-            android:src="@drawable/sponsor7"/>
-
-        <ImageView
-            android:id="@+id/ivSponser7"
-            android:layout_width="250sp"
-            android:layout_height="200sp"
-            android:scaleType="fitXY"
-            android:layout_marginTop="6sp"
-            android:layout_marginLeft="2sp"
-            android:layout_marginRight="2sp"
-            android:src="@drawable/sponsor8"/>
-
-        <!--<ImageView-->
-            <!--android:id="@+id/ivSponser8"-->
-            <!--android:layout_width="250sp"-->
-            <!--android:layout_height="200sp"-->
-            <!--android:scaleType="fitXY"-->
-            <!--android:layout_marginLeft="2sp"-->
-            <!--android:layout_marginRight="2sp"-->
-            <!--android:layout_marginTop="6sp"-->
-            <!--android:src="@drawable/sponsor9"-->
-            <!--/>-->
-
-        <ImageView
-            android:id="@+id/ivSponser9"
-            android:layout_marginTop="6sp"
-            android:layout_marginLeft="2sp"
-            android:layout_marginRight="2sp"
-            android:layout_width="250sp"
-            android:layout_height="200sp"
-            android:scaleType="fitXY"
-            android:src="@drawable/sponsor11"/>
-
-        <ImageView
-            android:id="@+id/ivSponser10"
+            android:id="@+id/employeme"
             android:layout_width="250sp"
             android:layout_height="200sp"
             android:layout_marginLeft="2sp"
             android:layout_marginRight="2sp"
             android:layout_marginTop="6sp"
             android:scaleType="fitXY"
-            android:src="@drawable/sponsor10"/>
+            android:src="@drawable/employeme"/>
+
+
+
+
         <ImageView
-            android:id="@+id/ivsponser11"
+            android:id="@+id/parktonianhotel"
+            android:layout_width="250sp"
+            android:layout_height="200sp"
+            android:layout_marginTop="6sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:scaleType="fitXY"
+            android:src="@drawable/parktonianhotel"/>
+
+        <ImageView
+            android:id="@+id/laseroil"
+            android:layout_width="250sp"
+            android:layout_height="200sp"
+            android:scaleType="fitXY"
+            android:layout_marginTop="6sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:src="@drawable/laseroil"/>
+
+
+        <ImageView
+            android:id="@+id/sweethomes"
             android:layout_width="250sp"
             android:layout_height="200sp"
             android:layout_marginLeft="2sp"
             android:layout_marginRight="2sp"
             android:layout_marginTop="6sp"
             android:scaleType="fitXY"
-            android:src="@drawable/sponser11"/>
+            android:src="@drawable/sweethomes"/>
+        <ImageView
+            android:id="@+id/newage"
+            android:layout_width="250sp"
+            android:layout_height="200sp"
+            android:layout_marginLeft="2sp"
+            android:layout_marginRight="2sp"
+            android:layout_marginTop="6sp"
+            android:scaleType="fitXY"
+            android:src="@drawable/newage"/>
+
+
+
 
     </LinearLayout>
     </ScrollView>

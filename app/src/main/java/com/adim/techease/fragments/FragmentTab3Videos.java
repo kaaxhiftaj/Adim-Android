@@ -15,8 +15,10 @@ import android.widget.Button;
 
 import com.adim.techease.Adapter.VideoAdapter;
 import com.adim.techease.R;
+import com.adim.techease.activities.AuthOptionScreen;
 import com.adim.techease.controllers.VideoModel;
 import com.adim.techease.utils.Configuration;
+import com.adim.techease.utils.DialogUtils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -48,6 +50,7 @@ public  class FragmentTab3Videos extends Fragment{
     Button btnShare;
     Typeface typeface;
     String GetId;
+    SweetAlertDialog pDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,7 +88,7 @@ public  class FragmentTab3Videos extends Fragment{
     }
 
     private void apicall() {
-        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+       pDialog  = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
         pDialog.setTitleText("Loading");
         pDialog.setCancelable(false);
@@ -114,20 +117,19 @@ public  class FragmentTab3Videos extends Fragment{
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        pDialog.dismiss();
                     }
 
 
                 } else {
-//                    DialogUtils.sweetAlertDialog.dismiss();
-                    //                  DialogUtils.showWarningAlertDialog(getActivity(), "Something went wrong");
+                    pDialog.dismiss();
                 }
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //DialogUtils.sweetAlertDialog.dismiss();
-                // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
+
                 Log.d("error" , String.valueOf(error.getCause()));
 
             }

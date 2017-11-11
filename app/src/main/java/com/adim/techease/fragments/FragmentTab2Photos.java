@@ -110,20 +110,19 @@ public class FragmentTab2Photos extends Fragment {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        pDialog.dismiss();
                     }
 
 
                 } else {
-//                    DialogUtils.sweetAlertDialog.dismiss();
-  //                  DialogUtils.showWarningAlertDialog(getActivity(), "Something went wrong");
+                    pDialog.dismiss();
                 }
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //DialogUtils.sweetAlertDialog.dismiss();
-                // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
+
                 Log.d("error" , String.valueOf(error.getCause()));
 
             }

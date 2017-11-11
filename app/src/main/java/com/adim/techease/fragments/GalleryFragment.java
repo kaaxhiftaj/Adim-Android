@@ -84,12 +84,15 @@ public class GalleryFragment extends Fragment {
                             }
                             galleryAdapter.notifyDataSetChanged();
 
-                        }catch(JSONException e){e.printStackTrace();}
+                        }catch(JSONException e){
+                            pDialog.dismiss();
+                            e.printStackTrace();}
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        pDialog.dismiss();
                         Log.e("Volley", String.valueOf(error.getCause()));
 
                     }

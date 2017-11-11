@@ -6,10 +6,10 @@
     tools:context="com.adim.techease.activities.SplashScreen">
 
     <ImageView
-        android:layout_width="398dp"
+        android:layout_width="match_parent"
         android:layout_height="270dp"
         android:layout_gravity="center"
         android:foregroundGravity="center"
-        android:src="@drawable/main_app_logo" />
+        android:src="@drawable/splash_icon" />
 
 </LinearLayout>

@@ -91,10 +91,12 @@ public class VoteFragment extends Fragment {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        pDialog.dismiss();
                     }
 
 
                 } else {
+                    pDialog.dismiss();
                 }
             }
 

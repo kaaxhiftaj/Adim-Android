@@ -1,8 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/main_app_bg"
     android:orientation="vertical"
     android:padding="40dp"
@@ -24,15 +24,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:padding="10dp"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="0.7">
+                    android:layout_weight="0.7"
+                    android:orientation="vertical">
+
                     <ImageView
                         android:id="@+id/iv_back_login"
                         android:layout_width="20dp"
@@ -44,20 +45,20 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
 
-                    android:layout_weight="1">
+                    android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sign Up"
+                        android:textColor="#fff"
                         android:textSize="30dp"
                         android:textStyle="bold"
-                        android:textColor="#fff"
 
                         />
                 </LinearLayout>
-
 
 
             </LinearLayout>
@@ -67,15 +68,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
-                android:gravity="center_horizontal"
                 android:background="@drawable/et_design"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_marginLeft="30dp"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:src="@drawable/login_username_icon" />
 
@@ -83,12 +84,15 @@
                     android:id="@+id/et_username"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@null"
                     android:layout_gravity="center"
+                    android:background="@null"
                     android:hint="Full Name"
                     android:inputType="textEmailAddress"
                     android:textColor="#fff"
-                    android:textColorHint="#fff" />
+                    android:textColorHint="#fff"
+
+
+                    />
 
             </LinearLayout>
 
@@ -104,18 +108,18 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:layout_gravity="center"
                     android:src="@drawable/forget_email_icon" />
 
                 <EditText
                     android:id="@+id/et_email_signup"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
                     android:background="@null"
                     android:hint="Email"
-                    android:layout_gravity="center"
                     android:inputType="textEmailAddress"
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
@@ -123,7 +127,6 @@
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -135,24 +138,23 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:layout_gravity="center"
                     android:src="@drawable/login_password_icon" />
 
                 <EditText
                     android:id="@+id/et_password_signup"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
                     android:background="@null"
                     android:hint="password"
                     android:inputType="textPassword"
-                    android:layout_gravity="center"
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
 
             </LinearLayout>
-
 
 
             <LinearLayout
@@ -166,19 +168,19 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:layout_gravity="center"
                     android:src="@drawable/login_password_icon" />
 
                 <EditText
                     android:id="@+id/et_confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
                     android:background="@null"
                     android:hint="Confirm Password"
                     android:inputType="textPassword"
-                    android:layout_gravity="center"
                     android:textColor="#fff"
                     android:textColorHint="#fff" />
 
@@ -203,9 +205,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColor="#fff"
             android:gravity="center_horizontal"
             android:text="Already have an account? Sign In"
-            android:textColor="#fff" />
+            android:typeface="normal" />
 
     </TableLayout>
 </ScrollView>

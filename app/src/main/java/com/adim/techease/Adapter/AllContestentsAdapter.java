@@ -4,6 +4,7 @@ package com.adim.techease.Adapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -79,10 +80,13 @@ public class AllContestentsAdapter extends RecyclerView.Adapter<AllContestentsAd
         private TextView contestentname;
         private  de.hdodenhof.circleimageview.CircleImageView contestentImage;
         LinearLayout llItemView;
+        Typeface typeface;
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            typeface = Typeface.createFromAsset(context.getAssets(), "myfont.ttf");
             contestentname = (TextView) itemView.findViewById(R.id.contestentName);
+            contestentname.setTypeface(typeface);
             contestentImage = (de.hdodenhof.circleimageview.CircleImageView) itemView.findViewById(R.id.contestentImage);
             llItemView = (LinearLayout)itemView.findViewById(R.id.ll_main_item);
 

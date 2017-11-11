@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     TextView Name,Email;
     SharedPreferences sharedprefs;
     SharedPreferences.Editor editor ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

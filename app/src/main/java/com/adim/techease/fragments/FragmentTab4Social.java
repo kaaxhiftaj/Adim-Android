@@ -106,16 +106,14 @@ public class FragmentTab4Social extends Fragment {
 
 
                 } else {
-                    DialogUtils.sweetAlertDialog.dismiss();
-                    DialogUtils.showWarningAlertDialog(getActivity(), "Something went wrong");
+
                 }
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //DialogUtils.sweetAlertDialog.dismiss();
-                // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
+
                 Log.d("error" , String.valueOf(error.getCause()));
 
             }
