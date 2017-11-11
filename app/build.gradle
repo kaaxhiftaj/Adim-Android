@@ -56,8 +56,10 @@ android {
         annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
         compile 'de.hdodenhof:circleimageview:2.2.0'
         compile 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
+        compile 'com.google.firebase:firebase-core:11.6.0'
 
     }
+    apply plugin: 'com.google.gms.google-services'
 }
 dependencies {
     compile files('libs/YouTubeAndroidPlayerApi.jar')
