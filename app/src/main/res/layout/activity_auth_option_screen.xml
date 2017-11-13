@@ -16,6 +16,7 @@
         android:layout_marginRight="15dp"
         android:gravity="right"
         android:text="Continue as Guest"
+        android:visibility="gone"
         android:textSize="17dp"
         android:layout_marginTop="20dp"
         android:textColor="#FFF" />
