@@ -54,6 +54,7 @@ public class AdimTvAdapter extends RecyclerView.Adapter<AdimTvAdapter.MyViewHold
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         final TvModel model = modelTv.get(position);
         id=model.getId();
+
         if (model.getTypeTv().equals("image")) {
             id=model.getId();
             holder.imageView.setVisibility(View.VISIBLE);
@@ -97,6 +98,25 @@ public class AdimTvAdapter extends RecyclerView.Adapter<AdimTvAdapter.MyViewHold
                 }
             });
 
+            holder.btnPlay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS)){
+                        //This means that your device has the Youtube API Service (the app) and you are safe to launch it.
+                        Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, Key, id );
+                        context.startActivity(intent);
+
+                    }else{
+                        Toast.makeText(context, "Please download youtube app", Toast.LENGTH_SHORT).show();
+                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.youtube")));
+
+                    }
+
+                }
+
+            });
+
 
         }
     }
@@ -106,7 +126,7 @@ public class AdimTvAdapter extends RecyclerView.Adapter<AdimTvAdapter.MyViewHold
         return modelTv.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
         FrameLayout frameLayout;
         ImageView imageView;
@@ -125,26 +145,10 @@ public class AdimTvAdapter extends RecyclerView.Adapter<AdimTvAdapter.MyViewHold
             textViewTitle.setTypeface(typeface);
             frameLayout=(FrameLayout)itemView.findViewById(R.id.FrameTv);
             btnPlay = (ImageView) itemView.findViewById(R.id.btnPlayTv);
-            btnPlay.setOnClickListener(this);
             youtubeTview = (YouTubeThumbnailView) itemView.findViewById(R.id.youtubeGalleryTv);
             RLoverThumbView = (RelativeLayout) itemView.findViewById(R.id.RloverTv);
         }
 
-        @Override
-        public void onClick(View v) {
 
-            if(YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS)){
-                //This means that your device has the Youtube API Service (the app) and you are safe to launch it.
-                Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, Key, id);
-                context.startActivity(intent);
-
-            }else{
-                Toast.makeText(context, "Please download youtube app", Toast.LENGTH_SHORT).show();
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.youtube")));
-
-            }
-
-
-        }
     }
 }

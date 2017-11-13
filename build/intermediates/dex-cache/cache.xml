@@ -21,6 +21,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/eapple/.android/build-cache/89a3248d5d4273375423e6ab0671654d78cee52e/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="f63291c198bf572a4b24353ec91e8dc112f5e7f3">
+        <dex dex="/Users/eapple/AndroidStudioProjects/Adim-Android/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6c18fff4f29f7e13e97ed9b08f5873b2a2501d67/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/eapple/.android/build-cache/dd6f6c22f1414e7acf670b113d586e3cea59fd6b/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"

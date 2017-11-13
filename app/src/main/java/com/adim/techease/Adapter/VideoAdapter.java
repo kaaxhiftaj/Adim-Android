@@ -54,8 +54,8 @@ public class VideoAdapter  extends RecyclerView.Adapter<VideoAdapter.MyViewHolde
     public void onBindViewHolder(final VideoAdapter.MyViewHolder holder, final int position) {
 
         final VideoModel model=videoModel.get(position);
-        Id_s=model.getId();
         holder.text.setText(model.getTitle());
+
        final YouTubeThumbnailLoader.OnThumbnailLoadedListener onThumbnailLoadedListener= new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
             @Override
             public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
@@ -73,13 +73,33 @@ public class VideoAdapter  extends RecyclerView.Adapter<VideoAdapter.MyViewHolde
             @Override
             public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
 
-                youTubeThumbnailLoader.setVideo(Id_s);
+                Id_s = model.getId();
+                youTubeThumbnailLoader.setVideo(model.getId());
                 youTubeThumbnailLoader.setOnThumbnailLoadedListener(onThumbnailLoadedListener);
             }
 
             @Override
             public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
             }
+        });
+
+        holder.playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    if(YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS)){
+                        //This means that your device has the Youtube API Service (the app) and you are safe to launch it.
+                        Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, Key,model.getId());
+                        context.startActivity(intent);
+
+                    }else{
+                        Toast.makeText(context, "Please download youtube app", Toast.LENGTH_SHORT).show();
+                        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.youtube")));
+
+                    }
+
+                }
+
         });
 
     }
@@ -89,7 +109,7 @@ public class VideoAdapter  extends RecyclerView.Adapter<VideoAdapter.MyViewHolde
         return videoModel.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView text;
         protected RelativeLayout relativeLayoutOverYouTubeThumbnailView;
@@ -102,24 +122,11 @@ public class VideoAdapter  extends RecyclerView.Adapter<VideoAdapter.MyViewHolde
             text=(TextView)itemView.findViewById(R.id.tvVideoTitle);
             text.setTypeface(typeface);
             playButton=(ImageView)itemView.findViewById(R.id.btnYoutube_player);
-            playButton.setOnClickListener(this);
+         //   playButton.setOnClickListener(this);
             relativeLayoutOverYouTubeThumbnailView = (RelativeLayout) itemView.findViewById(R.id.relativeLayout_over_youtube_thumbnail);
             youTubeThumbnailView = (YouTubeThumbnailView) itemView.findViewById(R.id.youtube_thumbnail);
         }
 
-        @Override
-        public void onClick(View v) {
-            if(YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS)){
-                //This means that your device has the Youtube API Service (the app) and you are safe to launch it.
-                Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, Key,Id_s);
-                context.startActivity(intent);
 
-            }else{
-                Toast.makeText(context, "Please download youtube app", Toast.LENGTH_SHORT).show();
-               context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.youtube")));
-
-            }
-
-        }
     }
 }
