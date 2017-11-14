@@ -53,10 +53,9 @@ public class AdimTvAdapter extends RecyclerView.Adapter<AdimTvAdapter.MyViewHold
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         final TvModel model = modelTv.get(position);
-        id=model.getId();
+
 
         if (model.getTypeTv().equals("image")) {
-            id=model.getId();
             holder.imageView.setVisibility(View.VISIBLE);
             holder.RLoverThumbView.setVisibility(View.GONE);
             holder.btnPlay.setVisibility(View.GONE);
@@ -71,7 +70,6 @@ public class AdimTvAdapter extends RecyclerView.Adapter<AdimTvAdapter.MyViewHold
             final YouTubeThumbnailLoader.OnThumbnailLoadedListener onThumbnailLoadedListener= new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
                 @Override
                 public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
-                    id=model.getId();
                     holder.frameLayout.setVisibility(View.VISIBLE);
                     youTubeThumbnailView.setVisibility(View.VISIBLE);
                     holder.imageView.setVisibility(View.GONE);
@@ -89,7 +87,7 @@ public class AdimTvAdapter extends RecyclerView.Adapter<AdimTvAdapter.MyViewHold
             holder.youtubeTview.initialize(Key, new YouTubeThumbnailView.OnInitializedListener() {
                 @Override
                 public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
-                    youTubeThumbnailLoader.setVideo(id);
+                    youTubeThumbnailLoader.setVideo(model.getId());
                     youTubeThumbnailLoader.setOnThumbnailLoadedListener(onThumbnailLoadedListener);
                 }
 
@@ -104,7 +102,7 @@ public class AdimTvAdapter extends RecyclerView.Adapter<AdimTvAdapter.MyViewHold
 
                     if(YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS)){
                         //This means that your device has the Youtube API Service (the app) and you are safe to launch it.
-                        Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, Key, id );
+                        Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, Key, model.getId() );
                         context.startActivity(intent);
 
                     }else{

@@ -29,6 +29,7 @@ import com.adim.techease.fragments.OurTeamFragment;
 import com.adim.techease.fragments.SponsorsFragment;
 import com.adim.techease.fragments.VoteFragment;
 import com.adim.techease.utils.Configuration;
+import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
 
@@ -178,6 +179,7 @@ public class MainActivity extends AppCompatActivity
                     getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
                     item.setChecked(true);
                     setTitle(item.getTitle());
+                    LoginManager.getInstance().logOut();
                     finish();
                 }else  if (id == R.id.nav_aboutus) {
                     fragment = new AboutusFragment();

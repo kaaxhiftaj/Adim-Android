@@ -99,9 +99,8 @@ public class VoteAdapter extends  RecyclerView.Adapter<VoteAdapter.MyViewHolder>
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_SUBJECT, "Adim");
-                    String sAux = "\nI have voted for " + model.getTitle() + ". Vote for your favourite one here\n\n";
-                    sAux = sAux + "https://play.google.com/store/apps/details?id=com.adim.techease \n\n";
-                    intent.putExtra(Intent.EXTRA_TEXT, sAux);
+                    String sAuxLink = "I have voted for " + model.getTitle() + ". Vote for your favourite one here. https://play.google.com/store/apps/details?id=com.adim.techease";
+                    intent.putExtra(Intent.EXTRA_TEXT, sAuxLink);
                     context.startActivity(Intent.createChooser(intent, "choose one"));
                 } catch(Exception e) {
                     //e.toString();
