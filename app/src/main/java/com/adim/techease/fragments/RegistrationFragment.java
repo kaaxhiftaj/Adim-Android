@@ -124,7 +124,7 @@ public class RegistrationFragment extends Fragment {
         } else if (!strPassword.equals(strConfirmPassword)) {
             etConfirmPassword.setError("Password doesn't match");
         } else {
-            Log.d("zma data", strUserName+"\n"+strEmail+"\n"+strDob+"\n"+strConfirmPassword);
+            Log.d("zma data", strUserName+"\n"+strEmail+"\n"+strPassword+"\n"+strConfirmPassword);
             DialogUtils.showProgressSweetDialog(getActivity(), "Getting registered");
             apiCall();
 

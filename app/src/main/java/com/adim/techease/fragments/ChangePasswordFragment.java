@@ -100,10 +100,10 @@ public class ChangePasswordFragment extends Fragment {
         });
         sharedPreferences = getActivity().getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
         strAPIToken = sharedPreferences.getString("api_token","");
-        pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#179e99"));
-        pDialog.setTitleText("Updating password");
-        pDialog.setCancelable(false);
+//        pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#179e99"));
+//        pDialog.setTitleText("Updating password");
+//        pDialog.setCancelable(false);
         btnChangePassword = (Button) view.findViewById(R.id.btn_update_password);
         etNewPassword = (EditText) view.findViewById(R.id.et_new_password_change);
         etConfirmPassword = (EditText) view.findViewById(R.id.et_confirm_password_change);

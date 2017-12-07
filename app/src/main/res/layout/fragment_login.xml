@@ -99,7 +99,7 @@
             android:layout_marginTop="10dp"
             android:gravity="right"
             android:paddingRight="30dp"
-            android:text="Foget Password?"
+            android:text="Forget Password?"
             android:textColor="#fff" />
 
         <Button

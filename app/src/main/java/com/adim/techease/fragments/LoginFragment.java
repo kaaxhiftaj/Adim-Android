@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.adim.techease.R;
 import com.adim.techease.activities.MainActivity;
@@ -35,8 +33,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class LoginFragment extends Fragment {
@@ -125,11 +121,11 @@ public class LoginFragment extends Fragment {
     }
 
     public void apiCall() {
-        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
-        pDialog.show();
+//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
+//        pDialog.setTitleText("Loading");
+//        pDialog.setCancelable(false);
+//        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL + "Signup/login"
                 , new Response.Listener<String>() {
             @Override
@@ -159,7 +155,7 @@ public class LoginFragment extends Fragment {
                         e.printStackTrace();
                         Log.d("error", String.valueOf(e.getMessage()));
                     }
-                    pDialog.dismiss();
+                  //  pDialog.dismiss();
                     editor.putString("api_token", "abc").commit();
 
 
