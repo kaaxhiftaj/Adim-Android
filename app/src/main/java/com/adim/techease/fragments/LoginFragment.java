@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,9 +22,14 @@ import com.adim.techease.utils.Configuration;
 import com.adim.techease.utils.DialogUtils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -33,6 +39,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class LoginFragment extends Fragment {
@@ -121,11 +129,11 @@ public class LoginFragment extends Fragment {
     }
 
     public void apiCall() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
+        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL + "Signup/login"
                 , new Response.Listener<String>() {
             @Override
@@ -160,8 +168,16 @@ public class LoginFragment extends Fragment {
 
 
                 } else {
+                    pDialog.dismiss();
                     DialogUtils.sweetAlertDialog.dismiss();
-                    DialogUtils.showWarningAlertDialog(getActivity(), "Something went wrong");
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String message = jsonObject.getString("message");
+                        DialogUtils.showErrorDialog(getActivity(), message);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
 
@@ -169,7 +185,18 @@ public class LoginFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 DialogUtils.sweetAlertDialog.dismiss();
-                DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    DialogUtils.showWarningAlertDialog(getActivity(), "Network Error");
+                } else if (error instanceof AuthFailureError) {
+                    DialogUtils.showWarningAlertDialog(getActivity(), "Email or Password Error");
+                } else if (error instanceof ServerError) {
+                    DialogUtils.showWarningAlertDialog(getActivity(), "Server Error");
+                } else if (error instanceof NetworkError) {
+                    DialogUtils.showWarningAlertDialog(getActivity(), "Network Error");
+                } else if (error instanceof ParseError) {
+                    DialogUtils.showWarningAlertDialog(getActivity(), "Parsing Error");
+                }
+
 
             }
         }) {

@@ -82,7 +82,7 @@ public class VoteFragment extends Fragment {
                             VoteModel votemodel=new VoteModel();
                             votemodel.setImage(temp.getString("profile_pic"));
                             votemodel.setTitle(temp.getString("name"));
-                            votemodel.setVote(temp.getString("votes"));
+                            votemodel.setVote(temp.getString("totalVotes"));
                             votemodel.setVoteContestentID(temp.getString("id"));
                             voteModel.add(votemodel);
                             pDialog.dismiss();

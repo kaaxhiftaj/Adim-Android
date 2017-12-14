@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adim.techease.R;
 import com.adim.techease.utils.Configuration;
@@ -72,7 +74,6 @@ public class AuthOptionScreen extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         typeface=Typeface.createFromAsset(getAssets(),"myfont.ttf");
-
 
         //get sharedprefs for checking
         String prefs= sharedPreferences.getString("api_token","");
@@ -150,28 +151,6 @@ public class AuthOptionScreen extends AppCompatActivity {
         });
 
 
-
-//        twitter_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                twitter_button.setCallback(new Callback<TwitterSession>() {
-//                    @Override
-//                    public void success(Result<TwitterSession> result) {
-//                        // Do something with result, which provides a TwitterSession for making API calls
-//                        startActivity(new Intent(AuthOptionScreen.this, MainActivity.class));
-//                    }
-//
-//                    @Override
-//                    public void failure(TwitterException exception) {
-//                        // Do something on failure
-//                    }
-//                });
-//            }
-//        });
-
-
-
         email_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,8 +176,6 @@ public class AuthOptionScreen extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
          callbackManager.onActivityResult(requestCode, resultCode, data);
 
-        // Pass the activity result to the login button.
-        //twitter_button.onActivityResult(requestCode, resultCode, data);
     }
 
 
@@ -209,17 +186,16 @@ public class AuthOptionScreen extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.d("zma  reg response", response);
-//                DialogUtils.sweetAlertDialog.dismiss();
                 if (response.contains("true")) {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
-                        JSONArray jsonArray = jsonObject.getJSONArray("user");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject temp = jsonArray.getJSONObject(i);
-                             strApiToken = temp.getString("token_id");
+                        JSONObject jsonArray = jsonObject.getJSONObject("user");
+                             strApiToken = jsonArray.getString("token_id");
+                           String user_id = jsonArray.getString("token_id");
+                            Toast.makeText(AuthOptionScreen.this, strApiToken, Toast.LENGTH_SHORT).show();
                             editor.putString("api_token", strApiToken).commit();
+                        editor.putString("user_Id", user_id).commit();
 
-                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

@@ -5,6 +5,9 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,6 +17,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -31,6 +36,7 @@ import com.adim.techease.fragments.VoteFragment;
 import com.adim.techease.utils.Configuration;
 import com.facebook.login.LoginManager;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
 
 
@@ -56,6 +62,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerLayout = navigationView.getHeaderView(0);
+        getHasKey();
 
         Name=(TextView)headerLayout.findViewById(R.id.tvNavHeaderName);
         Email=(TextView)headerLayout.findViewById(R.id.tvNavHeaderEmail);
@@ -205,5 +212,29 @@ public class MainActivity extends AppCompatActivity
         fragment = new HomeFragment();
         getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).commit();
 
+    }
+
+
+    void getHasKey()
+    {
+        //Get Has Key
+        try
+        {
+            PackageInfo info = getPackageManager().getPackageInfo("com.adim.techease", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures)
+            {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

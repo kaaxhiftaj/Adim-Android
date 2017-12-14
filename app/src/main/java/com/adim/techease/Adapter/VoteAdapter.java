@@ -90,8 +90,7 @@ public class VoteAdapter extends  RecyclerView.Adapter<VoteAdapter.MyViewHolder>
         Glide.with(context).load("http://adadigbomma.com/panel/images/gallery/" + model.getImage()).into(holder.imageVote);
         holder.imageVote.getDrawable();
         holder.textviewTitle.setText(model.getTitle());
-        holder.textviewVotes.setText(model.getVote());
-
+        holder.textviewVotes.setText(model.getVote()+"votes");
         holder.btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,28 +181,15 @@ public class VoteAdapter extends  RecyclerView.Adapter<VoteAdapter.MyViewHolder>
 
                 Log.d("zma url", Configuration.USER_URL + "App/voteher/" + UserId + "/" + id);
                 if (response.contains("true")) {
-                    try {
-                        pDialog.dismiss();
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONArray jsonArr = jsonObject.getJSONArray("user");
-                        for (int i = 0; i < jsonArr.length(); i++) {
-                            JSONObject temp = jsonArr.getJSONObject(i);
-                            getPercentatge=temp.getString("votes");
-                            final  SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(context,SweetAlertDialog.SUCCESS_TYPE);
-                            sweetAlertDialog.setTitleText("Vote");
-                            sweetAlertDialog.setContentText("Your vote has been added");
-                            sweetAlertDialog.setCancelable(true);
-                            sweetAlertDialog.show();
-                            Fragment fragment = new VoteFragment();
-                            ((AppCompatActivity)context).getFragmentManager().beginTransaction().replace(R.id.mainFrame , fragment).commit();
+                    pDialog.dismiss();
 
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        pDialog.dismiss();
-                        Log.d("zma error", String.valueOf(e.getCause()));
-                    }
+                    final  SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(context,SweetAlertDialog.SUCCESS_TYPE);
+                    sweetAlertDialog.setTitleText("Vote");
+                    sweetAlertDialog.setContentText("Your vote has been added");
+                    sweetAlertDialog.setCancelable(true);
+                    sweetAlertDialog.show();
+                    Fragment fragment = new VoteFragment();
+                    ((AppCompatActivity)context).getFragmentManager().beginTransaction().replace(R.id.mainFrame , fragment).commit();
 
 
                 } else {
@@ -232,8 +218,7 @@ public class VoteAdapter extends  RecyclerView.Adapter<VoteAdapter.MyViewHolder>
             @Override
             public void onErrorResponse(VolleyError error) {
                 pDialog.dismiss();
-                //DialogUtils.sweetAlertDialog.dismiss();
-                // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
+
                 Log.d("zma volley error", String.valueOf(error.getCause()));
 
             }
