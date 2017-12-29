@@ -39,6 +39,7 @@ public class NewsDetailsFragment extends Fragment {
     ImageView imageView;
     TextView name,description;
     Typeface typeface;
+    String id ;
     Context context;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,6 +52,10 @@ public class NewsDetailsFragment extends Fragment {
         typeface=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
         name.setTypeface(typeface);
         description.setTypeface(typeface);
+        Bundle bundle = null;
+        bundle = getActivity().getIntent().getExtras();
+        id = getArguments().getString("id");
+        Log.d("id" , id );
         apicall();
         return view;
     }
@@ -61,7 +66,7 @@ public class NewsDetailsFragment extends Fragment {
         pDialog.setTitleText("Loading");
         pDialog.setCancelable(false);
         pDialog.show();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/news/1"
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/newsdetail/"+id
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -69,16 +74,13 @@ public class NewsDetailsFragment extends Fragment {
                 //   DialogUtils.sweetAlertDialog.dismiss();
                 if (response.contains("true")) {
                     try {
-                        JSONObject jsonObject=new JSONObject(response);
-                        JSONArray jsonArr=jsonObject.getJSONArray("user ");
-                        for (int i=0; i<jsonArr.length(); i++)
-                        {
-                            JSONObject temp = jsonArr.getJSONObject(i);
+                        JSONObject temp =new JSONObject(response).getJSONObject("user ");
+
                             name.setText(String.valueOf(temp.getString("title")));
                             description.setText(String.valueOf(temp.getString("description")));
                             Glide.with(getActivity()).load("http://adadigbomma.com/panel/images/"+temp.getString("image")).into(imageView);
                             pDialog.dismiss();
-                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -92,8 +94,7 @@ public class NewsDetailsFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //DialogUtils.sweetAlertDialog.dismiss();
-                // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
+
                 Log.d("error" , String.valueOf(error.getCause()));
 
             }

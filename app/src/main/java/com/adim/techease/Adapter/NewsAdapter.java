@@ -44,7 +44,7 @@ public class NewsAdapter extends RecyclerView.Adapter <NewsAdapter.MyViewHolder>
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final NewsModel nModel=model.get(position);
-        id=String.valueOf(nModel.getNewsid());
+
         holder.textView.setText(nModel.getNewsTitle());
         Glide.with(context).load("http://adadigbomma.com/panel/images/"+nModel.getNewsImage()).into(holder.imageView);
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +52,7 @@ public class NewsAdapter extends RecyclerView.Adapter <NewsAdapter.MyViewHolder>
             public void onClick(View v) {
                 Fragment  fragment = new NewsDetailsFragment();
                 Bundle bundle = new Bundle();
+                id=nModel.getNewsid();
                 bundle.putString("id", id);
                 fragment.setArguments(bundle);
                 ((Activity)context).getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
