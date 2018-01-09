@@ -90,6 +90,7 @@ public class HomeFragment extends Fragment {
                     }
 
                 } else {
+                    pDialog.dismiss();
                     DialogUtils.sweetAlertDialog.dismiss();
                     DialogUtils.showWarningAlertDialog(getActivity(), "Something went wrong");
                 }

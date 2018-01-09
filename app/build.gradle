@@ -66,9 +66,7 @@ android {
 
     }
     apply plugin: 'com.google.gms.google-services'
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-    }
+
 }
 dependencies {
     compile files('libs/YouTubeAndroidPlayerApi.jar')
