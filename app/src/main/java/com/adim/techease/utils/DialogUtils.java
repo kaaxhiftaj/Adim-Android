@@ -1,10 +1,10 @@
 package com.adim.techease.utils;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -13,6 +13,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 
 public class DialogUtils {
+
     public static ProgressDialog progressDialog = null;
     public static SweetAlertDialog sweetAlertDialog = null;
 
@@ -28,16 +29,7 @@ public class DialogUtils {
         builder.create().show();
     }
 
-    public static ProgressDialog showProgressDialog(Context context) {
-        if (progressDialog == null) {
-            ProgressDialog progressDialog1 = new ProgressDialog(context);
-            progressDialog1.setCancelable(false);
-            progressDialog1.setMessage("Please wait...");
-            progressDialog = progressDialog1;
-        }
-        return progressDialog;
 
-    }
 
     public static SweetAlertDialog showProgressSweetDialog(Context context, String message) {
         sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);

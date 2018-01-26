@@ -7,9 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.widget.Toast;
-
-import com.adim.techease.utils.Configuration;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

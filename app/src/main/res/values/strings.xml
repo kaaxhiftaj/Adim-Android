@@ -15,9 +15,8 @@
 
     <string name="title_activity_auth_option_screen">AuthOptionScreen</string>
 
-    <string name="facebook_app_id">356323031474852</string>
-    <string name="fb_login_protocol_scheme">fb356323031474852</string>
-    <string name="api_key">AIzaSyDnTSqXDRyGbksm4xd2HUuwXRKjUHvBygw</string>
+    <string name="facebook_app_id">849129278591731</string>
+    <string name="fb_login_protocol_scheme">fb849129278591731</string>
 
 
 </resources>

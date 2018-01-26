@@ -5,6 +5,20 @@ package com.adim.techease.controllers;
  */
 
 public class NewsModel {
+    private String Newsid;
+    private String NewsDescription;
+    private String NewsImage;
+    private String NewsTitle;
+
+    public String getNewsLink() {
+        return NewsLink;
+    }
+
+    public void setNewsLink(String newsLink) {
+        NewsLink = newsLink;
+    }
+
+    private String NewsLink;
 
     public String getNewsid() {
         return Newsid;
@@ -22,10 +36,7 @@ public class NewsModel {
         NewsDescription = newsDescription;
     }
 
-    private String Newsid;
-    private String NewsDescription;
-    private String NewsImage;
-    private String NewsTitle;
+
 
 
     public String getNewsImage() {

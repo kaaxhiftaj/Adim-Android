@@ -13,18 +13,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adim.techease.R;
 import com.adim.techease.activities.AuthOptionScreen;
-import com.adim.techease.activities.MyFirebaseInstanceIdService;
+import com.adim.techease.utils.Alert_Utils;
 import com.adim.techease.utils.Configuration;
 import com.adim.techease.utils.DialogUtils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -42,19 +42,26 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import belka.us.androidtoggleswitch.widgets.BaseToggleSwitch;
+import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
+
 public class RegistrationFragment extends Fragment {
 
-    Button btnNextSignUp;
+    Button btnNextSignUp,btnSignIn,btnSignUp;
     TextView tv_login ;
     Fragment fragment;
+    LinearLayout linearLayout;
     EditText etUserName, etEmail, etPassword, etConfirmPassword;
     String  strUserName, strDob,  strEmail, strPassword, strConfirmPassword;
     Bundle bundle;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     ImageView ivBackToLogin;
-    Typeface typeface;
+    Typeface typefaceReg,typefaceBold;
     String device_token = "" ;
+    ImageView ivBackArrow;
+
+    android.support.v7.app.AlertDialog alertDialog;
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -76,7 +83,7 @@ public class RegistrationFragment extends Fragment {
         editor = sharedPreferences.edit();
         device_token = sharedPreferences.getString("device_token","");
 
-        ivBackToLogin = (ImageView) view.findViewById(R.id.iv_back_login);
+        ivBackToLogin = (ImageView) view.findViewById(R.id.ivBackArrow);
         ivBackToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,20 +91,53 @@ public class RegistrationFragment extends Fragment {
             }
         });
 
-        typeface = Typeface.createFromAsset(getActivity().getAssets(), "myfont.ttf");
+        typefaceReg = Typeface.createFromAsset(getActivity().getAssets(), "raleway_reg.ttf");
+        typefaceBold = Typeface.createFromAsset(getActivity().getAssets(), "raleway_bold.ttf");
         etUserName = (EditText) view.findViewById(R.id.et_username);
         etEmail = (EditText) view.findViewById(R.id.et_email_signup);
         etPassword = (EditText) view.findViewById(R.id.et_password_signup);
         etConfirmPassword = (EditText) view.findViewById(R.id.et_confirm_password);
         tv_login = (TextView)view.findViewById(R.id.tv_login_here);
         btnNextSignUp = (Button) view.findViewById(R.id.btn_next_signup);
-        etUserName.setTypeface(typeface);
-        etEmail.setTypeface(typeface);
-        etPassword.setTypeface(typeface);
-        etConfirmPassword.setTypeface(typeface);
-        tv_login.setTypeface(typeface);
-        btnNextSignUp.setTypeface(typeface);
 
+//        btnSignIn=(Button)view.findViewById(R.id.btnSignIn);
+//        btnSignUp=(Button)view.findViewById(R.id.btnSignUp);
+        linearLayout=(LinearLayout)view.findViewById(R.id.parentLayout);
+        ivBackArrow=(ImageView)view.findViewById(R.id.ivBackArrow);
+
+        etUserName.setTypeface(typefaceReg);
+        etEmail.setTypeface(typefaceReg);
+        etPassword.setTypeface(typefaceReg);
+        etConfirmPassword.setTypeface(typefaceReg);
+        tv_login.setTypeface(typefaceReg);
+        btnNextSignUp.setTypeface(typefaceBold);
+
+        ToggleSwitch toggleSwitch=(ToggleSwitch)view.findViewById(R.id.toglebtn);
+
+        toggleSwitch.setOnToggleSwitchChangeListener(new BaseToggleSwitch.OnToggleSwitchChangeListener() {
+            @Override
+            public void onToggleSwitchChangeListener(int position, boolean isChecked) {
+
+                if (position==0)
+                {
+                    Fragment fragment=new RegistrationFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack("abc").commit();
+                }
+                else if (position==1)
+                {
+                    Fragment fragment=new LoginFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack("abc").commit();
+                }
+            }
+        });
+
+        ivBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),AuthOptionScreen.class));
+                getActivity().finish();
+            }
+        });
 
         btnNextSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +173,12 @@ public class RegistrationFragment extends Fragment {
             etConfirmPassword.setError("Password doesn't match");
         } else {
             Log.d("zma data", strUserName+"\n"+strEmail+"\n"+strPassword+"\n"+strConfirmPassword);
-            DialogUtils.showProgressSweetDialog(getActivity(), "Getting registered");
+          //  DialogUtils.showProgressSweetDialog(getActivity(), "Getting registered");
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
             apiCall();
 
 
@@ -147,7 +192,9 @@ public class RegistrationFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 Log.d("zma  reg response", response);
-                DialogUtils.sweetAlertDialog.dismiss();
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
+               // DialogUtils.sweetAlertDialog.dismiss();
                 if (response.contains("true")) {
 
                     try {
@@ -178,6 +225,8 @@ public class RegistrationFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
                 DialogUtils.sweetAlertDialog.dismiss();
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     DialogUtils.showWarningAlertDialog(getActivity(), "Network Error");

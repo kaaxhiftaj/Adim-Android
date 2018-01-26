@@ -1,7 +1,5 @@
 package com.adim.techease.fragments;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,14 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.adim.techease.Adapter.VideoAdapter;
 import com.adim.techease.R;
-import com.adim.techease.activities.AuthOptionScreen;
 import com.adim.techease.controllers.VideoModel;
+import com.adim.techease.utils.Alert_Utils;
 import com.adim.techease.utils.Configuration;
-import com.adim.techease.utils.DialogUtils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -47,40 +43,26 @@ public  class FragmentTab3Videos extends Fragment{
     List<VideoModel> videoModels;
     VideoAdapter videoAdapter;
     String getId;
-    Button btnShare;
-    Typeface typeface;
+    Typeface typefaceBold;
     String GetId;
     SweetAlertDialog pDialog;
+    android.support.v7.app.AlertDialog alertDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_fragment_tab3_videos, container, false);
-        btnShare=(Button)v.findViewById(R.id.btnShareVideo);
         GetId=getArguments().getString("id");
-        typeface=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
-        btnShare.setTypeface(typeface);
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Adim");
-                    String sAux = "\nLet me recommend you this application\n\n";
-                    sAux = sAux + "https://play.google.com/store/apps/details?id=com.adim.techease \n\n";
-                    intent.putExtra(Intent.EXTRA_TEXT, sAux);
-                    startActivity(Intent.createChooser(intent, "choose one"));
-                } catch(Exception e) {
-                    //e.toString();
-                }
-            }
-        });
-
+        typefaceBold=Typeface.createFromAsset(getActivity().getAssets(),"raleway_bold.ttf");
         recyclerView=(RecyclerView)v.findViewById(R.id.rvVideos);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         getId=getArguments().getString("id");
         videoModels=new ArrayList<>();
+        if (alertDialog==null)
+        {
+            alertDialog= Alert_Utils.createProgressDialog(getActivity());
+            alertDialog.show();
+        }
         apicall();
         videoAdapter=new VideoAdapter(getActivity(),videoModels);
         recyclerView.setAdapter(videoAdapter);
@@ -88,11 +70,11 @@ public  class FragmentTab3Videos extends Fragment{
     }
 
     private void apicall() {
-       pDialog  = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
-        pDialog.show();
+//       pDialog  = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
+//        pDialog.setTitleText("Loading");
+//        pDialog.setCancelable(false);
+//        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/getvideos/"+GetId
                 , new Response.Listener<String>() {
             @Override
@@ -111,25 +93,32 @@ public  class FragmentTab3Videos extends Fragment{
                             videoModel.setLink(temp.getString("link"));
                             videoModel.setId(temp.getString("id"));
                             videoModels.add(videoModel);
-                            pDialog.dismiss();
+                            if (alertDialog!=null)
+                                alertDialog.dismiss();
+                           // pDialog.dismiss();
                         }
                         videoAdapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        pDialog.dismiss();
+                        if (alertDialog!=null)
+                            alertDialog.dismiss();
+                        //pDialog.dismiss();
                     }
 
 
                 } else {
-                    pDialog.dismiss();
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
+                  //  pDialog.dismiss();
                 }
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
                 Log.d("error" , String.valueOf(error.getCause()));
 
             }
@@ -153,13 +142,7 @@ public  class FragmentTab3Videos extends Fragment{
         mRequestQueue.add(stringRequest);
     }
 
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//       FragmentTab3Videos fragmentTab3Videos=new FragmentTab3Videos();
-//        getFragmentManager().beginTransaction().replace(R.id.mainFrame,fragmentTab3Videos).commit();
-//
-//    }
+
 }
 
 

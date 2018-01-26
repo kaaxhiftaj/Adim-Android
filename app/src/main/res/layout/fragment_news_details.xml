@@ -2,9 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="#fff"
+
     tools:context="com.adim.techease.fragments.NewsDetailsFragment">
-<ScrollView
+    <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -18,27 +21,40 @@
             android:layout_width="match_parent"
             android:layout_height="200sp"
             android:id="@+id/ivNewsDetails"
+            android:background="#eee"
             android:scaleType="fitXY"
             />
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50sp"
             android:id="@+id/tvImageItitleNewsDetials"
-            android:text="Adam noor"
             android:textSize="20sp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:layout_gravity="center"
             android:gravity="center"
-            android:background="#88FFFFFF"
-            android:textColor="#000"/>
+            android:background="@color/transparent_white_hex_33"
+            android:textColor="#fff"/>
 
     </FrameLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="30sp"
+            android:text="Share"
+            android:drawablePadding="10sp"
+            android:textColor="@color/btnColor"
+            android:textAlignment="center"
+            android:id="@+id/btnShareNews"
+            android:layout_gravity="right"
+            android:background="@drawable/btnripple"/>
+
 <TextView
     android:id="@+id/tvNewsDetailsDescription"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10sp"
     android:text="Description"
-    android:padding="15sp"/>
+    android:padding="10sp"/>
     </LinearLayout>
     </ScrollView>
 </LinearLayout>

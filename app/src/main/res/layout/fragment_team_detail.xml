@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.adim.techease.fragments.TeamDetailFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200sp"
+        android:scaleType="fitXY"
+        android:id="@+id/ivPersonImage"/>
+
+        <TextView
+            android:id="@+id/tvPersonName"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:background="@drawable/ribbon_large"
+            android:text="Name"
+            android:textColor="#fff"
+            android:layout_gravity="bottom"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:paddingTop="10sp"/>
+    </FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3sp"
+        android:background="@color/transparent_black_hex_33"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Designation"
+    android:textSize="17sp"
+    android:id="@+id/tvDesignationTitle"
+    android:textColor="#7db3d2"
+    android:padding="5sp"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is test"
+        android:layout_marginLeft="100sp"
+        android:id="@+id/tvPersonDesig"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textColor="#7db3d2"
+        android:textSize="17sp"
+        android:id="@+id/tvDescriptionTitle"
+        android:padding="5sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100sp"
+        android:text="This is test"
+        android:id="@+id/tvPersonDes"/>
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

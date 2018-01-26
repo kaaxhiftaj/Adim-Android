@@ -5,15 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 
 import com.adim.techease.R;
+import com.adim.techease.utils.Alert_Utils;
 import com.adim.techease.utils.Configuration;
 import com.adim.techease.utils.DialogUtils;
 import com.android.volley.AuthFailureError;
@@ -30,18 +30,11 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.TwitterSession;
-import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,27 +46,28 @@ import java.util.Map;
 
 public class AuthOptionScreen extends AppCompatActivity {
 
-    TextView guest;
-    Typeface typeface;
-    ImageButton email_button;
-   // TwitterLoginButton twitter_button;
+    Button guest;
+    Typeface typefaceReg,typefaceBold;
+    Button email_button;
     LoginButton fb_button;
     CallbackManager callbackManager;
-    ProfileTracker profileTracker;
     String fullname , email ,  provider, provider_id;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor ;
     String strApiToken;
-    Bundle NameEmailBundle;
-
+    Button Facebookbtn;
+    android.support.v7.app.AlertDialog alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_auth_option_screen);
         sharedPreferences = this.getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        typeface=Typeface.createFromAsset(getAssets(),"myfont.ttf");
+        Facebookbtn=(Button)findViewById(R.id.fbBtn);
+        typefaceReg = Typeface.createFromAsset(this.getAssets(), "raleway_reg.ttf");
+        typefaceBold = Typeface.createFromAsset(this.getAssets(), "raleway_bold.ttf");
 
         //get sharedprefs for checking
         String prefs= sharedPreferences.getString("api_token","");
@@ -90,12 +84,64 @@ public class AuthOptionScreen extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
 
-        guest = (TextView) findViewById(R.id.guest);
-        guest.setTypeface(typeface);
+        guest = (Button) findViewById(R.id.guest);
+        guest.setTypeface(typefaceBold);
         fb_button = (LoginButton) findViewById(R.id.login_button);
+        email_button = (Button) findViewById(R.id.email_button);
 
-       // twitter_button = (TwitterLoginButton) findViewById(R.id.twitter_button);
-        email_button = (ImageButton) findViewById(R.id.email_button);
+        Facebookbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fb_button.performClick();
+                fb_button.setReadPermissions("email");
+
+                // Other app specific specialization
+
+                // Callback registration
+                fb_button.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(final LoginResult loginResult) {
+                        // App code
+
+                        String accessToken = loginResult.getAccessToken().getToken();
+                        provider_id = accessToken ;
+
+                        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                Log.i("LoginActivity", response.toString());
+                                // Get facebook data from login
+                                Bundle bFacebookData = getFacebookData(object);
+                                apiCall();
+
+
+                            }
+                        });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location"); // Parámetros que pedimos a facebook
+                        request.setParameters(parameters);
+
+                        request.executeAsync();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        System.out.println("onCancel");
+                    }
+
+                    @Override
+                    public void onError(FacebookException e) {
+
+                    }
+
+
+
+                });
+
+
+            }
+        });
 
         fb_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +201,7 @@ public class AuthOptionScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(AuthOptionScreen.this, FullscreenActivity.class));
+                finish();
             }
         });
 
@@ -164,8 +211,14 @@ public class AuthOptionScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                if (alertDialog==null)
+                {
+                    alertDialog= Alert_Utils.createProgressDialog(AuthOptionScreen.this);
+                    alertDialog.show();
+                }
                 startActivity(new Intent(AuthOptionScreen.this, MainActivity.class));
-
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
             }
         });
     }
@@ -192,7 +245,6 @@ public class AuthOptionScreen extends AppCompatActivity {
                         JSONObject jsonArray = jsonObject.getJSONObject("user");
                              strApiToken = jsonArray.getString("token_id");
                            String user_id = jsonArray.getString("token_id");
-                            Toast.makeText(AuthOptionScreen.this, strApiToken, Toast.LENGTH_SHORT).show();
                             editor.putString("api_token", strApiToken).commit();
                         editor.putString("user_Id", user_id).commit();
 

@@ -1,14 +1,9 @@
 package com.adim.techease.Adapter;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.adim.techease.R;
 import com.adim.techease.activities.AuthOptionScreen;
@@ -36,12 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.facebook.share.ShareApi;
-import com.facebook.share.model.ShareContent;
-import com.facebook.share.model.SharePhoto;
-import com.facebook.share.model.SharePhotoContent;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,10 +39,6 @@ import java.util.List;
 import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-
-import static com.thefinestartist.utils.content.ContextUtil.createPackageContext;
-import static com.thefinestartist.utils.content.ContextUtil.getResources;
-import static com.thefinestartist.utils.content.ContextUtil.startActivity;
 
 /**
  * Created by kaxhiftaj on 10/22/17.
@@ -90,22 +75,22 @@ public class VoteAdapter extends  RecyclerView.Adapter<VoteAdapter.MyViewHolder>
         Glide.with(context).load("http://adadigbomma.com/panel/images/gallery/" + model.getImage()).into(holder.imageVote);
         holder.imageVote.getDrawable();
         holder.textviewTitle.setText(model.getTitle());
-        holder.textviewVotes.setText(model.getVote()+"votes");
-        holder.btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Adim");
-                    String sAuxLink = "I have voted for " + model.getTitle() + ". Vote for your favourite one here. https://play.google.com/store/apps/details?id=com.adim.techease";
-                    intent.putExtra(Intent.EXTRA_TEXT, sAuxLink);
-                    context.startActivity(Intent.createChooser(intent, "choose one"));
-                } catch(Exception e) {
-                    //e.toString();
-                }
-            }
-        });
+        holder.textviewVotes.setText(model.getVote()+" Votes");
+//        holder.btnShare.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try {
+//                    Intent intent = new Intent(Intent.ACTION_SEND);
+//                    intent.setType("text/plain");
+//                    intent.putExtra(Intent.EXTRA_SUBJECT, "Adim");
+//                    String sAuxLink = "I have voted for " + model.getTitle() + ". Vote for your favourite one here. https://play.google.com/store/apps/details?id=com.adim.techease";
+//                    intent.putExtra(Intent.EXTRA_TEXT, sAuxLink);
+//                    context.startActivity(Intent.createChooser(intent, "choose one"));
+//                } catch(Exception e) {
+//                    //e.toString();
+//                }
+//            }
+//        });
 
         holder.btnVote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,24 +134,25 @@ public class VoteAdapter extends  RecyclerView.Adapter<VoteAdapter.MyViewHolder>
     public class MyViewHolder extends RecyclerView.ViewHolder  {
         ImageView imageVote;
         TextView textviewTitle;
-        Button  textviewVotes;
+        TextView  textviewVotes;
         LinearLayout linearLayout;
         Button btnVote, btnShare;
-        Typeface typeface;
+        Typeface typefaceBold,typefaceReg;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            typeface = Typeface.createFromAsset(context.getAssets(), "myfont.ttf");
+            typefaceReg = Typeface.createFromAsset(context.getAssets(), "raleway_reg.ttf");
+            typefaceBold = Typeface.createFromAsset(context.getAssets(), "raleway_bold.ttf");
             imageVote = (ImageView) itemView.findViewById(R.id.ivVote);
             textviewTitle = (TextView) itemView.findViewById(R.id.tvVoteImageTitle);
-            textviewVotes = (Button) itemView.findViewById(R.id.tvVote);
+            textviewVotes = (TextView) itemView.findViewById(R.id.tvVote);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.llVote);
             btnVote = (Button) itemView.findViewById(R.id.btnVote);
-            textviewVotes.setTypeface(typeface);
-            textviewTitle.setTypeface(typeface);
-            btnVote.setTypeface(typeface);
-            btnShare = (Button) itemView.findViewById(R.id.btnShare);
-            btnShare.setTypeface(typeface);
+            textviewVotes.setTypeface(typefaceReg);
+            textviewTitle.setTypeface(typefaceBold);
+            btnVote.setTypeface(typefaceBold);
+//            btnShare = (Button) itemView.findViewById(R.id.btnShare);
+//            btnShare.setTypeface(typeface);
 
         }
 

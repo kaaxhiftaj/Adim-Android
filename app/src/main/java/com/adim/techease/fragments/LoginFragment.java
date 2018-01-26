@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.adim.techease.R;
+import com.adim.techease.activities.AuthOptionScreen;
 import com.adim.techease.activities.MainActivity;
+import com.adim.techease.utils.Alert_Utils;
 import com.adim.techease.utils.Configuration;
 import com.adim.techease.utils.DialogUtils;
 import com.android.volley.AuthFailureError;
@@ -40,7 +41,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
+import belka.us.androidtoggleswitch.widgets.BaseToggleSwitch;
+import belka.us.androidtoggleswitch.widgets.ToggleSwitch;
 
 
 public class LoginFragment extends Fragment {
@@ -53,8 +55,9 @@ public class LoginFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     ImageView ivBackToLogin;
-    Typeface typeface;
-
+    Typeface typefaceReg,typefaceBold;
+    ImageView ivBackArrow;
+    android.support.v7.app.AlertDialog alertDialog;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -82,15 +85,18 @@ public class LoginFragment extends Fragment {
         etPassword = (EditText) view.findViewById(R.id.et_password_login);
         tvForgetPassword = (TextView) view.findViewById(R.id.tv_forget_password);
         btnLogin = (Button) view.findViewById(R.id.btn_login);
-        typeface = Typeface.createFromAsset(getActivity().getAssets(), "myfont.ttf");
-        etEmail.setTypeface(typeface);
-        etPassword.setTypeface(typeface);
-        tvForgetPassword.setTypeface(typeface);
-        btnLogin.setTypeface(typeface);
+        typefaceReg = Typeface.createFromAsset(getActivity().getAssets(), "raleway_reg.ttf");
+        typefaceBold = Typeface.createFromAsset(getActivity().getAssets(), "raleway_bold.ttf");
+        ivBackArrow=(ImageView)view.findViewById(R.id.ivBackArrowSignIn);
 
 
+        etEmail.setTypeface(typefaceReg);
+        etPassword.setTypeface(typefaceReg);
+        tvForgetPassword.setTypeface(typefaceReg);
+        btnLogin.setTypeface(typefaceBold);
 
         tvRegisterHere = (TextView) view.findViewById(R.id.tv_register_here);
+        tvRegisterHere.setTypeface(typefaceReg);
         tvRegisterHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,6 +110,33 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 fragment = new EmailVerificationFragment();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            }
+        });
+
+        ivBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),AuthOptionScreen.class));
+                getActivity().finish();
+            }
+        });
+
+        ToggleSwitch toggleSwitch=(ToggleSwitch)view.findViewById(R.id.toglebtnLoginFrag);
+
+        toggleSwitch.setOnToggleSwitchChangeListener(new BaseToggleSwitch.OnToggleSwitchChangeListener() {
+            @Override
+            public void onToggleSwitchChangeListener(int position, boolean isChecked) {
+
+                if (position==0)
+                {
+                    Fragment fragment=new RegistrationFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack("abc").commit();
+                }
+                else if (position==1)
+                {
+                    Fragment fragment=new LoginFragment();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack("abc").commit();
+                }
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -123,23 +156,28 @@ public class LoginFragment extends Fragment {
         } else if (strPassword.equals("")) {
             etPassword.setError("Please enter your password");
         } else {
-            DialogUtils.showProgressSweetDialog(getActivity(), "Getting Login");
+           // DialogUtils.showProgressSweetDialog(getActivity(), "Getting Login");
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
             apiCall();
         }
     }
 
     public void apiCall() {
-        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
-        pDialog.show();
+//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
+//        pDialog.setTitleText("Loading");
+//        pDialog.setCancelable(false);
+//        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL + "Signup/login"
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("zma log ", response);
-                DialogUtils.sweetAlertDialog.dismiss();
+             //   DialogUtils.sweetAlertDialog.dismiss();
 
                 if (response.contains("true")) {
                     try {
@@ -154,12 +192,16 @@ public class LoginFragment extends Fragment {
                         editor.putString("fullname" , fullname);
                         editor.putString("email" , email);
                         editor.commit();
+                        if (alertDialog!=null)
+                            alertDialog.dismiss();
                         Log.d("zma user id", Logged_In_User_Id);
                         startActivity(new Intent(getActivity(), MainActivity.class));
                         getActivity().finish();
 
 
                     } catch (JSONException e) {
+                        if (alertDialog!=null)
+                            alertDialog.dismiss();
                         e.printStackTrace();
                         Log.d("error", String.valueOf(e.getMessage()));
                     }
@@ -168,8 +210,10 @@ public class LoginFragment extends Fragment {
 
 
                 } else {
-                    pDialog.dismiss();
-                    DialogUtils.sweetAlertDialog.dismiss();
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
+                  //  pDialog.dismiss();
+                    //DialogUtils.sweetAlertDialog.dismiss();
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         String message = jsonObject.getString("message");
@@ -184,6 +228,8 @@ public class LoginFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
                 DialogUtils.sweetAlertDialog.dismiss();
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     DialogUtils.showWarningAlertDialog(getActivity(), "Network Error");

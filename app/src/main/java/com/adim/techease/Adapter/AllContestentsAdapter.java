@@ -6,10 +6,10 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,79 +19,82 @@ import com.adim.techease.controllers.Contestents;
 import com.adim.techease.fragments.BioContestent;
 import com.bumptech.glide.Glide;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by kaxhiftaj on 4/3/17.
  */
 
-public class AllContestentsAdapter extends RecyclerView.Adapter<AllContestentsAdapter.MyViewHolder> {
+public class AllContestentsAdapter extends BaseAdapter{
 
+    ArrayList<Contestents> contestents;
+    Context context;
+    private LayoutInflater layoutInflater;
 
-    private List<Contestents> contestents;
-    private Context context;
-    public AllContestentsAdapter(Context context, List<Contestents> contestents) {
-
-        this.context = context;
-        this.contestents = contestents;
-
+    public AllContestentsAdapter(Context context,ArrayList<Contestents> contestents)
+    {
+        this.context=context;
+        this.contestents=contestents;
+        this.layoutInflater=LayoutInflater.from(context);
     }
 
     @Override
-    public AllContestentsAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getCount() {
+        if (contestents!=null) return contestents.size();
 
-        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_contestents, parent, false);
-
-        return new MyViewHolder(rootView);
+        return 0;
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final Contestents contest = contestents.get(position);
-        //Pass the values of feeds object to Views
-        holder.contestentname.setText(contest.getContestentName());
-        Glide.with(context).load("http://adadigbomma.com/panel/images/contestant/"+contest.getContestentImage()).into(holder.contestentImage);
-        holder.llItemView.setOnClickListener(new View.OnClickListener() {
+    public Object getItem(int i) {
+        if(contestents != null && contestents.size() > i) return  contestents.get(i);
+        return null;
+    }
+
+    @Override
+    public long getItemId(int i) {
+        final Contestents model=contestents.get(i);
+        if(contestents != null && contestents.size() > i) return  contestents.size();
+        return 0;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        final Contestents model=contestents.get(i);
+        MyViewHolder viewHolder = null;
+        viewHolder=new MyViewHolder() ;
+        view=layoutInflater.inflate(R.layout.custom_contestents,viewGroup,false);
+        viewHolder.typefaceBold = Typeface.createFromAsset(context.getAssets(), "raleway_bold.ttf");
+        viewHolder.contestentname = (TextView) view.findViewById(R.id.contestentName);
+        viewHolder.contestentname.setTypeface(viewHolder.typefaceBold);
+        viewHolder.contestentImage = (de.hdodenhof.circleimageview.CircleImageView) view.findViewById(R.id.contestentImage);
+        viewHolder.llItemView = (LinearLayout)view.findViewById(R.id.ll_main_item);
+
+        viewHolder.contestentname.setText(model.getContestentName());
+        Glide.with(context).load("http://adadigbomma.com/panel/images/contestant/"+model.getContestentImage()).into(viewHolder.contestentImage);
+        viewHolder.llItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                    String id=contest.getContestentId().toString();
-                    Fragment fragment = new BioContestent();
-                    Bundle bundle=new Bundle();
-                    bundle.putString("id",id);
-                    fragment.setArguments(bundle);
-                    Activity activity = (MainActivity) context;
-                    activity.getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("").commit();
-
-
+                String id=model.getContestentId().toString();
+                Fragment fragment = new BioContestent();
+                Bundle bundle=new Bundle();
+                bundle.putString("id",id);
+                fragment.setArguments(bundle);
+                Activity activity = (MainActivity) context;
+                activity.getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("abc").commit();
             }
         });
-
+        view.setTag(viewHolder);
+        return view;
     }
 
-
-    @Override
-    public int getItemCount() {
-        return contestents.size();
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    private class MyViewHolder  {
 
         private TextView contestentname;
         private  de.hdodenhof.circleimageview.CircleImageView contestentImage;
         LinearLayout llItemView;
-        Typeface typeface;
+        Typeface typefaceBold;
 
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            typeface = Typeface.createFromAsset(context.getAssets(), "myfont.ttf");
-            contestentname = (TextView) itemView.findViewById(R.id.contestentName);
-            contestentname.setTypeface(typeface);
-            contestentImage = (de.hdodenhof.circleimageview.CircleImageView) itemView.findViewById(R.id.contestentImage);
-            llItemView = (LinearLayout)itemView.findViewById(R.id.ll_main_item);
-
-
-        }
     }
 
 

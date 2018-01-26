@@ -17,7 +17,7 @@
         android:textSize="17sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:textColor="@color/colorPrimary"
+        android:textColor="#7db3d2"
         android:layout_marginTop="5sp"
        android:layout_gravity="center"
         />
@@ -40,7 +40,7 @@ day of the contest."
             android:textSize="15sp"
             android:gravity="center"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#7db3d2"
             android:layout_margin="5sp"
             android:layout_gravity="center"
             />

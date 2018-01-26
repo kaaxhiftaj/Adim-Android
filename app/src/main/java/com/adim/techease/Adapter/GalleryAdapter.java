@@ -1,15 +1,15 @@
 package com.adim.techease.Adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -25,61 +25,118 @@ import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Adam Noor on 19-Oct-17.
  */
 
-public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHolder> {
+public class GalleryAdapter extends BaseAdapter{
 
-    private List<Gallery> galleryModels;
+    private ArrayList<Gallery> galleryModels;
     private Context context;
-    String test;
-    public static final String Key="AIzaSyDnTSqXDRyGbksm4xd2HUuwXRKjUHvBygw";
-    public static final String[] PlaylistI={"BrkB3NJSO78"};
+    public static final String Key="AIzaSyCbuAooOEnFlWE3JFINgbktSq3Qw9PA8R4";
     public static String id;
+    private LayoutInflater layoutInflater;
+   MyViewHolder viewHolder = null;
+     Typeface typefaceBold;
+    android.support.v7.app.AlertDialog alertDialog;
 
-    public GalleryAdapter(Context context,List<Gallery> models)
+    public GalleryAdapter(Context context,ArrayList<Gallery> models)
     {
         this.context=context;
         this.galleryModels=models;
-    }
-
-
-    @Override
-    public GalleryAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.customitem, parent, false);
-        return new MyViewHolder(rootView);
+        if (context!=null)
+        {
+            this.layoutInflater=LayoutInflater.from(context);
+        }
     }
 
     @Override
-    public void onBindViewHolder(final GalleryAdapter.MyViewHolder holder, final int position) {
+    public int getCount() {
+        if (galleryModels!=null) return galleryModels.size();
+        return 0;
+    }
 
-        final Gallery model = galleryModels.get(position);
+    @Override
+    public Object getItem(int i) {
+        if(galleryModels != null && galleryModels.size() > i) return  galleryModels.get(i);
+        return null;
+    }
+
+    @Override
+    public long getItemId(int i) {
+        final Gallery model=galleryModels.get(i);
+        if(galleryModels != null && galleryModels.size() > i) return  galleryModels.size();
+        return 0;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+       final Gallery model=galleryModels.get(i);
+        viewHolder=new MyViewHolder() ;
+        view=layoutInflater.inflate(R.layout.customitem,viewGroup,false);
+        viewHolder.typeface = Typeface.createFromAsset(context.getAssets(), "raleway_bold.ttf");
+        viewHolder.imageView = (ImageView) view.findViewById(R.id.iv_photo);
+        viewHolder.textViewTitle = (TextView) view.findViewById(R.id.tvTitle);
+        viewHolder.textViewTitle.setTypeface(viewHolder.typeface);
+        viewHolder.frameLayout=(FrameLayout)view.findViewById(R.id.Frame);
+        viewHolder.btnPlay = (ImageView) view.findViewById(R.id.btnPlay);
+        viewHolder.youtubeTview = (YouTubeThumbnailView) view.findViewById(R.id.youtubeGallery);
+        viewHolder.RLoverThumbView = (RelativeLayout) view.findViewById(R.id.Rlover);
+
         if (model.getType().equals("image")) {
-            id=model.getId();
-            holder.imageView.setVisibility(View.VISIBLE);
-            holder.RLoverThumbView.setVisibility(View.GONE);
-            holder.btnPlay.setVisibility(View.GONE);
-            holder.frameLayout.setVisibility(View.GONE);
-            holder.youtubeTview.setVisibility(View.GONE);
-            Glide.with(context).load("http://adadigbomma.com/panel/images/gallery/"+ model.getLink()).into(holder.imageView);
-            holder.textViewTitle.setText(model.getTitle());
+            viewHolder.imageView.setVisibility(View.VISIBLE);
+            viewHolder.RLoverThumbView.setVisibility(View.GONE);
+            viewHolder.btnPlay.setVisibility(View.GONE);
+            viewHolder.frameLayout.setVisibility(View.GONE);
+            viewHolder.youtubeTview.setVisibility(View.GONE);
+            Glide.with(context).load("http://adadigbomma.com/panel/images/gallery/"+ model.getLink()).into(viewHolder.imageView);
+            viewHolder.textViewTitle.setText(model.getTitle());
 
-        } else {
-            id=model.getId();
-            Log.d("zma getId",String.valueOf(model.getId()));
+
+            viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Dialog dialog = new Dialog(context);
+                    dialog.setContentView(R.layout.custom_zoom_image);
+                    dialog.setCancelable(true);
+                    typefaceBold=Typeface.createFromAsset(context.getAssets(),"raleway_bold.ttf");
+                    ImageView img = (ImageView) dialog.findViewById(R.id.ivZoomImage);
+                    Glide.with(context).load("http://adadigbomma.com/panel/images/gallery/"+model.getLink()).into(img);
+                    dialog.show();
+                   // CallBigSizeImage();
+                }
+            });
+            viewHolder.textViewTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Dialog dialog = new Dialog(context);
+                    dialog.setContentView(R.layout.custom_zoom_image);
+                    dialog.setCancelable(true);
+                    typefaceBold=Typeface.createFromAsset(context.getAssets(),"raleway_bold.ttf");
+                    ImageView img = (ImageView) dialog.findViewById(R.id.ivZoomImage);
+                    Glide.with(context).load("http://adadigbomma.com/panel/images/gallery/"+model.getLink()).into(img);
+                    dialog.show();
+                   // CallBigSizeImage();
+                }
+            });
+            if (alertDialog!=null)
+                alertDialog.dismiss();
+        }
+        else
+        {
             final YouTubeThumbnailLoader.OnThumbnailLoadedListener onThumbnailLoadedListener= new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
                 @Override
                 public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
-                    holder.frameLayout.setVisibility(View.VISIBLE);
+                    viewHolder.frameLayout.setVisibility(View.VISIBLE);
                     youTubeThumbnailView.setVisibility(View.VISIBLE);
-                    holder.imageView.setVisibility(View.GONE);
-                    holder.RLoverThumbView.setVisibility(View.VISIBLE);
-                    holder.btnPlay.setVisibility(View.VISIBLE);
-                    holder.textViewTitle.setText(model.getTitle());
+                    viewHolder.imageView.setVisibility(View.GONE);
+                    viewHolder.textViewTitle.setText(model.getTitle());
+                    viewHolder.RLoverThumbView.setVisibility(View.VISIBLE);
+                    viewHolder.btnPlay.setVisibility(View.VISIBLE);
+
 
                 }
 
@@ -88,12 +145,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
 
                 }
             };
-            holder.youtubeTview.initialize(Key, new YouTubeThumbnailView.OnInitializedListener() {
+            viewHolder.youtubeTview.initialize(Key, new YouTubeThumbnailView.OnInitializedListener() {
                 @Override
                 public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
-                   // Toast.makeText(context, String.valueOf(model.getThumbnail()), Toast.LENGTH_SHORT).show();
-                    youTubeThumbnailLoader.setVideo(id);
+                    youTubeThumbnailLoader.setVideo(model.getId());
                     youTubeThumbnailLoader.setOnThumbnailLoadedListener(onThumbnailLoadedListener);
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
                 }
 
                 @Override
@@ -101,13 +159,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
                 }
             });
 
-            holder.btnPlay.setOnClickListener(new View.OnClickListener() {
+            viewHolder.btnPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     if(YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS)){
                         //This means that your device has the Youtube API Service (the app) and you are safe to launch it.
-                        Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, Key, id );
+                        Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, Key, model.getId() );
                         context.startActivity(intent);
 
                     }else{
@@ -121,13 +179,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
             });
 
         }
-    }
-    @Override
-    public int getItemCount() {
-        return galleryModels.size();
+        view.setTag(viewHolder);
+        return view;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+
+    public class MyViewHolder {
 
         FrameLayout frameLayout;
         ImageView imageView;
@@ -136,18 +193,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHo
         YouTubeThumbnailView youtubeTview;
         protected ImageView btnPlay;
         Typeface typeface;
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            typeface=Typeface.createFromAsset(context.getAssets(),"myfont.ttf");
-            imageView = (ImageView) itemView.findViewById(R.id.iv_photo);
-            textViewTitle = (TextView) itemView.findViewById(R.id.tvTitle);
-            textViewTitle.setTypeface(typeface);
-            frameLayout=(FrameLayout)itemView.findViewById(R.id.Frame);
-            btnPlay = (ImageView) itemView.findViewById(R.id.btnPlay);
-            youtubeTview = (YouTubeThumbnailView) itemView.findViewById(R.id.youtubeGallery);
-            RLoverThumbView = (RelativeLayout) itemView.findViewById(R.id.Rlover);
 
-        }
 
     }
+
 }

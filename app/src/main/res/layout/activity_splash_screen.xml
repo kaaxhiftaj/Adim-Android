@@ -1,15 +1,50 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_app_bg"
+    android:orientation="vertical"
     tools:context="com.adim.techease.activities.SplashScreen">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="270dp"
-        android:layout_gravity="center"
-        android:foregroundGravity="center"
-        android:src="@drawable/splash_icon" />
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="fitXY"
+    android:src="@drawable/splash"
+    android:id="@+id/ivSplash"
+    />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/ivWifi"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_above="@+id/tvNoInternet"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_marginBottom="46dp"
+        android:src="@drawable/global" />
+
+    <TextView
+        android:id="@+id/tvNoInternet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="Opps your device is not connected with internet"
+        android:textColor="#fff"
+        android:textSize="17sp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btnTryAgain"
+        android:visibility="gone"
+        android:layout_marginBottom="100dp"
+        android:textColor="@color/colorPrimary"
+        android:background="#fff"
+        android:text="Try Again" />
+
+</RelativeLayout>

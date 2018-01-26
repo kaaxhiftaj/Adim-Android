@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.adim.techease">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,26 +15,44 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".activities.FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme" />
+
+
         <activity
             android:name=".activities.MainActivity"
+            android:launchMode="singleTask"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="yoursite.example.com" android:scheme="http"/>
+                <data android:host="yoursite.example.com" android:scheme="https"/>
+            </intent-filter>
+
+
+        </activity>
+
         <activity
             android:name=".activities.SplashScreen"
-            android:roundIcon="@drawable/main_app_logo"
-            android:icon="@drawable/main_app_logo"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:icon="@drawable/main_app_logo"
+            android:roundIcon="@drawable/main_app_logo"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
         <activity
             android:name=".activities.AuthOptionScreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -43,16 +62,15 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <provider android:authorities="com.facebook.app.FacebookContentProvider356323031474852"
+        <provider
             android:name="com.facebook.FacebookContentProvider"
-            android:exported="true"/>
+            android:authorities="com.facebook.app.FacebookContentProvider356323031474852"
+            android:exported="true" />
 
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            />
-
+            android:label="@string/app_name" />
         <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity" />
 
         <service android:name=".activities.MyFirebaseInstanceIdService">
@@ -60,6 +78,15 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
+        <activity android:name=".activities.NewsDetailsActivity" />
+        <activity android:name=".activities.WebviewActivity"></activity>
+
+        <activity
+            android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="sensor"
+            android:theme="@style/FinestWebViewTheme.Light" />
 
     </application>
 

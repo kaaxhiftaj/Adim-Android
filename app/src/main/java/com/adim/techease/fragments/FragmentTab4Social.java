@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 
 import com.adim.techease.R;
 import com.adim.techease.utils.Configuration;
-import com.adim.techease.utils.DialogUtils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;

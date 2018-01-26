@@ -1,27 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:id="@+id/LinearNews"
-    android:layout_margin="5sp"
     android:layout_height="wrap_content">
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/frameLayout"
+        >
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="250sp"
-        android:src="@drawable/main_app_logo"
+        android:layout_height="200sp"
         android:scaleType="fitXY"
+        android:background="#eee"
         android:id="@+id/ivCustomNews"/>
+        <ImageView
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:src="@drawable/global"
+            android:layout_gravity="right"
+            android:layout_margin="10sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="News"
+            android:textColor="@color/colorDark"
+            android:textSize="15sp"
+            android:layout_gravity="center|left"
+            android:layout_marginTop="25sp"
+            android:layout_marginLeft="10sp"/>
     <TextView
         android:id="@+id/customNewsTitle"
         android:layout_width="match_parent"
-        android:layout_height="45sp"
-        android:text="Title"
-        android:background="#000"
-        android:textSize="17sp"
+        android:layout_height="40sp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:background="@color/transparent_black_hex_22"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="15sp"
         android:textColor="#fff"
-        android:gravity="center"
-        />
-
+        android:textAlignment="textStart"
+        android:paddingLeft="5sp"
+        tools:ignore="RtlCompat" />
+    </FrameLayout>
 
 </LinearLayout>

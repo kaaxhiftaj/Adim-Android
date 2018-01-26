@@ -17,7 +17,6 @@ public class SponsorsFragment extends Fragment {
 
     ImageView event_factory, veba,employme,parktonianhotels, laseroil, sweethomes, newage;
     WebView webView;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

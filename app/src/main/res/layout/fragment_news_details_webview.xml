@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.adim.techease.fragments.NewsDetailsWebviewFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <WebView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/wv"></WebView>
+        <Button
+            android:id="@+id/btnShareNews"
+            android:layout_width="wrap_content"
+            android:layout_height="30sp"
+            android:text="Share"
+            android:layout_gravity="center|right"
+            android:layout_marginBottom="80sp"
+            android:layout_marginRight="10sp"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/btnripple"/>
+    </FrameLayout>
+</LinearLayout>

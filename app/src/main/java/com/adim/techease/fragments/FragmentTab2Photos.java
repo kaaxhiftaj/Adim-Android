@@ -1,21 +1,18 @@
 package com.adim.techease.fragments;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.GridView;
 
 import com.adim.techease.Adapter.PhotoAdapter;
 import com.adim.techease.R;
 import com.adim.techease.controllers.PhotoModel;
+import com.adim.techease.utils.Alert_Utils;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -32,60 +29,42 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class FragmentTab2Photos extends Fragment {
 
-    RecyclerView recyclerView;
-    List<PhotoModel> models;
-    String getId;
+    GridView gridView;
+    ArrayList<PhotoModel> models;
+    String getId,strContestentName;
     PhotoAdapter photoAdapter;
-    Button btnShare;
-    Typeface typeface;
+    Typeface typefaceReg,typefaceBold;
+    android.support.v7.app.AlertDialog alertDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_fragment_tab2_photos, container, false);
 
-        btnShare=(Button)v.findViewById(R.id.btnSharePhoto);
-        typeface=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
-        btnShare.setTypeface(typeface);
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Adim");
-                    String sAux = "\nLet me recommend you this application\n\n";
-                    sAux = sAux + "https://play.google.com/store/apps/details?id=com.adim.techease \n\n";
-                    intent.putExtra(Intent.EXTRA_TEXT, sAux);
-                    startActivity(Intent.createChooser(intent, "choose one"));
-                } catch(Exception e) {
-                    //e.toString();
-                }
-            }
-        });
-        recyclerView=(RecyclerView)v.findViewById(R.id.rv_images);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        typefaceReg=Typeface.createFromAsset(getActivity().getAssets(),"raleway_reg.ttf");
+        typefaceBold=Typeface.createFromAsset(getActivity().getAssets(),"raleway_bold.ttf");
+        gridView=(GridView) v.findViewById(R.id.gridViewTabPhoto);
         getId=getArguments().getString("id");
+        strContestentName=getArguments().getString("name");
+        if (alertDialog==null)
+        {
+            alertDialog= Alert_Utils.createProgressDialog(getActivity());
+            alertDialog.show();
+        }
         apicall();
-        models=new ArrayList<>();
-        photoAdapter=new PhotoAdapter(getActivity(),models);
-        recyclerView.setAdapter(photoAdapter);
         return v;
     }
 
     private void apicall() {
-        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
-        pDialog.show();
+//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
+//        pDialog.setTitleText("Loading");
+//        pDialog.setCancelable(false);
+//        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/getphotos/"+getId
                 , new Response.Listener<String>() {
             @Override
@@ -96,6 +75,7 @@ public class FragmentTab2Photos extends Fragment {
                     try {
                         JSONObject jsonObject=new JSONObject(response);
                         JSONArray jsonArr=jsonObject.getJSONArray("user");
+                        models=new ArrayList<>();
                         for (int i=0; i<jsonArr.length(); i++)
                         {
                             JSONObject temp = jsonArr.getJSONObject(i);
@@ -103,26 +83,39 @@ public class FragmentTab2Photos extends Fragment {
                             photoModel.setFile(temp.getString("file"));
                             photoModel.setType(temp.getString("type"));
                             photoModel.setId(temp.getString("id"));
+                            photoModel.setName(strContestentName);
                             models.add(photoModel);
-                            pDialog.dismiss();
+                            //pDialog.dismiss();
                         }
-                        photoAdapter.notifyDataSetChanged();
+                        if (getActivity()!=null)
+                        {
+                            photoAdapter=new PhotoAdapter(getActivity(),models);
+                            gridView.setAdapter(photoAdapter);
+                            if (alertDialog!=null)
+                            alertDialog.dismiss();
+
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        pDialog.dismiss();
+                        if (alertDialog!=null)
+                            alertDialog.dismiss();
+                       // pDialog.dismiss();
                     }
 
 
                 } else {
-                    pDialog.dismiss();
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
+                   // pDialog.dismiss();
                 }
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
                 Log.d("error" , String.valueOf(error.getCause()));
 
             }

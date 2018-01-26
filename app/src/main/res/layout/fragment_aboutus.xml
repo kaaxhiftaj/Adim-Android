@@ -23,13 +23,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="About the Ada di Igbo nma pageant"
+        android:text="ABOUT THE ADA DI IGBO NMA PAGEANT"
         android:textColor="#FFF"
         android:layout_marginTop="20sp"
-        android:textSize="20dp"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:textSize="15dp"
         android:id="@+id/aboutPegant"
         android:layout_marginBottom="20dp"
         android:gravity="center"
@@ -37,9 +40,9 @@
 
 
     <View
-        android:layout_width="104dp"
-        android:layout_height="1dp"
-        android:background="#fff"
+        android:layout_width="100sp"
+        android:layout_height="12sp"
+        android:background="@drawable/view"
         android:layout_gravity="center"
         />
 
@@ -50,18 +53,19 @@
         android:layout_height="wrap_content"
         android:text="WHAT IS A BEAUTY PAGEANT?"
         android:textColor="#FFF"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:id="@+id/whatIsPeageant"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:textAlignment="center"
         />
 
-    <View
-        android:layout_width="70dp"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:background="#fff" />
+        <View
+            android:layout_width="100sp"
+            android:layout_height="12sp"
+            android:background="@drawable/view"
+            android:layout_gravity="center"
+            />
 
 
     <TextView
@@ -72,16 +76,16 @@
         android:id="@+id/aboutProject"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:textSize="20dp"
+        android:textSize="15dp"
         android:gravity="center"
         />
 
-    <View
-        android:layout_width="70dp"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:background="#fff" />
-
+        <View
+            android:layout_width="100sp"
+            android:layout_height="12sp"
+            android:background="@drawable/view"
+            android:layout_gravity="center"
+            />
 
 
     <LinearLayout
@@ -94,25 +98,25 @@
         >
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:layout_width="150sp"
+            android:layout_height="40sp"
+            android:background="@drawable/custom_btn"
             android:text="COOKIES POLICIES"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="10dp"
             android:id="@+id/cookies"
-            android:textColor="#FFF"
+            android:textColor="#7DB3D2"
             android:layout_weight="1"
             />
 
         <Button
             android:id="@+id/privacy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
+            android:layout_width="150sp"
+            android:layout_height="40sp"
+            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/custom_btn"
             android:text="PRIVACY POLICIES"
-            android:textColor="#FFF"
+            android:textColor="#7DB3D2"
             android:layout_weight="1"
             />
 

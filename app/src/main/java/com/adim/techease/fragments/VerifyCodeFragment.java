@@ -3,7 +3,7 @@ package com.adim.techease.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adim.techease.R;
+import com.adim.techease.utils.Alert_Utils;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -51,7 +52,8 @@ public class VerifyCodeFragment extends Fragment {
     TextView tvSkipLogin;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-
+    Typeface typefaceReg,typefaceBold;
+    android.support.v7.app.AlertDialog alertDialog;
     public VerifyCodeFragment() {
         // Required empty public constructor
     }
@@ -84,6 +86,9 @@ public class VerifyCodeFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        typefaceReg = Typeface.createFromAsset(getActivity().getAssets(), "raleway_reg.ttf");
+        typefaceBold = Typeface.createFromAsset(getActivity().getAssets(), "raleway_bold.ttf");
+
         Bundle args = getArguments();
         strEmail = args.getString("email");
         etCode = (EditText) view.findViewById(R.id.et_code_forget);
@@ -96,6 +101,11 @@ public class VerifyCodeFragment extends Fragment {
         });
         ivBackToEmailVerification = (ImageView)view.findViewById(R.id.iv_back_login);
         tvSkipLogin = (TextView)view.findViewById(R.id.tv_skip_login);
+
+        etCode.setTypeface(typefaceReg);
+        btnSendCode.setTypeface(typefaceBold);
+        tvSkipLogin.setTypeface(typefaceReg);
+
         tvSkipLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,16 +130,21 @@ public class VerifyCodeFragment extends Fragment {
         if (strVerifyCode.equals("") || strVerifyCode.length() < 6) {
             etCode.setError("Please enter a valid code");
         } else {
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
             apiCall();
         }
     }
 
     public void apiCall() {
-        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
-        pDialog.show();
+//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
+//        pDialog.setTitleText("Loading");
+//        pDialog.setCancelable(false);
+//        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://adadigbomma.com/Signup/CheckCode/",
                 new Response.Listener<String>() {
             @Override
@@ -138,16 +153,25 @@ public class VerifyCodeFragment extends Fragment {
 
                     JSONObject jsonObject = null;
                     try {
+                        if (alertDialog!=null)
+                            alertDialog.dismiss();
                         jsonObject = new JSONObject(response).getJSONObject("message");
                         Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
 
                     } catch (JSONException e) {
+                        if (alertDialog!=null)
+                            alertDialog.dismiss();
                         e.printStackTrace();
                     }
-                    pDialog.dismiss();
-                    fragment = new ChangePasswordFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                   // pDialog.dismiss();
 
+                    fragment = new ChangePasswordFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("code",strVerifyCode);
+                    fragment.setArguments(bundle);
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
                 }
 
 
@@ -155,6 +179,8 @@ public class VerifyCodeFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
                 etCode.setText("");
                 new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Response Error")

@@ -9,6 +9,15 @@ public class PhotoModel {
     private String file;
     private String type;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name;
 
     public String getId() {
         return id;

@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:id="@+id/ll_main_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:layout_margin="5dp"
-        android:id="@+id/ll_main_item"
-        android:background="@drawable/layoutripple"
-        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="90dp"
@@ -23,24 +15,20 @@
             android:id="@+id/contestentImage"
             android:src="@drawable/main_app_bg"
             android:layout_gravity="center"
-            android:layout_marginLeft="20sp"
             app:civ_border_width="2dp"
-            app:civ_border_color="#FFF"
+            app:civ_border_color="#129FDD"
             />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
             android:text="contestentName"
-            android:textColor="#FFF"
+            android:layout_gravity="center"
+            android:textColor="#129FDD"
             android:id="@+id/contestentName"
             android:textStyle="italic"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:textSize="20dp"
-            />
-
-
-        </LinearLayout>
+            android:textSize="15sp"
+            android:textAlignment="textStart"
+            tools:ignore="RtlCompat" />
 
     </LinearLayout>

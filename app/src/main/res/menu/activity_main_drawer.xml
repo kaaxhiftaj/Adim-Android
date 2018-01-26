@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_news"
             android:icon="@drawable/home"
-            android:title="Home" />
+            android:title="News" />
+        <item
+            android:id="@+id/nav_contestent"
+            android:icon="@drawable/insignia"
+            android:title="Contestant"/>
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/nav_gallery"
+            android:icon="@drawable/gallery"
             android:title="Gallery" />
 
         <item
@@ -18,12 +23,9 @@
 
         <item
             android:id="@+id/nav_vote"
-            android:icon="@drawable/nav_gallery"
+            android:icon="@drawable/elections"
             android:title="Vote" />
-        <item
-            android:id="@+id/nav_News"
-            android:icon="@drawable/news"
-            android:title="News"/>
+
 
         <item
             android:id="@+id/nav_sponsors"
@@ -39,6 +41,10 @@
             android:title="Team"
             android:icon="@drawable/group"
             />
+        <item
+            android:id="@+id/nav_ShareApp"
+            android:title="Share"
+            android:icon="@drawable/share"/>
 
         <item
             android:id="@+id/nav_aboutus"
@@ -48,10 +54,12 @@
         <item
             android:id="@+id/action_Logout"
             android:title="Logout"
-            android:icon="@drawable/back_icon"
-            />
+            android:icon="@drawable/back_icon"/>
     </group>
-
-
+    <!--<group>-->
+        <!--<item android:id="@+id/nav_switch"-->
+            <!--app:actionLayout="@layout/custom_drawer_button"-->
+            <!--android:title="Downloaded only" />-->
+    <!--</group>-->
 
 </menu>

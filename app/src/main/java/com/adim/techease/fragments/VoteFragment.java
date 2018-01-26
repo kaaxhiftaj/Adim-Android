@@ -1,8 +1,6 @@
 package com.adim.techease.fragments;
 
 import android.app.Fragment;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +14,7 @@ import android.widget.Button;
 import com.adim.techease.Adapter.VoteAdapter;
 import com.adim.techease.R;
 import com.adim.techease.controllers.VoteModel;
+import com.adim.techease.utils.Alert_Utils;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -35,8 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 
 public class VoteFragment extends Fragment {
 
@@ -44,16 +41,22 @@ public class VoteFragment extends Fragment {
     List<VoteModel> voteModel;
     VoteAdapter voteAdapter;
     Button btnShare;
-    Typeface typeface;
+    Typeface typefaceReg,typefaceBold;
+    android.support.v7.app.AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_vote, container, false);
-        typeface=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
+        typefaceReg=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
         recyclerViewVote=(RecyclerView)view.findViewById(R.id.rvVote);
         recyclerViewVote.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if (alertDialog==null)
+        {
+            alertDialog= Alert_Utils.createProgressDialog(getActivity());
+            alertDialog.show();
+        }
         apicall();
         voteModel=new ArrayList<>();
         voteAdapter=new VoteAdapter(getActivity(),voteModel);
@@ -62,11 +65,11 @@ public class VoteFragment extends Fragment {
     }
 
     private void apicall() {
-        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
-        pDialog.show();
+//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
+//        pDialog.setTitleText("Loading");
+//        pDialog.setCancelable(false);
+//        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/vote"
                 , new Response.Listener<String>() {
             @Override
@@ -85,18 +88,23 @@ public class VoteFragment extends Fragment {
                             votemodel.setVote(temp.getString("totalVotes"));
                             votemodel.setVoteContestentID(temp.getString("id"));
                             voteModel.add(votemodel);
-                            pDialog.dismiss();
+                            if (alertDialog!=null)
+                                alertDialog.dismiss();
+                            //pDialog.dismiss();
                         }
                         voteAdapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        pDialog.dismiss();
+                        if (alertDialog!=null)
+                            alertDialog.dismiss();
+                       // pDialog.dismiss();
                     }
 
 
                 } else {
-                    pDialog.dismiss();
+
+                   // pDialog.dismiss();
                 }
             }
 
@@ -105,6 +113,8 @@ public class VoteFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 //DialogUtils.sweetAlertDialog.dismiss();
                 // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
                 Log.d("error" , String.valueOf(error.getCause()));
 
             }

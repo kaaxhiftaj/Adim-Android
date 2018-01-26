@@ -1,7 +1,7 @@
 package com.adim.techease.fragments;
 
 import android.app.Fragment;
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.adim.techease.R;
+import com.adim.techease.utils.Alert_Utils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -38,43 +39,27 @@ public class EmailVerificationFragment extends Fragment {
     String strEmail;
     EditText etEmailForgetPassword;
     SweetAlertDialog pDialog;
-    TextView tvSkipLogin;
-
-    public EmailVerificationFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment EmailVerificationFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static EmailVerificationFragment newInstance(String param1, String param2) {
-        EmailVerificationFragment fragment = new EmailVerificationFragment();
-
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    TextView tvSkipLogin,tvForgetPass;
+    Typeface typefaceReg,typefaceBold;
+    android.support.v7.app.AlertDialog alertDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_email_verification, container, false);
-        pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#179e99"));
-        pDialog.setTitleText("Sending email");
-        pDialog.setCancelable(false);
+        typefaceReg= Typeface.createFromAsset(getActivity().getAssets(),"raleway_reg.ttf");
+        typefaceBold=Typeface.createFromAsset(getActivity().getAssets(), "raleway_bold.ttf");
+//        pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#179e99"));
+//        pDialog.setTitleText("Sending email");
+//        pDialog.setCancelable(false);
+        tvForgetPass=(TextView)view.findViewById(R.id.tv_forget_passwordEmailVerify);
+        tvForgetPass.setTypeface(typefaceBold);
         etEmailForgetPassword = (EditText) view.findViewById(R.id.et_email_forget);
+        etEmailForgetPassword.setTypeface(typefaceReg);
         btnSendEmail = (Button) view.findViewById(R.id.btn_send_email);
+        btnSendEmail.setTypeface(typefaceBold);
         btnSendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,6 +67,7 @@ public class EmailVerificationFragment extends Fragment {
             }
         });
         tvSkipLogin = (TextView)view.findViewById(R.id.tv_skip_login);
+        tvSkipLogin.setTypeface(typefaceReg);
         tvSkipLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,7 +97,12 @@ public class EmailVerificationFragment extends Fragment {
                 if ((!android.util.Patterns.EMAIL_ADDRESS.matcher(strEmail).matches())) {
                     etEmailForgetPassword.setError("Please enter valid email id");
                 } else {
-                    pDialog.dismiss();
+                    //pDialog.dismiss();
+                    if (alertDialog==null)
+                    {
+                        alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                        alertDialog.show();
+                    }
                     apiCall();
                 }
             }
@@ -119,16 +110,18 @@ public class EmailVerificationFragment extends Fragment {
     }
 
     public void apiCall() {
-        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
-        pDialog.show();
+//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
+//        pDialog.setTitleText("Loading");
+//        pDialog.setCancelable(false);
+//        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://adadigbomma.com/Signup/forgot", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("zma forget res", response);
                 if (response.contains("true")) {
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
                     new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Email sent")
                             .setContentText("Please check your email")
@@ -136,10 +129,12 @@ public class EmailVerificationFragment extends Fragment {
                     Bundle args = new Bundle();
                     fragment = new VerifyCodeFragment();
                     args.putString("email", strEmail);
-                    pDialog.dismiss();
+                   // pDialog.dismiss();
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
                     fragment.setArguments(args);
                 }else{
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
                     new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Something went wrong, try again")
                             .show();
@@ -149,6 +144,8 @@ public class EmailVerificationFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
                 new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Response Error")
                         .show();

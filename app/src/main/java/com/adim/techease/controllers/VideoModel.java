@@ -8,6 +8,7 @@ public class VideoModel {
     private String Title;
     private String Link;
     private String Thumbnails;
+    private String Id;
 
     public String getId() {
         return Id;
@@ -17,7 +18,7 @@ public class VideoModel {
         Id = id;
     }
 
-    private String Id;
+
     public String getTitle() {
         return Title;
     }

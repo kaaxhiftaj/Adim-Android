@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "651018867140-gq5dtcp2idgfc2ok4g0n8l6b6iboa7mt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.adim.techease",
+            "certificate_hash": "03cc2dd2a029466bbdea9f3ffff74e7382bfe998"
+          }
+        },
+        {
           "client_id": "651018867140-u57p4dklksjhau2ormve6alng5uq09ac.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "651018867140-u57p4dklksjhau2ormve6alng5uq09ac.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

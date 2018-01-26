@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="40sp"
+    android:layout_height="40sp"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/custom_progress_bar"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:indeterminateTint="@color/colorPrimary"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:layout_gravity="center"
+        />
+
+</LinearLayout>

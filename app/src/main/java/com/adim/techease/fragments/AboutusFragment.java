@@ -16,7 +16,7 @@ public class AboutusFragment extends Fragment {
 TextView  aboutPeagant , whatisPeagant, aboutPtoject ;
     Button cookies, privacy ;
     Fragment fragment;
-    Typeface typeface;
+    Typeface typefaceReg;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,12 +28,12 @@ TextView  aboutPeagant , whatisPeagant, aboutPtoject ;
         aboutPtoject = (TextView)v.findViewById(R.id.aboutProject);
         cookies = (Button)v.findViewById(R.id.cookies);
         privacy = (Button)v.findViewById(R.id.privacy);
-        typeface=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
-        aboutPeagant.setTypeface(typeface);
-        whatisPeagant.setTypeface(typeface);
-        aboutPtoject.setTypeface(typeface);
-        cookies.setTypeface(typeface);
-        privacy.setTypeface(typeface);
+        typefaceReg=Typeface.createFromAsset(getActivity().getAssets(), "raleway_bold.ttf");
+        aboutPeagant.setTypeface(typefaceReg);
+        whatisPeagant.setTypeface(typefaceReg);
+        aboutPtoject.setTypeface(typefaceReg);
+        cookies.setTypeface(typefaceReg);
+        privacy.setTypeface(typefaceReg);
 
         aboutPeagant.setOnClickListener(new View.OnClickListener() {
             @Override

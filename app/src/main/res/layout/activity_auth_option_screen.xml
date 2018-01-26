@@ -9,53 +9,66 @@
     android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/guest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="15dp"
-        android:gravity="right"
-        android:text="Continue as Guest"
-        android:textSize="17dp"
-        android:layout_marginTop="20dp"
-        android:textColor="#FFF" />
-
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
         android:foregroundGravity="center"
         android:gravity="center_vertical"
         android:layout_weight="1.03">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp">
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/login_button"
-            android:layout_width="match_parent"
+            android:layout_width="100sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="20sp"
             android:foregroundGravity="center" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="45sp"
+                android:background="#7db3d2"
+                android:drawableLeft="@drawable/facebook_white"
+                android:paddingLeft="20sp"
+                android:text="Login with facebook"
+                android:textColor="#fff"
+                android:drawablePadding="20sp"
+                android:id="@+id/fbBtn"/>
 
+        </FrameLayout>
 
-        <!--<com.twitter.sdk.android.core.identity.TwitterLoginButton-->
-            <!--android:id="@+id/twitter_button"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_vertical"-->
-            <!--android:foregroundGravity="center"-->
-            <!--android:layout_marginBottom="15dp"-->
-             <!--/>-->
-
-        <ImageButton
+        <Button
             android:id="@+id/email_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45sp"
             android:layout_gravity="center_vertical"
-            android:foregroundGravity="center"
-            android:background="@drawable/email_button" />
+            android:drawableLeft="@drawable/email_white"
+            android:paddingLeft="20sp"
+            android:background="@color/transparent_white_hex_11"
+            android:text="Continue with Email"
+            android:drawablePadding="10sp"
+            android:textColor="#fff"
+            />
 
+
+
+        <Button
+            android:id="@+id/guest"
+            android:layout_width="match_parent"
+            android:layout_height="45sp"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="20sp"
+            android:layout_marginTop="20sp"
+            android:background="@color/transparent_white_hex_11"
+            android:text="Continue as guest"
+            android:textColor="#fff" />
 
     </LinearLayout>
 

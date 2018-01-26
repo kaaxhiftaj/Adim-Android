@@ -33,8 +33,8 @@ public class VideoAdapter  extends RecyclerView.Adapter<VideoAdapter.MyViewHolde
     List<VideoModel> videoModel;
     Context context;
     public static final String Key="AIzaSyDnTSqXDRyGbksm4xd2HUuwXRKjUHvBygw";
-    public static final String[] PlaylistI={"RzCPHc645bQ","awp1Zr94Yrw","Kf6MsltI7lQ"};
     public static String Id_s;
+
     public VideoAdapter(Context context, List<VideoModel> model){
         this.context=context;
         this.videoModel=model;
@@ -46,7 +46,6 @@ public class VideoAdapter  extends RecyclerView.Adapter<VideoAdapter.MyViewHolde
     @Override
     public VideoAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.customvideo, parent, false);
-
         return new MyViewHolder(rootView);
     }
 
@@ -88,9 +87,10 @@ public class VideoAdapter  extends RecyclerView.Adapter<VideoAdapter.MyViewHolde
             public void onClick(View view) {
 
                     if(YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(context).equals(YouTubeInitializationResult.SUCCESS)){
-                        //This means that your device has the Youtube API Service (the app) and you are safe to launch it.
+
                         Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity) context, Key,model.getId());
                         context.startActivity(intent);
+
 
                     }else{
                         Toast.makeText(context, "Please download youtube app", Toast.LENGTH_SHORT).show();
@@ -103,6 +103,7 @@ public class VideoAdapter  extends RecyclerView.Adapter<VideoAdapter.MyViewHolde
         });
 
     }
+
 
     @Override
     public int getItemCount() {

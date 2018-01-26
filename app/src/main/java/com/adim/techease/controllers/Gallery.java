@@ -12,6 +12,15 @@ public class Gallery {
     private String link;
     private String Type;
 
+    public String getThumbnail() {
+        return Thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        Thumbnail = thumbnail;
+    }
+
+    private String Thumbnail;
 
     public String getId() {
         return Id;

@@ -2,17 +2,20 @@ package com.adim.techease.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.adim.techease.R;
+import com.adim.techease.utils.Alert_Utils;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -24,48 +27,69 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 
 public class NewsDetailsFragment extends Fragment {
 
     ImageView imageView;
+    Button shareBtn;
     TextView name,description;
-    Typeface typeface;
-    String id ;
-    Context context;
+    Typeface typefaceReg,typefaceBold;
+    String id,imageUrl,strTitle,strDes;
+    android.support.v7.app.AlertDialog alertDialog;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor ;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_news_details, container, false);
+
+        sharedPreferences = getActivity().getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         imageView=(ImageView)view.findViewById(R.id.ivNewsDetails);
         name=(TextView)view.findViewById(R.id.tvImageItitleNewsDetials);
         description=(TextView)view.findViewById(R.id.tvNewsDetailsDescription);
-        typeface=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
-        name.setTypeface(typeface);
-        description.setTypeface(typeface);
+       shareBtn=(Button) view.findViewById(R.id.btnShareNews);
+        typefaceReg=Typeface.createFromAsset(getActivity().getAssets(),"raleway_reg.ttf");
+        typefaceBold=Typeface.createFromAsset(getActivity().getAssets(),"raleway_bold.ttf");
+        name.setTypeface(typefaceBold);
+        description.setTypeface(typefaceReg);
         Bundle bundle = null;
         bundle = getActivity().getIntent().getExtras();
         id = getArguments().getString("id");
         Log.d("id" , id );
+        if (alertDialog==null)
+        {
+            alertDialog= Alert_Utils.createProgressDialog(getActivity());
+            alertDialog.show();
+        }
         apicall();
+
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent;
+                intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_SUBJECT,strTitle);
+               // intent.putExtra(Intent.EXTRA_TEXT,"News image link:\nhttp://adadigbomma.com/panel/images/" +imageUrl+"\nDescription"+ strDes);
+                intent.putExtra(Intent.EXTRA_TEXT,strTitle+":\nhttp://adim.app.link/m1vtHA0jUJ");
+                intent.setType("text/plain");
+
+                startActivity(Intent.createChooser(intent, "choose one"));
+            }
+        });
         return view;
     }
 
+
     private void apicall() {
-        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
-        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/newsdetail/"+id
                 , new Response.Listener<String>() {
             @Override
@@ -78,23 +102,31 @@ public class NewsDetailsFragment extends Fragment {
 
                             name.setText(String.valueOf(temp.getString("title")));
                             description.setText(String.valueOf(temp.getString("description")));
+                            imageUrl=temp.getString("image");
+                            strDes=temp.getString("description");
+                            strTitle=temp.getString("title");
                             Glide.with(getActivity()).load("http://adadigbomma.com/panel/images/"+temp.getString("image")).into(imageView);
-                            pDialog.dismiss();
-
+                          //  pDialog.dismiss();
+                        if (alertDialog!=null)
+                            alertDialog.dismiss();
                     } catch (JSONException e) {
+                        if (alertDialog!=null)
+                            alertDialog.dismiss();
                         e.printStackTrace();
                     }
 
 
                 } else {
-
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
                 }
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
                 Log.d("error" , String.valueOf(error.getCause()));
 
             }

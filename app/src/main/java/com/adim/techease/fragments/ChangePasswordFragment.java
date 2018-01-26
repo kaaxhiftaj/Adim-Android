@@ -1,11 +1,11 @@
 package com.adim.techease.fragments;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.adim.techease.R;
+import com.adim.techease.utils.Alert_Utils;
+import com.adim.techease.utils.Configuration;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -22,8 +25,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.adim.techease.R;
-import com.adim.techease.utils.Configuration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class ChangePasswordFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     EditText etNewPassword, etConfirmPassword;
-    String strNewPassword, strConfirmPassowrd, strAPIToken;
+    String strNewPassword, strConfirmPassowrd, strAPIToken,code;
     Button btnChangePassword;
     ImageView ivBackToLogin;
     Fragment fragment;
@@ -49,7 +50,9 @@ public class ChangePasswordFragment extends Fragment {
     SharedPreferences.Editor editor;
     SweetAlertDialog pDialog;
     TextView tvSkipLogin;
-
+    Typeface typefaceReg,typefaceBold;
+    TextView tvForgetPassword;
+    android.support.v7.app.AlertDialog alertDialog;
     public ChangePasswordFragment() {
         // Required empty public constructor
     }
@@ -82,6 +85,13 @@ public class ChangePasswordFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         tvSkipLogin = (TextView)view.findViewById(R.id.tv_skip_login);
+        typefaceReg=Typeface.createFromAsset(getActivity().getAssets(),"raleway_reg.ttf");
+        typefaceBold=Typeface.createFromAsset(getActivity().getAssets(), "raleway_bold.ttf");
+        tvForgetPassword=(TextView)view.findViewById(R.id.tv_forget_passwordTitle);
+        tvForgetPassword.setTypeface(typefaceBold);
+
+        code=getArguments().getString("code");
+
         tvSkipLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,6 +117,10 @@ public class ChangePasswordFragment extends Fragment {
         btnChangePassword = (Button) view.findViewById(R.id.btn_update_password);
         etNewPassword = (EditText) view.findViewById(R.id.et_new_password_change);
         etConfirmPassword = (EditText) view.findViewById(R.id.et_confirm_password_change);
+        btnChangePassword.setTypeface(typefaceBold);
+        etNewPassword.setTypeface(typefaceReg);
+        etConfirmPassword.setTypeface(typefaceReg);
+        tvSkipLogin.setTypeface(typefaceReg);
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,31 +149,40 @@ public class ChangePasswordFragment extends Fragment {
         } else if (!strNewPassword.equals(strConfirmPassowrd)) {
             etConfirmPassword.setError("Password doesn't match");
         } else {
-            pDialog.show();
+           // pDialog.show();
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
             apiCall();
         }
     }
 
 
     public void apiCall() {
-        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
-        pDialog.show();
+//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
+//        pDialog.setTitleText("Loading");
+//        pDialog.setCancelable(false);
+//        pDialog.show();
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://adadigbomma.com/Signup/Resetpassword",
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.contains("true")) {
-                    pDialog.dismiss();
+                   // pDialog.dismiss();
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
                     new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Password Changed Successfully")
                             .show();
                     fragment = new LoginFragment();
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
                 } else {
-                    pDialog.dismiss();
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
+                   // pDialog.dismiss();
                     new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Something Went Wrong, Try again")
                             .show();
@@ -169,6 +192,8 @@ public class ChangePasswordFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
                 new SweetAlertDialog(getActivity(), SweetAlertDialog.ERROR_TYPE)
                         .setTitleText("Response Error")
                         .show();
@@ -183,10 +208,8 @@ public class ChangePasswordFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("api_token", strAPIToken);
+                params.put("code", code);
                 params.put("password", strNewPassword);
-                params.put("password_confirmation", strConfirmPassowrd);
-                params.put("Accept", "application/json");
                 return params;
             }
 

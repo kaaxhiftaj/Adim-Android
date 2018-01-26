@@ -7,6 +7,13 @@
     android:gravity="center"
     android:background="#fff"
     tools:context="com.adim.techease.fragments.FragmentTab4Social">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,6 +71,9 @@
         android:id="@+id/wv"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="60dp">
+        android:layout_marginBottom="60dp"
+        tools:ignore="WebViewLayout">
     </WebView>
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

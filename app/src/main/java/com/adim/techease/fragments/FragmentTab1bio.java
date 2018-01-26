@@ -1,7 +1,5 @@
 package com.adim.techease.fragments;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,12 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.adim.techease.R;
+import com.adim.techease.utils.Alert_Utils;
 import com.adim.techease.utils.Configuration;
-import com.adim.techease.utils.DialogUtils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -30,23 +27,24 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 
 public class FragmentTab1bio extends Fragment {
 
     TextView Description, Age, Height, Dob,textView1,textView2,textView3;
     String getId;
-    Typeface typeface;
-    Button btnShare;
+    Typeface typefaceReg,typefaceBold;
+    android.support.v7.app.AlertDialog alertDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_fragment_tab1bio, container, false);
 
 
-        typeface=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
+
+        typefaceReg=Typeface.createFromAsset(getActivity().getAssets(),"raleway_reg.ttf");
+        typefaceBold=Typeface.createFromAsset(getActivity().getAssets(),"raleway_bold.ttf");
         Description = (TextView) v.findViewById(R.id.tvDescription);
         Age = (TextView) v.findViewById(R.id.tvAge);
         Height = (TextView) v.findViewById(R.id.tvHeight);
@@ -54,42 +52,32 @@ public class FragmentTab1bio extends Fragment {
         textView1=(TextView)v.findViewById(R.id.txt1);
         textView2=(TextView)v.findViewById(R.id.txt2);
         textView3=(TextView)v.findViewById(R.id.txt3);
-        btnShare=(Button)v.findViewById(R.id.btnShareBio);
+
         getId=getArguments().getString("id");
-        Description.setTypeface(typeface);
-        Age.setTypeface(typeface);
-        Height.setTypeface(typeface);
-        Dob.setTypeface(typeface);
-        textView1.setTypeface(typeface);
-        textView2.setTypeface(typeface);
-        textView3.setTypeface(typeface);
-        btnShare.setTypeface(typeface);
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Adim");
-                    String sAux = "\nHi, Download this beautiful aoo to Vote your favourite beauty Queen for Adim Pageant\n\n";
-                    sAux = sAux + "https://play.google.com/store/apps/details?id=com.adim.techease \n\n";
-                    intent.putExtra(Intent.EXTRA_TEXT, sAux);
-                    startActivity(Intent.createChooser(intent, "choose one"));
-                } catch(Exception e) {
-                    //e.toString();
-                }
-            }
-        });
+        Description.setTypeface(typefaceReg);
+        Age.setTypeface(typefaceReg);
+        Height.setTypeface(typefaceReg);
+        Dob.setTypeface(typefaceReg);
+        textView1.setTypeface(typefaceBold);
+        textView2.setTypeface(typefaceBold);
+        textView3.setTypeface(typefaceBold);
+        if (alertDialog==null)
+        {
+            alertDialog= Alert_Utils.createProgressDialog(getActivity());
+            alertDialog.show();
+        }
         apicall();
         return v;
     }
 
+
+
     private void apicall() {
-        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
-        pDialog.show();
+//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
+//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
+//        pDialog.setTitleText("Loading");
+//        pDialog.setCancelable(false);
+//        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/getDetail/"+getId
                 , new Response.Listener<String>() {
             @Override
@@ -106,7 +94,9 @@ public class FragmentTab1bio extends Fragment {
                         String age = jsonObj.getString("age");
                         String des=jsonObj.getString("description");
                         String height=jsonObj.getString("height");
-                        pDialog.dismiss();
+                       // pDialog.dismiss();
+                        if (alertDialog!=null)
+                            alertDialog.dismiss();
                         Age.setText(age);
                         Description.setText(des);
                         Dob.setText(dob);
@@ -118,8 +108,10 @@ public class FragmentTab1bio extends Fragment {
 
 
                 } else {
-                    DialogUtils.sweetAlertDialog.dismiss();
-                    DialogUtils.showWarningAlertDialog(getActivity(), "Something went wrong");
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
+//                    DialogUtils.sweetAlertDialog.dismiss();
+//                    DialogUtils.showWarningAlertDialog(getActivity(), "Something went wrong");
                 }
             }
 
@@ -128,6 +120,8 @@ public class FragmentTab1bio extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 //DialogUtils.sweetAlertDialog.dismiss();
                 // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
                 Log.d("error" , String.valueOf(error.getCause()));
 
             }

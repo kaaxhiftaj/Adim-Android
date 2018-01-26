@@ -14,15 +14,16 @@ import com.adim.techease.R;
 public class AboutDetails extends Fragment {
 
     TextView aboutText;
-    Typeface typeface;
+    Typeface typefaceReg,typefaceBold;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_about_details, container, false);
         aboutText = (TextView)v.findViewById(R.id.aboutText);
-        typeface=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
-        aboutText.setTypeface(typeface);
+        typefaceReg=Typeface.createFromAsset(getActivity().getAssets(), "raleway_reg.ttf");
+
+        aboutText.setTypeface(typefaceReg);
         Bundle args = getArguments();
         String intent = args.getString("type","");
 

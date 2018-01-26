@@ -11,18 +11,22 @@
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="230dp"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
+        app:insetForeground="@color/colorDark"
         android:layout_gravity="start"
+        android:background="#fff"
         android:fitsSystemWindows="true"
         app:itemIconTint="@color/colorPrimaryDark"
         style="@style/NavigationDrawerStyle"
         app:headerLayout="@layout/nav_header_main"
         app:itemTextAppearance="@style/NavigationDrawerStyle"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer" >
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

@@ -18,9 +18,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.adim.techease.R;
 import com.adim.techease.controllers.VolleyMultipartRequest;
+import com.adim.techease.utils.Alert_Utils;
 import com.adim.techease.utils.Configuration;
 import com.adim.techease.utils.DialogUtils;
 import com.adim.techease.utils.GeneralUtils;
@@ -55,8 +57,10 @@ public class AuditionsFragment extends Fragment {
     final int CAMERA_CAPTURE = 1;
     final int RESULT_LOAD_IMAGE = 2;
     File file;
+    TextView SomeText;
     Button sendButton;
-    Typeface typeface;
+    Typeface typefaceReg,typefaceBold;
+    android.support.v7.app.AlertDialog alertDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,7 +68,8 @@ public class AuditionsFragment extends Fragment {
 
 
         View v = inflater.inflate(R.layout.fragment_auditions, container, false);
-        typeface=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
+        typefaceReg=Typeface.createFromAsset(getActivity().getAssets(),"raleway_reg.ttf");
+        typefaceBold=Typeface.createFromAsset(getActivity().getAssets(),"raleway_reg.ttf");
         name = (EditText) v.findViewById(R.id.et_name);
         email = (EditText) v.findViewById(R.id.et_email_audition);
         age=(EditText)v.findViewById(R.id.etAgeAudition);
@@ -72,12 +77,14 @@ public class AuditionsFragment extends Fragment {
         state = (EditText) v.findViewById(R.id.et_stateofRegion);
         image = (ImageView) v.findViewById(R.id.image);
         sendButton = (Button)v.findViewById(R.id.sendButton);
-        sendButton.setTypeface(typeface);
-        name.setTypeface(typeface);
-        email.setTypeface(typeface);
-        age.setTypeface(typeface);
-        phone.setTypeface(typeface);
-        state.setTypeface(typeface);
+        SomeText=(TextView)v.findViewById(R.id.tvText);
+        SomeText.setTypeface(typefaceBold);
+        sendButton.setTypeface(typefaceBold);
+        name.setTypeface(typefaceReg);
+        email.setTypeface(typefaceReg);
+        age.setTypeface(typefaceReg);
+        phone.setTypeface(typefaceReg);
+        state.setTypeface(typefaceReg);
 
 
         city = (MaterialSpinner) v.findViewById(R.id.city);
@@ -148,7 +155,12 @@ public class AuditionsFragment extends Fragment {
             age.setError("Please enter your age");
         }
         else {
-            DialogUtils.showProgressSweetDialog(getActivity(), " Submiting your Application");
+           // DialogUtils.showProgressSweetDialog(getActivity(), " Submiting your Application");
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
             apiCall();
         }
     }
@@ -159,7 +171,9 @@ public class AuditionsFragment extends Fragment {
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, Configuration.USER_URL + "App/audition", new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
-                DialogUtils.sweetAlertDialog.dismiss();
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
+               // DialogUtils.sweetAlertDialog.dismiss();
                 Log.d("zma response", String.valueOf(Configuration.USER_URL+ "App/audition"+"\n"+response));
                 if (response.statusCode == 200) {
                     email.setText("");
@@ -185,7 +199,9 @@ public class AuditionsFragment extends Fragment {
                         errorMessage = "Failed to connect server";
                     }
                 } else {
-                    DialogUtils.sweetAlertDialog.dismiss();
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
+                   // DialogUtils.sweetAlertDialog.dismiss();
                     String result = new String(networkResponse.data);
                     Log.d("zma error response", String.valueOf(result));
                     DialogUtils.showWarningAlertDialog(getActivity(),result);
@@ -211,7 +227,9 @@ public class AuditionsFragment extends Fragment {
                     }
                 }
                 Log.d("zma Error", errorMessage);
-                DialogUtils.showWarningAlertDialog(getActivity(),errorMessage);
+                if (alertDialog!=null)
+                    alertDialog.dismiss();
+               // DialogUtils.showWarningAlertDialog(getActivity(),errorMessage);
                 error.printStackTrace();
             }
         }) {
@@ -256,6 +274,9 @@ public class AuditionsFragment extends Fragment {
     public void galleryIntent() {
 
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        i.setType("image/*");
+        i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        i.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(i, RESULT_LOAD_IMAGE);
 
     }
@@ -268,6 +289,7 @@ public class AuditionsFragment extends Fragment {
         if (requestCode == RESULT_LOAD_IMAGE && null != data) {
             Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
             Cursor cursor = getActivity().getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
             cursor.moveToFirst();
