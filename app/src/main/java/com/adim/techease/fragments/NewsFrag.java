@@ -1,7 +1,10 @@
 package com.adim.techease.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Typeface;
+import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +15,14 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.adim.techease.Adapter.NewsGridLayoutAdapter;
 import com.adim.techease.Adapter.VoteAdapter;
 import com.adim.techease.R;
 import com.adim.techease.controllers.NewsModel;
 import com.adim.techease.utils.Alert_Utils;
+import com.adim.techease.utils.CheckInternetConnection;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -50,19 +55,30 @@ public class NewsFrag extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_news2, container, false);
 
-        recyclerView=(RecyclerView)view.findViewById(R.id.rvAllNews);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        typefaceBold=Typeface.createFromAsset(getActivity().getAssets(),"raleway_bold.ttf");
 
-        if (alertDialog==null)
+
+        if(CheckInternetConnection.isInternetAvailable(getActivity()))
         {
-            alertDialog= Alert_Utils.createProgressDialog(getActivity());
-            alertDialog.show();
+            recyclerView=(RecyclerView)view.findViewById(R.id.rvAllNews);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            typefaceBold=Typeface.createFromAsset(getActivity().getAssets(),"raleway_bold.ttf");
+
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
+            apicall();
+            newsModelList = new ArrayList<>();
+            newsAdapter=new NewsGridLayoutAdapter(getActivity(),newsModelList);
+            recyclerView.setAdapter(newsAdapter);
+
+
         }
-        apicall();
-        newsModelList = new ArrayList<>();
-        newsAdapter=new NewsGridLayoutAdapter(getActivity(),newsModelList);
-        recyclerView.setAdapter(newsAdapter);
+        else
+        {
+            Toast.makeText(getActivity(),"No Internet Connection",Toast.LENGTH_SHORT).show();
+        }
 
         return view;
     }
@@ -75,7 +91,6 @@ public class NewsFrag extends Fragment {
             @Override
             public void onResponse(String response) {
                 Log.d("zma  reg response", response);
-                //   DialogUtils.sweetAlertDialog.dismiss();
                 if (response.contains("true")) {
 
                     try {
@@ -108,7 +123,7 @@ public class NewsFrag extends Fragment {
                 } else {
                     if (alertDialog!=null)
                         alertDialog.dismiss();
-                   // pDialog.dismiss();
+
                 }
             }
 
@@ -117,8 +132,6 @@ public class NewsFrag extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 if (alertDialog!=null)
                     alertDialog.dismiss();
-               // pDialog.dismiss();
-                Log.d("error" , String.valueOf(error.getCause()));
 
             }
         }) {
@@ -141,11 +154,4 @@ public class NewsFrag extends Fragment {
         mRequestQueue.add(stringRequest);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        apicall();
-        newsAdapter =new NewsGridLayoutAdapter(getActivity(),newsModelList);
-        recyclerView.setAdapter(newsAdapter);
-    }
 }

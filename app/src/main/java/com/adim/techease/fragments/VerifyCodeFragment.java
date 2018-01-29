@@ -35,14 +35,7 @@ import java.util.Map;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class VerifyCodeFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     EditText etCode;
     Button btnSendCode;
@@ -54,29 +47,11 @@ public class VerifyCodeFragment extends Fragment {
     SharedPreferences.Editor editor;
     Typeface typefaceReg,typefaceBold;
     android.support.v7.app.AlertDialog alertDialog;
+
     public VerifyCodeFragment() {
         // Required empty public constructor
     }
 
-
-    // TODO: Rename and change types and number of parameters
-    public static VerifyCodeFragment newInstance(String param1, String param2) {
-        VerifyCodeFragment fragment = new VerifyCodeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -140,11 +115,6 @@ public class VerifyCodeFragment extends Fragment {
     }
 
     public void apiCall() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://adadigbomma.com/Signup/CheckCode/",
                 new Response.Listener<String>() {
             @Override
@@ -163,8 +133,6 @@ public class VerifyCodeFragment extends Fragment {
                             alertDialog.dismiss();
                         e.printStackTrace();
                     }
-                   // pDialog.dismiss();
-
                     fragment = new ChangePasswordFragment();
                     Bundle bundle=new Bundle();
                     bundle.putString("code",strVerifyCode);

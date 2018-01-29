@@ -9,11 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.adim.techease.Adapter.VideoAdapter;
 import com.adim.techease.R;
 import com.adim.techease.controllers.VideoModel;
 import com.adim.techease.utils.Alert_Utils;
+import com.adim.techease.utils.CheckInternetConnection;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -58,23 +60,28 @@ public  class FragmentTab3Videos extends Fragment{
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         getId=getArguments().getString("id");
         videoModels=new ArrayList<>();
-        if (alertDialog==null)
+
+        if(CheckInternetConnection.isInternetAvailable(getActivity()))
         {
-            alertDialog= Alert_Utils.createProgressDialog(getActivity());
-            alertDialog.show();
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
+            apicall();
+            videoAdapter=new VideoAdapter(getActivity(),videoModels);
+            recyclerView.setAdapter(videoAdapter);
+
         }
-        apicall();
-        videoAdapter=new VideoAdapter(getActivity(),videoModels);
-        recyclerView.setAdapter(videoAdapter);
+        else
+        {
+            Toast.makeText(getActivity(),"No Internet Connection",Toast.LENGTH_SHORT).show();
+        }
+
         return v;
     }
 
     private void apicall() {
-//       pDialog  = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/getvideos/"+GetId
                 , new Response.Listener<String>() {
             @Override
@@ -95,7 +102,7 @@ public  class FragmentTab3Videos extends Fragment{
                             videoModels.add(videoModel);
                             if (alertDialog!=null)
                                 alertDialog.dismiss();
-                           // pDialog.dismiss();
+
                         }
                         videoAdapter.notifyDataSetChanged();
 
@@ -103,14 +110,14 @@ public  class FragmentTab3Videos extends Fragment{
                         e.printStackTrace();
                         if (alertDialog!=null)
                             alertDialog.dismiss();
-                        //pDialog.dismiss();
+
                     }
 
 
                 } else {
                     if (alertDialog!=null)
                         alertDialog.dismiss();
-                  //  pDialog.dismiss();
+
                 }
             }
 

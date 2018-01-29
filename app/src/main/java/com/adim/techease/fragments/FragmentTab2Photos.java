@@ -3,16 +3,21 @@ package com.adim.techease.fragments;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 
+import com.adim.techease.Adapter.NewsGridLayoutAdapter;
 import com.adim.techease.Adapter.PhotoAdapter;
 import com.adim.techease.R;
 import com.adim.techease.controllers.PhotoModel;
 import com.adim.techease.utils.Alert_Utils;
+import com.adim.techease.utils.CheckInternetConnection;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -50,27 +55,33 @@ public class FragmentTab2Photos extends Fragment {
         gridView=(GridView) v.findViewById(R.id.gridViewTabPhoto);
         getId=getArguments().getString("id");
         strContestentName=getArguments().getString("name");
-        if (alertDialog==null)
+
+        if(CheckInternetConnection.isInternetAvailable(getActivity()))
         {
-            alertDialog= Alert_Utils.createProgressDialog(getActivity());
-            alertDialog.show();
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
+            apicall();
+
         }
-        apicall();
+        else
+        {
+            Toast.makeText(getActivity(),"No Internet Connection",Toast.LENGTH_SHORT).show();
+        }
+
         return v;
     }
 
     private void apicall() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/getphotos/"+getId
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("zma  reg response", response);
-                //   DialogUtils.sweetAlertDialog.dismiss();
+
                 if (response.contains("true")) {
                     try {
                         JSONObject jsonObject=new JSONObject(response);
@@ -85,7 +96,7 @@ public class FragmentTab2Photos extends Fragment {
                             photoModel.setId(temp.getString("id"));
                             photoModel.setName(strContestentName);
                             models.add(photoModel);
-                            //pDialog.dismiss();
+
                         }
                         if (getActivity()!=null)
                         {
@@ -100,14 +111,14 @@ public class FragmentTab2Photos extends Fragment {
                         e.printStackTrace();
                         if (alertDialog!=null)
                             alertDialog.dismiss();
-                       // pDialog.dismiss();
+
                     }
 
 
                 } else {
                     if (alertDialog!=null)
                         alertDialog.dismiss();
-                   // pDialog.dismiss();
+
                 }
             }
 

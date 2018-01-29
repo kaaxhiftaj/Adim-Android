@@ -232,13 +232,13 @@ public class MainActivity extends AppCompatActivity
                 item.setChecked(true);
                 setTitle(item.getTitle());
             }
-            else
-                if(id==R.id.nav_Tv){
-                    fragment=new AdimTvFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
-                    item.setChecked(true);
-                    setTitle(item.getTitle());
-                }
+//            else
+//                if(id==R.id.nav_Tv){
+//                    fragment=new AdimTvFragment();
+//                    getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
+//                    item.setChecked(true);
+//                    setTitle(item.getTitle());
+//                }
                 else
                 if(id==R.id.action_Logout){
                     editor.clear().commit();

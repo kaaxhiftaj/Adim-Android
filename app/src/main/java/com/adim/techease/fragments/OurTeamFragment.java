@@ -1,17 +1,23 @@
 package com.adim.techease.fragments;
 
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 
+import com.adim.techease.Adapter.NewsGridLayoutAdapter;
 import com.adim.techease.Adapter.TeamAdapter;
 import com.adim.techease.R;
 import com.adim.techease.controllers.TeamModel;
 import com.adim.techease.utils.Alert_Utils;
+import com.adim.techease.utils.CheckInternetConnection;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -45,21 +51,25 @@ public class OurTeamFragment extends Fragment {
 
         gridView=(GridView) view.findViewById(R.id.gridViewAdimTeam);
         teamModel=new ArrayList<>();
-        if (alertDialog==null)
+        if(CheckInternetConnection.isInternetAvailable(getActivity()))
         {
-            alertDialog= Alert_Utils.createProgressDialog(getActivity());
-            alertDialog.show();
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
+            apicall();
+
         }
-        apicall();
+        else
+        {
+            Toast.makeText(getActivity(),"No Internet Connection",Toast.LENGTH_SHORT).show();
+        }
         return view;
     }
 
     private void apicall() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/team"
                 , new Response.Listener<String>() {
             @Override
@@ -79,7 +89,7 @@ public class OurTeamFragment extends Fragment {
                             teammodel.setTeamDescription(temp.getString("description"));
                             teammodel.setTeamDesignation(temp.getString("designation"));
                             teamModel.add(teammodel);
-                           // pDialog.dismiss();
+
                             if (alertDialog!=null)
                                 alertDialog.dismiss();
                         }
@@ -96,7 +106,7 @@ public class OurTeamFragment extends Fragment {
                 } else {
                     if (alertDialog!=null)
                         alertDialog.dismiss();
-                    //pDialog.dismiss();
+
                 }
             }
 
@@ -105,8 +115,6 @@ public class OurTeamFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 if (alertDialog!=null)
                     alertDialog.dismiss();
-               // pDialog.dismiss();
-                Log.d("error" , String.valueOf(error.getCause()));
 
             }
         }) {

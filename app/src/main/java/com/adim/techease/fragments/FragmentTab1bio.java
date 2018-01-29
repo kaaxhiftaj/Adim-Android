@@ -3,14 +3,19 @@ package com.adim.techease.fragments;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.adim.techease.Adapter.NewsGridLayoutAdapter;
 import com.adim.techease.R;
 import com.adim.techease.utils.Alert_Utils;
+import com.adim.techease.utils.CheckInternetConnection;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -24,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,22 +68,33 @@ public class FragmentTab1bio extends Fragment {
         textView2.setTypeface(typefaceBold);
         textView3.setTypeface(typefaceBold);
         if (alertDialog==null)
+
+
+
+        if(CheckInternetConnection.isInternetAvailable(getActivity()))
         {
-            alertDialog= Alert_Utils.createProgressDialog(getActivity());
-            alertDialog.show();
+
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
+            apicall();
+
+
         }
-        apicall();
+        else
+        {
+            Toast.makeText(getActivity(),"No Internet Connection",Toast.LENGTH_SHORT).show();
+        }
+
         return v;
     }
 
 
 
     private void apicall() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/getDetail/"+getId
                 , new Response.Listener<String>() {
             @Override
@@ -94,7 +111,7 @@ public class FragmentTab1bio extends Fragment {
                         String age = jsonObj.getString("age");
                         String des=jsonObj.getString("description");
                         String height=jsonObj.getString("height");
-                       // pDialog.dismiss();
+
                         if (alertDialog!=null)
                             alertDialog.dismiss();
                         Age.setText(age);
@@ -110,16 +127,12 @@ public class FragmentTab1bio extends Fragment {
                 } else {
                     if (alertDialog!=null)
                         alertDialog.dismiss();
-//                    DialogUtils.sweetAlertDialog.dismiss();
-//                    DialogUtils.showWarningAlertDialog(getActivity(), "Something went wrong");
                 }
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //DialogUtils.sweetAlertDialog.dismiss();
-                // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
                 if (alertDialog!=null)
                     alertDialog.dismiss();
                 Log.d("error" , String.valueOf(error.getCause()));

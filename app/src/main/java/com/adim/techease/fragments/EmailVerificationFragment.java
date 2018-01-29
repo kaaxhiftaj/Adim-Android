@@ -50,10 +50,7 @@ public class EmailVerificationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_email_verification, container, false);
         typefaceReg= Typeface.createFromAsset(getActivity().getAssets(),"raleway_reg.ttf");
         typefaceBold=Typeface.createFromAsset(getActivity().getAssets(), "raleway_bold.ttf");
-//        pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#179e99"));
-//        pDialog.setTitleText("Sending email");
-//        pDialog.setCancelable(false);
+
         tvForgetPass=(TextView)view.findViewById(R.id.tv_forget_passwordEmailVerify);
         tvForgetPass.setTypeface(typefaceBold);
         etEmailForgetPassword = (EditText) view.findViewById(R.id.et_email_forget);
@@ -110,11 +107,6 @@ public class EmailVerificationFragment extends Fragment {
     }
 
     public void apiCall() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://adadigbomma.com/Signup/forgot", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

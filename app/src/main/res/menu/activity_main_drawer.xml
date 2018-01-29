@@ -16,10 +16,10 @@
             android:icon="@drawable/gallery"
             android:title="Gallery" />
 
-        <item
-            android:id="@+id/nav_Tv"
-            android:icon="@drawable/television"
-            android:title="Adim TV" />
+        <!--<item-->
+            <!--android:id="@+id/nav_Tv"-->
+            <!--android:icon="@drawable/television"-->
+            <!--android:title="Adim TV" />-->
 
         <item
             android:id="@+id/nav_vote"

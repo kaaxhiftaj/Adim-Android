@@ -100,8 +100,6 @@ public class RegistrationFragment extends Fragment {
         tv_login = (TextView)view.findViewById(R.id.tv_login_here);
         btnNextSignUp = (Button) view.findViewById(R.id.btn_next_signup);
 
-//        btnSignIn=(Button)view.findViewById(R.id.btnSignIn);
-//        btnSignUp=(Button)view.findViewById(R.id.btnSignUp);
         linearLayout=(LinearLayout)view.findViewById(R.id.parentLayout);
         ivBackArrow=(ImageView)view.findViewById(R.id.ivBackArrow);
 
@@ -185,7 +183,7 @@ public class RegistrationFragment extends Fragment {
         }
 
     }
-//
+
 
     public void apiCall() {
             final StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL+"Signup/register", new Response.Listener<String>() {
@@ -194,7 +192,6 @@ public class RegistrationFragment extends Fragment {
                 Log.d("zma  reg response", response);
                 if (alertDialog!=null)
                     alertDialog.dismiss();
-               // DialogUtils.sweetAlertDialog.dismiss();
                 if (response.contains("true")) {
 
                     try {

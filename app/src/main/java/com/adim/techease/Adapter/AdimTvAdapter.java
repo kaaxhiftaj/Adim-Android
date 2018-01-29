@@ -113,8 +113,6 @@ public class AdimTvAdapter extends  RecyclerView.Adapter<AdimTvAdapter.MyViewHol
                         context.startActivity(intent);
                         sharedPreferences = context.getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
                         editor = sharedPreferences.edit();
-//                        String jugad="back";
-//                        editor.putString("back",jugad).commit();
 
                     }else{
                         Toast.makeText(context, "Please download youtube app", Toast.LENGTH_SHORT).show();
@@ -137,7 +135,7 @@ public class AdimTvAdapter extends  RecyclerView.Adapter<AdimTvAdapter.MyViewHol
             holder.youtubeTview.setVisibility(View.GONE);
             holder.ivShareVideos.setVisibility(View.INVISIBLE);
             Glide.with(context).load("http://adadigbomma.com/panel/images/gallery/"+ model.getLinkTv()).into(holder.imageView);
-            //    viewHolder.textViewTitle.setText(model.getTitleTv());
+
         }
 
 

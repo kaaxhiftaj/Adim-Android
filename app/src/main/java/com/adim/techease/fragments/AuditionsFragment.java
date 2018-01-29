@@ -248,8 +248,6 @@ public class AuditionsFragment extends Fragment {
             @Override
             protected Map<String, DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
-                // file name could found file base or direct access from real path
-                // for now just get bitmap data from ImageView
                 String mimeType = getMimeTypeofFile(file);
                 params.put("files", new DataPart("files", GeneralUtils.getByteArrayFromFile(file), mimeType));
                 Log.d("zma photo params", file.getPath());

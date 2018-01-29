@@ -7,11 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.adim.techease.Adapter.GalleryAdapter;
+import com.adim.techease.Adapter.VideoAdapter;
 import com.adim.techease.R;
 import com.adim.techease.controllers.Gallery;
 import com.adim.techease.utils.Alert_Utils;
+import com.adim.techease.utils.CheckInternetConnection;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,27 +45,29 @@ public class GalleryFragment extends Fragment {
         // Inflate the layout for this fragment
        View view=inflater.inflate(R.layout.fragment_gallery,container,false);
         gridView=(GridView) view.findViewById(R.id.gridViewGallery);
-        //recyclerView=(RecyclerView)view.findViewById(R.id.recycler);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //galleryAdapter=new GalleryAdapter(getActivity(),galleryList);
         requestQueue = Volley.newRequestQueue(getActivity());
         galleryList=new ArrayList<>();
-        if (alertDialog==null)
+
+        if(CheckInternetConnection.isInternetAvailable(getActivity()))
         {
-            alertDialog= Alert_Utils.createProgressDialog(getActivity());
-            alertDialog.show();
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
+            apicall();
+
         }
-        apicall();
-       // recyclerView.setAdapter(galleryAdapter);
+        else
+        {
+            Toast.makeText(getActivity(),"No Internet Connection",Toast.LENGTH_SHORT).show();
+        }
+
         return view;
     }
 
     private void apicall() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(true);
-//        pDialog.show();
+
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, Configuration.USER_URL+"App/getmedia",
                 new Response.Listener<JSONObject>() {
 
@@ -91,19 +96,17 @@ public class GalleryFragment extends Fragment {
                             gridView.setAdapter(galleryAdapter);
                             if (alertDialog!=null)
                                 alertDialog.dismiss();
-                          //  galleryAdapter.notifyDataSetChanged();
-                         //   pDialog.dismiss();
+
                         }catch(JSONException e){
                             if (alertDialog!=null)
                                 alertDialog.dismiss();
-                          //  pDialog.dismiss();
                             e.printStackTrace();}
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                      //  pDialog.dismiss();
+
                         if (alertDialog!=null)
                             alertDialog.dismiss();
                         Log.e("Volley", String.valueOf(error.getCause()));

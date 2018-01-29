@@ -110,10 +110,6 @@ public class ChangePasswordFragment extends Fragment {
         });
         sharedPreferences = getActivity().getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
         strAPIToken = sharedPreferences.getString("api_token","");
-//        pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#179e99"));
-//        pDialog.setTitleText("Updating password");
-//        pDialog.setCancelable(false);
         btnChangePassword = (Button) view.findViewById(R.id.btn_update_password);
         etNewPassword = (EditText) view.findViewById(R.id.et_new_password_change);
         etConfirmPassword = (EditText) view.findViewById(R.id.et_confirm_password_change);
@@ -161,11 +157,6 @@ public class ChangePasswordFragment extends Fragment {
 
 
     public void apiCall() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://adadigbomma.com/Signup/Resetpassword",
                 new Response.Listener<String>() {
             @Override
@@ -182,7 +173,6 @@ public class ChangePasswordFragment extends Fragment {
                 } else {
                     if (alertDialog!=null)
                         alertDialog.dismiss();
-                   // pDialog.dismiss();
                     new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Something Went Wrong, Try again")
                             .show();
@@ -222,16 +212,7 @@ public class ChangePasswordFragment extends Fragment {
 
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

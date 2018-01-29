@@ -19,11 +19,7 @@ public class Alert_Utils {
 
     public static ProgressDialog progressDialog;
 
-    /**
-     * add new patient
-     *
-     * @param activity
-     */
+
     public static void showErrorDialog(Activity activity, String message) {
 
 
@@ -33,15 +29,7 @@ public class Alert_Utils {
                 , null);
         dialogBuilder.setView(dialogView);
         final AlertDialog alertDialog = dialogBuilder.create();
-//        TextView tvError = dialogView.findViewById(R.id.tv_error);
-//        tvError.setText(message);
-//        Button btnOk = dialogView.findViewById(R.id.btn_ok);
-//        btnOk.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                alertDialog.dismiss();
-//            }
-//        });
+
         alertDialog.show();
     }
 

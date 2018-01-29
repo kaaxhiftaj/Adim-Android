@@ -2,6 +2,7 @@ package com.adim.techease.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.adim.techease.Adapter.AdimTvAdapter;
+import com.adim.techease.Adapter.NewsGridLayoutAdapter;
 import com.adim.techease.R;
 import com.adim.techease.controllers.TvModel;
 import com.adim.techease.utils.Alert_Utils;
+import com.adim.techease.utils.CheckInternetConnection;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,27 +47,34 @@ public class AdimTvFragment extends Fragment  {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_adim_tv, container, false);
 
-        recyclerView=(RecyclerView) view.findViewById(R.id.recycler_AdimTv);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        requestQueue = Volley.newRequestQueue(getActivity());
-        tvModels = new ArrayList<>();
-        if (alertDialog==null)
+
+        if(CheckInternetConnection.isInternetAvailable(getActivity()))
         {
-            alertDialog= Alert_Utils.createProgressDialog(getActivity());
-            alertDialog.show();
+
+            recyclerView=(RecyclerView) view.findViewById(R.id.recycler_AdimTv);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            requestQueue = Volley.newRequestQueue(getActivity());
+            tvModels = new ArrayList<>();
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
+            apicall();
+            adimTvAdapter=new AdimTvAdapter(getActivity(),tvModels);
+            recyclerView.setAdapter(adimTvAdapter);
+
         }
-        apicall();
-        adimTvAdapter=new AdimTvAdapter(getActivity(),tvModels);
-        recyclerView.setAdapter(adimTvAdapter);
+        else
+        {
+            Toast.makeText(getActivity(),"No Internet Connection",Toast.LENGTH_SHORT).show();
+        }
+
         return view;
     }
 
     private void apicall() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(true);
-//        pDialog.show();
+
         JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, Configuration.USER_URL+"App/adimtv",
                 new Response.Listener<JSONObject>() {
 

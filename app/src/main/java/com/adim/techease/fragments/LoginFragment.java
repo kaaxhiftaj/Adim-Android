@@ -156,7 +156,7 @@ public class LoginFragment extends Fragment {
         } else if (strPassword.equals("")) {
             etPassword.setError("Please enter your password");
         } else {
-           // DialogUtils.showProgressSweetDialog(getActivity(), "Getting Login");
+
             if (alertDialog==null)
             {
                 alertDialog= Alert_Utils.createProgressDialog(getActivity());
@@ -167,18 +167,11 @@ public class LoginFragment extends Fragment {
     }
 
     public void apiCall() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Configuration.USER_URL + "Signup/login"
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("zma log ", response);
-             //   DialogUtils.sweetAlertDialog.dismiss();
-
                 if (response.contains("true")) {
                     try {
                         Log.d("zma log inner ", response);
@@ -212,8 +205,6 @@ public class LoginFragment extends Fragment {
                 } else {
                     if (alertDialog!=null)
                         alertDialog.dismiss();
-                  //  pDialog.dismiss();
-                    //DialogUtils.sweetAlertDialog.dismiss();
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         String message = jsonObject.getString("message");
@@ -256,7 +247,6 @@ public class LoginFragment extends Fragment {
                 Map<String, String> params = new HashMap<>();
                 params.put("email", strEmail);
                 params.put("password", strPassword);
-                //   params.put("Accept", "application/json");
                 return params;
             }
 

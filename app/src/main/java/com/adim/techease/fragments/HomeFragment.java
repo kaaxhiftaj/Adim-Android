@@ -69,8 +69,6 @@ public class HomeFragment extends Fragment {
                 , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("zma  reg response", response);
-                //   DialogUtils.sweetAlertDialog.dismiss();
                 if (response.contains("true")) {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
@@ -85,8 +83,6 @@ public class HomeFragment extends Fragment {
                             contestentList.add(contes);
                             if (alertDialog!=null)
                                 alertDialog.dismiss();
-                            //pDialog.dismiss();
-
                         }
                         if (getActivity()!=null)
                         {
@@ -102,7 +98,6 @@ public class HomeFragment extends Fragment {
                 } else {
                     if (alertDialog!=null)
                         alertDialog.dismiss();
-                 //   pDialog.dismiss();
                     DialogUtils.sweetAlertDialog.dismiss();
                     DialogUtils.showWarningAlertDialog(getActivity(), "Something went wrong");
                 }
@@ -111,8 +106,6 @@ public class HomeFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //DialogUtils.sweetAlertDialog.dismiss();
-               // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
                 if (alertDialog!=null)
                     alertDialog.dismiss();
                 Log.d("error" , String.valueOf(error.getCause()));

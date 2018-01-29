@@ -106,7 +106,6 @@ public class GalleryAdapter extends BaseAdapter{
                     ImageView img = (ImageView) dialog.findViewById(R.id.ivZoomImage);
                     Glide.with(context).load("http://adadigbomma.com/panel/images/gallery/"+model.getLink()).into(img);
                     dialog.show();
-                   // CallBigSizeImage();
                 }
             });
             viewHolder.textViewTitle.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +118,7 @@ public class GalleryAdapter extends BaseAdapter{
                     ImageView img = (ImageView) dialog.findViewById(R.id.ivZoomImage);
                     Glide.with(context).load("http://adadigbomma.com/panel/images/gallery/"+model.getLink()).into(img);
                     dialog.show();
-                   // CallBigSizeImage();
+
                 }
             });
             if (alertDialog!=null)

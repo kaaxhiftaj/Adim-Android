@@ -105,9 +105,7 @@ public class BioContestent extends Fragment {
         LayoutInflater mInflater = LayoutInflater.from(getActivity());
         View mCustomView = mInflater.inflate(R.layout.custom_actionbar_layout, null);
         ImageButton imageView=(ImageButton)mCustomView.findViewById(R.id.action_bar_forward);
-//        TextView title=(TextView)mCustomView.findViewById(R.id.tvCustomActionTitle);
-//        title.setTypeface(typefaceBold);
-       // title.setText("Bio Data");
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,16 +153,12 @@ public class BioContestent extends Fragment {
                 } else {
                     if (alertDialog!=null)
                         alertDialog.dismiss();
-                   // DialogUtils.sweetAlertDialog.dismiss();
-                   // DialogUtils.showWarningAlertDialog(getActivity(), "Something went wrong");
                 }
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //DialogUtils.sweetAlertDialog.dismiss();
-                // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
                 if (alertDialog!=null)
                     alertDialog.dismiss();
                 Log.d("error" , String.valueOf(error.getCause()));

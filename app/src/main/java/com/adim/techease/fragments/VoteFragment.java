@@ -10,11 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.adim.techease.Adapter.NewsGridLayoutAdapter;
 import com.adim.techease.Adapter.VoteAdapter;
 import com.adim.techease.R;
 import com.adim.techease.controllers.VoteModel;
 import com.adim.techease.utils.Alert_Utils;
+import com.adim.techease.utils.CheckInternetConnection;
 import com.adim.techease.utils.Configuration;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -52,24 +55,31 @@ public class VoteFragment extends Fragment {
         typefaceReg=Typeface.createFromAsset(getActivity().getAssets(),"myfont.ttf");
         recyclerViewVote=(RecyclerView)view.findViewById(R.id.rvVote);
         recyclerViewVote.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (alertDialog==null)
+        if(CheckInternetConnection.isInternetAvailable(getActivity()))
         {
-            alertDialog= Alert_Utils.createProgressDialog(getActivity());
-            alertDialog.show();
+
+            voteModel=new ArrayList<>();
+            voteAdapter=new VoteAdapter(getActivity(),voteModel);
+            recyclerViewVote.setAdapter(voteAdapter);
+
+            if (alertDialog==null)
+            {
+                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+                alertDialog.show();
+            }
+            apicall();
+
         }
-        apicall();
-        voteModel=new ArrayList<>();
-        voteAdapter=new VoteAdapter(getActivity(),voteModel);
-        recyclerViewVote.setAdapter(voteAdapter);
+        else
+        {
+            Toast.makeText(getActivity(),"No Internet Connection",Toast.LENGTH_SHORT).show();
+        }
+
         return view;
     }
 
     private void apicall() {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/vote"
                 , new Response.Listener<String>() {
             @Override
@@ -98,21 +108,16 @@ public class VoteFragment extends Fragment {
                         e.printStackTrace();
                         if (alertDialog!=null)
                             alertDialog.dismiss();
-                       // pDialog.dismiss();
                     }
 
 
                 } else {
-
-                   // pDialog.dismiss();
                 }
             }
 
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //DialogUtils.sweetAlertDialog.dismiss();
-                // DialogUtils.showErrorTypeAlertDialog(getActivity(), "Server error");
                 if (alertDialog!=null)
                     alertDialog.dismiss();
                 Log.d("error" , String.valueOf(error.getCause()));

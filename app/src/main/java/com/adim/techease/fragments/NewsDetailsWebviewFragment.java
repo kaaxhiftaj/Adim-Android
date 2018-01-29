@@ -2,9 +2,13 @@ package com.adim.techease.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
+import com.thefinestartist.Base;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -31,6 +36,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import retrofit2.http.Url;
+
+import static com.thefinestartist.utils.content.ContextUtil.getContentResolver;
 
 
 public class NewsDetailsWebviewFragment extends Fragment {
@@ -46,16 +53,12 @@ public class NewsDetailsWebviewFragment extends Fragment {
 
         if (CheckInternetConnection.isInternetAvailable(getActivity()))
         {
-           // data=getArguments().getString("data");
-           // Log.d("zmaData",data);
-            //Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
             url=getArguments().getString("link");
+            title = getArguments().getString("title");
             btnSharenews=(Button)view.findViewById(R.id.btnShareNews);
             webView=(WebView)view.findViewById(R.id.wv);
             webView.getSettings().setPluginState(WebSettings.PluginState.ON);
             webView.getSettings().setJavaScriptEnabled(true);
-//            webView.getSettings().setBuiltInZoomControls(true);
-//            webView.getSettings().setSupportZoom(true);
             webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
             webView.setScrollbarFadingEnabled(false);
             webView.setInitialScale(120);
@@ -73,7 +76,6 @@ public class NewsDetailsWebviewFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
-
                     // 1. Create the dynamic link as usual
                     String packageName = getActivity().getPackageName();
                     String deepLink = url ;
@@ -85,12 +87,9 @@ public class NewsDetailsWebviewFragment extends Fragment {
                             .appendQueryParameter("apn", packageName);
 
                     final Uri uri = builder.build();
-
-
                     Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                     sharingIntent.setType("text/plain");
-                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Test");
-                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, title + "\n"+ String.valueOf(uri));
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,  String.valueOf(uri));
                     startActivity(Intent.createChooser(sharingIntent, "Choose"));
 
                 }

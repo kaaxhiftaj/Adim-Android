@@ -45,11 +45,7 @@ TextView  aboutPeagant , whatisPeagant, aboutPtoject ;
                         "\n" +
                         "The Ada Di Igbo Nma pageant is here to address several concerns that people have with the normal beauty contests and what they represent. There will be no exclusion of any contestant on the basis of height,size,figure,complexion etc as every contestant will be judged equally on their merits. This pageant is open only to all Igbo speaking ladies between the ages of 18-27 and the criteria for picking a winner will be down to the public as well as the judges. \n" +
                         "Good looks,intelligence,knowledge and practice of Igbo culture are some of the traits that will determine the eventual winner. Preserving the Igbo language and it's values ");
-//                fragment = new AboutDetails();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("type", "aboutPeagant");
-//                fragment.setArguments(bundle);
-//                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack("tag").commit();
+
             }
         });
 
@@ -64,11 +60,7 @@ TextView  aboutPeagant , whatisPeagant, aboutPtoject ;
                         "The Ada Di Igbo Nma pageant is here to address several concerns that people have with the normal beauty contests and what they represent. There will be no exclusion of any contestant on the basis of height,size,figure,complexion etc as every contestant will be judged equally on their merits. This pageant is open only to all Igbo speaking ladies between the ages of 18-27 and the criteria for picking a winner will be down to the public as well as the judges. \n" +
                         "Good looks,intelligence,knowledge and practice of Igbo culture are some of the traits that will determine the eventual winner. Preserving the Igbo language and it's values ");
 
-//                fragment = new AboutDetails();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("type", "whatisPeagant");
-//                fragment.setArguments(bundle);
-//                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack("tag").commit();
+
 
             }
         });
@@ -84,11 +76,7 @@ TextView  aboutPeagant , whatisPeagant, aboutPtoject ;
                         "The pageant seeks to digress from the Igbo way of life and the bastion rests of the mothers to preserve that. The organization and structure outlay for ‘Ada di Igbo nma’ projects is hinged on equal opportunity, transparency and professionalism.\n" +
                         "\n" +
                         "We promise to uphold the dignity of womanhood, educate and highlight ills against women, project the values of the Igbo culture and promote societal values and morals. \n");
-//                fragment = new AboutDetails();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("type", "aboutproject");
-//                fragment.setArguments(bundle);
-//                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack("tag").commit();
+
             }
         });
 
