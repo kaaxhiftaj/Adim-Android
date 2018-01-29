@@ -22,7 +22,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.adim.techease.R;
 import com.adim.techease.fragments.AboutusFragment;
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity
 
     private void applyFontToMenuItem(MenuItem menuItem) {
         int id=menuItem.getItemId();
-        Typeface font = Typeface.createFromAsset(getAssets(), "raleway_semiBold.ttf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "raleway_semibold.ttf");
         SpannableString mNewTitle = new SpannableString(menuItem.getTitle());
         mNewTitle.setSpan(new CustomTypefaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         menuItem.setTitle(mNewTitle);

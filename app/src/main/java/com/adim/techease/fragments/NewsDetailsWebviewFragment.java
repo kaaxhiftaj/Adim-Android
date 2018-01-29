@@ -50,9 +50,6 @@ public class NewsDetailsWebviewFragment extends Fragment {
            // Log.d("zmaData",data);
             //Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
             url=getArguments().getString("link");
-            title=getArguments().getString("title");
-            strDescription=getArguments().getString("des");
-            strImageUrl=getArguments().getString("img");
             btnSharenews=(Button)view.findViewById(R.id.btnShareNews);
             webView=(WebView)view.findViewById(R.id.wv);
             webView.getSettings().setPluginState(WebSettings.PluginState.ON);

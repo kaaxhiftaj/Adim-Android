@@ -3,6 +3,8 @@ package com.adim.techease.fragments;
 import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.adim.techease.Adapter.NewsGridLayoutAdapter;
+import com.adim.techease.Adapter.VoteAdapter;
 import com.adim.techease.R;
 import com.adim.techease.controllers.NewsModel;
 import com.adim.techease.utils.Alert_Utils;
@@ -31,17 +34,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class NewsFrag extends Fragment {
 
-    GridView gridView;
+    RecyclerView recyclerView;
     NewsGridLayoutAdapter newsAdapter;
-    NewsModel newsModel;
-    ImageView topImageView;
-    TextView tvTopNewsTitle;
     Typeface typefaceBold;
-    ArrayList<NewsModel> arrayList;
+    List<NewsModel> newsModelList;
     android.support.v7.app.AlertDialog alertDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,28 +50,26 @@ public class NewsFrag extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_news2, container, false);
 
-        //topImageView=(ImageView)view.findViewById(R.id.ivTopNews);
-        gridView=(GridView)view.findViewById(R.id.gridView);
-       // tvTopNewsTitle=(TextView)view.findViewById(R.id.tvNewsTopTitle);
+        recyclerView=(RecyclerView)view.findViewById(R.id.rvAllNews);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         typefaceBold=Typeface.createFromAsset(getActivity().getAssets(),"raleway_bold.ttf");
-       // tvTopNewsTitle.setTypeface(typefaceBold);
-        arrayList = new ArrayList<>();
+
         if (alertDialog==null)
         {
             alertDialog= Alert_Utils.createProgressDialog(getActivity());
             alertDialog.show();
         }
         apicall();
+        newsModelList = new ArrayList<>();
+        newsAdapter=new NewsGridLayoutAdapter(getActivity(),newsModelList);
+        recyclerView.setAdapter(newsAdapter);
+
         return view;
     }
 
     private  void apicall()
     {
-//        final SweetAlertDialog pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
-//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#7DB3D2"));
-//        pDialog.setTitleText("Loading");
-//        pDialog.setCancelable(false);
-//        pDialog.show();
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Configuration.USER_URL+"App/news"
                 , new Response.Listener<String>() {
             @Override
@@ -80,30 +79,24 @@ public class NewsFrag extends Fragment {
                 if (response.contains("true")) {
 
                     try {
-                        arrayList.clear();
+                        newsModelList.clear();
                         JSONObject jsonObject=new JSONObject(response);
                         JSONArray jsonArr=jsonObject.getJSONArray("user ");
                         for (int i=0; i<jsonArr.length(); i++)
                         {
-                            JSONObject object=jsonArr.getJSONObject(0);
                             JSONObject temp = jsonArr.getJSONObject(i);
                             NewsModel newsModel=new NewsModel();
                             newsModel.setNewsImage(temp.getString("image"));
                             newsModel.setNewsLink(temp.getString("link"));
-                          //  tvTopNewsTitle.setText(object.getString("title"));
-                          //  Glide.with(getActivity()).load("http://adadigbomma.com/panel/images/"+object.getString("image")).into(topImageView);
                             newsModel.setNewsTitle(temp.getString("title"));
                             newsModel.setNewsDescription(temp.getString("description"));
                             newsModel.setNewsid(temp.getString("id"));
-                            arrayList.add(newsModel);
+                            newsModelList.add(newsModel);
                             if (alertDialog!=null)
                                 alertDialog.dismiss();
-                           // pDialog.dismiss();
-                        }
-                        newsAdapter=new NewsGridLayoutAdapter(getActivity(),arrayList);
-                        gridView.setAdapter(newsAdapter);
 
-                      //  newsAdapter.notifyDataSetChanged();
+                        }
+                        newsAdapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {
                         if (alertDialog!=null)
@@ -152,7 +145,7 @@ public class NewsFrag extends Fragment {
     public void onResume() {
         super.onResume();
         apicall();
-        newsAdapter =new NewsGridLayoutAdapter(getActivity(),arrayList);
-        gridView.setAdapter(newsAdapter);
+        newsAdapter =new NewsGridLayoutAdapter(getActivity(),newsModelList);
+        recyclerView.setAdapter(newsAdapter);
     }
 }

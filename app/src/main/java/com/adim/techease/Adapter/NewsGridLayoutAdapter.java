@@ -1,14 +1,17 @@
 package com.adim.techease.Adapter;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,86 +21,99 @@ import com.adim.techease.controllers.NewsModel;
 import com.adim.techease.fragments.NewsDetailsWebviewFragment;
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import static com.thefinestartist.utils.content.ContextUtil.startActivity;
 
 /**
  * Created by Adam Noor on 10-Jan-18.
  */
 
-public class NewsGridLayoutAdapter extends BaseAdapter {
+public class NewsGridLayoutAdapter extends RecyclerView.Adapter<NewsGridLayoutAdapter.MyViewHolder> {
 
     Context context;
-    ArrayList<NewsModel> newsModels;
-    private LayoutInflater layoutInflater;
+    List<NewsModel> newsModels;
     String id,newsLink;
-    public NewsGridLayoutAdapter(Context context, ArrayList<NewsModel> arrayList) {
 
+
+    public NewsGridLayoutAdapter(Context context, List<NewsModel> newsModelList) {
+        this.newsModels=newsModelList;
         this.context=context;
-        this.newsModels=arrayList;
-        if (context!=null)
-        {
-            this.layoutInflater=LayoutInflater.from(context);
-
-        }
     }
 
     @Override
-    public int getCount() {
-        if(newsModels != null) return  newsModels.size();
-        return 0;
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_news_rv, parent, false);
+        return new MyViewHolder(rootView);
     }
 
     @Override
-    public Object getItem(int i) {
-        if(newsModels != null && newsModels.size() > i) return  newsModels.get(i);
-        return null;
-    }
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        final NewsModel model=newsModels.get(position);
 
-    @Override
-    public long getItemId(int i) {
-        final  NewsModel model=newsModels.get(i);
-        if(newsModels != null && newsModels.size() > i) return  newsModels.size();
-        return 0;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        final  NewsModel model=newsModels.get(i);
-        ViewHolder viewHolder = null;
-        viewHolder=new ViewHolder();
-        view=layoutInflater.inflate(R.layout.customnews,viewGroup,false);
-        viewHolder.imageView=(ImageView)view.findViewById(R.id.ivCustomNews);
-        viewHolder.textView=(TextView) view.findViewById(R.id.customNewsTitle);
-        viewHolder.linearLayout=(LinearLayout)view.findViewById(R.id.LinearNews);
-        viewHolder.typefaceBold=Typeface.createFromAsset(context.getAssets(),"raleway_bold.ttf");
-        viewHolder.textView.setTypeface(viewHolder.typefaceBold);
-        viewHolder.textView.setText(model.getNewsTitle());
-        Glide.with(context).load("http://adadigbomma.com/panel/images/"+model.getNewsImage()).into(viewHolder.imageView);
-        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.textView.setText(model.getNewsTitle());
+        Glide.with(context).load("http://adadigbomma.com/panel/images/"+model.getNewsImage()).into(holder.imageView);
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                Fragment fragment = new NewsDetailsWebviewFragment();
-                Bundle bundle = new Bundle();
+            public void onClick(View view) {
                 newsLink=model.getNewsLink();
-                bundle.putString("link", newsLink);
-                bundle.putString("title",model.getNewsTitle());
-                bundle.putString("des",model.getNewsDescription());
-                bundle.putString("img",model.getNewsImage());
+                Bundle bundle=new Bundle();
+                bundle.putString("link",newsLink);
+                Fragment fragment=new NewsDetailsWebviewFragment();
                 fragment.setArguments(bundle);
-                ((Activity)context).getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
+                ((AppCompatActivity)context).getFragmentManager().beginTransaction().replace(R.id.mainFrame , fragment).addToBackStack("abc").commit();
             }
         });
-        view.setTag(viewHolder);
+        holder.btnNewsShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        return view;
+                // 1. Create the dynamic link as usual
+                String packageName = context.getPackageName();
+                String deepLink = newsLink ;
+                Uri.Builder builder = new Uri.Builder()
+                        .scheme("https")
+                        .authority("fp2v3.app.goo.gl")
+                        .path("/")
+                        .appendQueryParameter("link", deepLink)
+                        .appendQueryParameter("apn", packageName);
+
+                final Uri uri = builder.build();
+
+
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Test");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, model.getNewsTitle() + "\n"+ String.valueOf(uri));
+               context.startActivity(Intent.createChooser(sharingIntent, "Choose"));
+            }
+        });
+
     }
-    private class ViewHolder
-    {
+
+    @Override
+    public int getItemCount() {
+        return newsModels.size();
+    }
+
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView textView;
-        Typeface typefaceBold;
+        Typeface typefaceBold,typeface;
+        ImageView btnNewsShare;
         LinearLayout linearLayout;
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            linearLayout=(LinearLayout)itemView.findViewById(R.id.llayoutCustomNews);
+            imageView=(ImageView)itemView.findViewById(R.id.ivNewsImage);
+            textView=(TextView)itemView.findViewById(R.id.tvNewsTitle);
+            btnNewsShare=(ImageView) itemView.findViewById(R.id.sharebtnNews);
+            typefaceBold=Typeface.createFromAsset(context.getAssets(), "raleway_semibold.ttf");
+            typeface=Typeface.createFromAsset(context.getAssets(),"raleway_reg.ttf");
+            textView.setTypeface(typefaceBold);
 
+
+        }
     }
 }
