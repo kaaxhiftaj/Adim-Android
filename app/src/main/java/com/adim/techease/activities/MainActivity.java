@@ -243,11 +243,10 @@ public class MainActivity extends AppCompatActivity
                 else
                 if(id==R.id.action_Logout){
                     editor.clear().commit();
-               //     startActivity(new Intent(MainActivity.this,SplashScreen.class));
-                    getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).addToBackStack("tag").commit();
                     item.setChecked(true);
                     setTitle(item.getTitle());
                     LoginManager.getInstance().logOut();
+                    startActivity(new Intent(MainActivity.this,SplashScreen.class));
                     finish();
                 }else  if (id == R.id.nav_aboutus) {
                     fragment = new AboutusFragment();

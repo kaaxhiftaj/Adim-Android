@@ -33,7 +33,7 @@ import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.twitter.sdk.android.core.TwitterAuthConfig;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,7 +78,6 @@ public class AuthOptionScreen extends AppCompatActivity {
             finish();
         }
 
-        final TwitterAuthConfig authConfig = new TwitterAuthConfig("XUOQSVyRuGqtZOzZXnPcKIMGq", "PTy0aYgFE2VUMTUOrUujdoaR97ZhniGZ3IH1ZFT5AmkH8QV4OM");
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         callbackManager = CallbackManager.Factory.create();
@@ -142,60 +141,6 @@ public class AuthOptionScreen extends AppCompatActivity {
 
             }
         });
-
-        fb_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fb_button.setReadPermissions("email");
-
-                // Other app specific specialization
-
-                // Callback registration
-                fb_button.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(final LoginResult loginResult) {
-                        // App code
-
-                        String accessToken = loginResult.getAccessToken().getToken();
-                        provider_id = accessToken ;
-
-                        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                Log.i("LoginActivity", response.toString());
-                                // Get facebook data from login
-                                Bundle bFacebookData = getFacebookData(object);
-                                apiCall();
-
-
-                            }
-                        });
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location"); // Parámetros que pedimos a facebook
-                        request.setParameters(parameters);
-
-                        request.executeAsync();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        System.out.println("onCancel");
-                    }
-
-                    @Override
-                    public void onError(FacebookException e) {
-
-                    }
-
-
-
-                });
-
-            }
-        });
-
 
         email_button.setOnClickListener(new View.OnClickListener() {
             @Override
