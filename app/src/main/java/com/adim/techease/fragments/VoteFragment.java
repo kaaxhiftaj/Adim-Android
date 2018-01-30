@@ -112,6 +112,9 @@ public class VoteFragment extends Fragment {
 
 
                 } else {
+                    if (alertDialog!=null)
+                        alertDialog.dismiss();
+                    Toast.makeText(getActivity(), "No Contestants added", Toast.LENGTH_SHORT).show();
                 }
             }
 

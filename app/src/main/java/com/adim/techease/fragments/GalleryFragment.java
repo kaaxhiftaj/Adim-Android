@@ -100,6 +100,7 @@ public class GalleryFragment extends Fragment {
                         }catch(JSONException e){
                             if (alertDialog!=null)
                                 alertDialog.dismiss();
+                            Toast.makeText(getActivity(), "No Images added", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();}
                     }
                 },
@@ -109,6 +110,7 @@ public class GalleryFragment extends Fragment {
 
                         if (alertDialog!=null)
                             alertDialog.dismiss();
+                        Toast.makeText(getActivity(), "No Images added", Toast.LENGTH_SHORT).show();
                         Log.e("Volley", String.valueOf(error.getCause()));
 
                     }

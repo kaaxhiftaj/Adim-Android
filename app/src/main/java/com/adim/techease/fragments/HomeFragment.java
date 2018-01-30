@@ -98,8 +98,6 @@ public class HomeFragment extends Fragment {
                 } else {
                     if (alertDialog!=null)
                         alertDialog.dismiss();
-                    DialogUtils.sweetAlertDialog.dismiss();
-                    DialogUtils.showWarningAlertDialog(getActivity(), "Something went wrong");
                 }
             }
 

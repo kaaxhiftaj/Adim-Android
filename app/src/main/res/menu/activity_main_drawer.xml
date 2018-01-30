@@ -6,7 +6,7 @@
         <item
             android:id="@+id/nav_news"
             android:icon="@drawable/home"
-            android:title="News" />
+            android:title="Adim Blog" />
         <item
             android:id="@+id/nav_contestent"
             android:icon="@drawable/insignia"
@@ -16,10 +16,6 @@
             android:icon="@drawable/gallery"
             android:title="Gallery" />
 
-        <!--<item-->
-            <!--android:id="@+id/nav_Tv"-->
-            <!--android:icon="@drawable/television"-->
-            <!--android:title="Adim TV" />-->
 
         <item
             android:id="@+id/nav_vote"
@@ -56,10 +52,6 @@
             android:title="Logout"
             android:icon="@drawable/back_icon"/>
     </group>
-    <!--<group>-->
-        <!--<item android:id="@+id/nav_switch"-->
-            <!--app:actionLayout="@layout/custom_drawer_button"-->
-            <!--android:title="Downloaded only" />-->
-    <!--</group>-->
+
 
 </menu>

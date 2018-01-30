@@ -1,5 +1,6 @@
 package com.adim.techease.fragments;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -7,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.app.Fragment;
@@ -67,6 +69,8 @@ public class AuditionsFragment extends Fragment {
         // Inflate the layout for this fragment
 
 
+
+
         View v = inflater.inflate(R.layout.fragment_auditions, container, false);
         typefaceReg=Typeface.createFromAsset(getActivity().getAssets(),"raleway_reg.ttf");
         typefaceBold=Typeface.createFromAsset(getActivity().getAssets(),"raleway_reg.ttf");
@@ -103,6 +107,12 @@ public class AuditionsFragment extends Fragment {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1);
+                }
 
                 final CharSequence[] itemedit = {"Take Photo", "Choose Image", "Cancel"};
                 AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
@@ -201,7 +211,7 @@ public class AuditionsFragment extends Fragment {
                 } else {
                     if (alertDialog!=null)
                         alertDialog.dismiss();
-                   // DialogUtils.sweetAlertDialog.dismiss();
+
                     String result = new String(networkResponse.data);
                     Log.d("zma error response", String.valueOf(result));
                     DialogUtils.showWarningAlertDialog(getActivity(),result);
@@ -264,12 +274,14 @@ public class AuditionsFragment extends Fragment {
 
     public void cameraIntent() {
 
+
         Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(captureIntent, CAMERA_CAPTURE);
 
     }
 
     public void galleryIntent() {
+
 
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         i.setType("image/*");
@@ -285,6 +297,8 @@ public class AuditionsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RESULT_LOAD_IMAGE && null != data) {
+
+
             Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
@@ -293,6 +307,7 @@ public class AuditionsFragment extends Fragment {
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
+
             file = new File(GeneralUtils.getRealPathFromURI(getApplicationContext(), selectedImage));
             Log.d("zma file", file.getPath());
             cursor.close();
