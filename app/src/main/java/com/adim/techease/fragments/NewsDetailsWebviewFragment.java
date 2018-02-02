@@ -89,7 +89,7 @@ public class NewsDetailsWebviewFragment extends Fragment {
                     final Uri uri = builder.build();
                     Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                     sharingIntent.setType("text/plain");
-                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,  String.valueOf(uri));
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, title + "    " + String.valueOf(uri));
                     startActivity(Intent.createChooser(sharingIntent, "Choose"));
 
                 }

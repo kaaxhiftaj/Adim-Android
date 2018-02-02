@@ -90,10 +90,11 @@ public class NewsGridLayoutAdapter extends RecyclerView.Adapter<NewsGridLayoutAd
             @Override
             public void onClick(View view) {
 
+                String url = model.getNewsLink();
 
                 // 1. Create the dynamic link as usual
                 String packageName = context.getPackageName();
-                String deepLink = newsLink ;
+                String deepLink = url;
                 Uri.Builder builder = new Uri.Builder()
                         .scheme("https")
                         .authority("fp2v3.app.goo.gl")
@@ -104,10 +105,10 @@ public class NewsGridLayoutAdapter extends RecyclerView.Adapter<NewsGridLayoutAd
                 final Uri uri = builder.build();
 
 
+                String title = model.getNewsTitle();
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Adim");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, model.getNewsTitle() + "\n"+ String.valueOf(uri));
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, title + "    " + String.valueOf(uri));
                context.startActivity(Intent.createChooser(sharingIntent, "Choose"));
             }
         });

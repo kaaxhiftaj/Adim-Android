@@ -1,17 +1,16 @@
 package com.adim.techease.fragments;
 
 import android.Manifest;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.app.Fragment;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.adim.techease.R;
 import com.adim.techease.controllers.VolleyMultipartRequest;
 import com.adim.techease.utils.Alert_Utils;
@@ -43,45 +43,44 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.adim.techease.utils.GeneralUtils.*;
+import static com.adim.techease.utils.GeneralUtils.getMimeTypeofFile;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class AuditionsFragment extends Fragment {
 
-    EditText name, email, state,loc,age,phone;
+    EditText name, email, state, loc, age, phone;
     MaterialSpinner city;
     ImageView image;
-    String strName, strEmail, strState , strCity,strLoc,strAge,strPhone;
+    String strName, strEmail, strState, strCity, strLoc, strAge, strPhone;
     final int CAMERA_CAPTURE = 1;
     final int RESULT_LOAD_IMAGE = 2;
     File file;
     TextView SomeText;
     Button sendButton;
-    Typeface typefaceReg,typefaceBold;
-    android.support.v7.app.AlertDialog alertDialog;
+    Typeface typefaceReg, typefaceBold;
+    AlertDialog alertDialog;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-
-
-
         View v = inflater.inflate(R.layout.fragment_auditions, container, false);
-        typefaceReg=Typeface.createFromAsset(getActivity().getAssets(),"raleway_reg.ttf");
-        typefaceBold=Typeface.createFromAsset(getActivity().getAssets(),"raleway_reg.ttf");
+        typefaceReg = Typeface.createFromAsset(getActivity().getAssets(), "raleway_reg.ttf");
+        typefaceBold = Typeface.createFromAsset(getActivity().getAssets(), "raleway_reg.ttf");
         name = (EditText) v.findViewById(R.id.et_name);
         email = (EditText) v.findViewById(R.id.et_email_audition);
-        age=(EditText)v.findViewById(R.id.etAgeAudition);
-        phone=(EditText)v.findViewById(R.id.etPhoneAudition);
+        age = (EditText) v.findViewById(R.id.etAgeAudition);
+        phone = (EditText) v.findViewById(R.id.etPhoneAudition);
         state = (EditText) v.findViewById(R.id.et_stateofRegion);
         image = (ImageView) v.findViewById(R.id.image);
-        sendButton = (Button)v.findViewById(R.id.sendButton);
-        SomeText=(TextView)v.findViewById(R.id.tvText);
+        sendButton = (Button) v.findViewById(R.id.sendButton);
+        SomeText = (TextView) v.findViewById(R.id.tvText);
         SomeText.setTypeface(typefaceBold);
         sendButton.setTypeface(typefaceBold);
         name.setTypeface(typefaceReg);
@@ -113,24 +112,6 @@ public class AuditionsFragment extends Fragment {
                     requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1);
                 }
-
-                final CharSequence[] itemedit = {"Take Photo", "Choose Image", "Cancel"};
-                AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
-                build.setTitle("Add Photo!");
-                build.setItems(itemedit, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int item) {
-                        // boolean result=Utility.checkPermission(UsersDetails.this);
-                        if (itemedit[item].equals("Take Photo")) {
-                            cameraIntent();
-                        } else if (itemedit[item].equals("Choose Image")) {
-                            galleryIntent();
-                        } else if (itemedit[item].equals("Cancel")) {
-                            dialog.dismiss();
-                        }
-                    }
-                });
-                build.show();
             }
         });
 
@@ -140,7 +121,7 @@ public class AuditionsFragment extends Fragment {
                 onDataInput();
             }
         });
-        return v ;
+        return v;
     }
 
     public void onDataInput() {
@@ -148,8 +129,8 @@ public class AuditionsFragment extends Fragment {
         strName = name.getText().toString();
         strState = name.getText().toString();
         strCity = city.getText().toString();
-        strAge= age.getText().toString();
-        strPhone=phone.getText().toString();
+        strAge = age.getText().toString();
+        strPhone = phone.getText().toString();
 
         if ((!android.util.Patterns.EMAIL_ADDRESS.matcher(strEmail).matches())) {
             email.setError("Please enter valid email id");
@@ -159,16 +140,14 @@ public class AuditionsFragment extends Fragment {
             state.setError("Please enter your State");
         } else if (name.equals("")) {
             name.setError("Please Select your City");
-        } else if(phone.equals("")){
+        } else if (phone.equals("")) {
             phone.setError("Please enter your number");
-        }else if(age.equals("")){
+        } else if (age.equals("")) {
             age.setError("Please enter your age");
-        }
-        else {
-           // DialogUtils.showProgressSweetDialog(getActivity(), " Submiting your Application");
-            if (alertDialog==null)
-            {
-                alertDialog= Alert_Utils.createProgressDialog(getActivity());
+        } else {
+            // DialogUtils.showProgressSweetDialog(getActivity(), " Submiting your Application");
+            if (alertDialog == null) {
+                alertDialog = Alert_Utils.createProgressDialog(getActivity());
                 alertDialog.show();
             }
             apiCall();
@@ -176,19 +155,16 @@ public class AuditionsFragment extends Fragment {
     }
 
 
-
     public void apiCall() {
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, Configuration.USER_URL + "App/audition", new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
-                if (alertDialog!=null)
+                if (alertDialog != null)
                     alertDialog.dismiss();
-               // DialogUtils.sweetAlertDialog.dismiss();
-                Log.d("zma response", String.valueOf(Configuration.USER_URL+ "App/audition"+"\n"+response));
                 if (response.statusCode == 200) {
                     email.setText("");
                     name.setText("");
-                     age.setText("");
+                    age.setText("");
                     phone.setText("");
                     image.setImageDrawable(null);
                     Toast.makeText(getActivity(), "Documents Uploaded", Toast.LENGTH_SHORT).show();
@@ -209,12 +185,12 @@ public class AuditionsFragment extends Fragment {
                         errorMessage = "Failed to connect server";
                     }
                 } else {
-                    if (alertDialog!=null)
+                    if (alertDialog != null)
                         alertDialog.dismiss();
 
                     String result = new String(networkResponse.data);
                     Log.d("zma error response", String.valueOf(result));
-                    DialogUtils.showWarningAlertDialog(getActivity(),result);
+                    DialogUtils.showWarningAlertDialog(getActivity(), result);
                     try {
                         JSONObject response = new JSONObject(result);
                         Log.d("zma response, obj", String.valueOf(response));
@@ -237,21 +213,21 @@ public class AuditionsFragment extends Fragment {
                     }
                 }
                 Log.d("zma Error", errorMessage);
-                if (alertDialog!=null)
+                if (alertDialog != null)
                     alertDialog.dismiss();
-               // DialogUtils.showWarningAlertDialog(getActivity(),errorMessage);
+                // DialogUtils.showWarningAlertDialog(getActivity(),errorMessage);
                 error.printStackTrace();
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("name" , strName);
+                params.put("name", strName);
                 params.put("email", strEmail);
-                params.put("state" , strState);
-                params.put("location",strCity);
-                params.put("age",strAge);
-                params.put("phone",strPhone);
+                params.put("state", strState);
+                params.put("location", strCity);
+                params.put("age", strAge);
+                params.put("phone", strPhone);
                 return params;
             }
 
@@ -293,6 +269,30 @@ public class AuditionsFragment extends Fragment {
 
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1 && grantResults.length > 0) {
+            final CharSequence[] itemedit = {"Take Photo", "Choose Image", "Cancel"};
+            AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
+            build.setTitle("Add Photo!");
+            build.setItems(itemedit, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int item) {
+                    // boolean result=Utility.checkPermission(UsersDetails.this);
+                    if (itemedit[item].equals("Take Photo")) {
+                        cameraIntent();
+                    } else if (itemedit[item].equals("Choose Image")) {
+                        galleryIntent();
+                    } else if (itemedit[item].equals("Cancel")) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+            build.show();
+        }
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -300,18 +300,13 @@ public class AuditionsFragment extends Fragment {
 
 
             Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-
-            file = new File(GeneralUtils.getRealPathFromURI(getApplicationContext(), selectedImage));
+            file = new File(GeneralUtils.getPath(getApplicationContext(), selectedImage));
             Log.d("zma file", file.getPath());
-            cursor.close();
-            image.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            try {
+                image.setImageBitmap(MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         } else if (requestCode == CAMERA_CAPTURE && null != data) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");

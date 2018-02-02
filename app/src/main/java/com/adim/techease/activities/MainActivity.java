@@ -1,7 +1,9 @@
 package com.adim.techease.activities;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -23,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.adim.techease.Firebase.ForceUpdateChecker;
 import com.adim.techease.R;
 import com.adim.techease.fragments.AboutusFragment;
 import com.adim.techease.fragments.AdimTvFragment;
@@ -45,7 +48,7 @@ import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener ,  ForceUpdateChecker.OnUpdateNeededListener{
 
     Fragment fragment;
     Typeface typeface;
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerLayout = navigationView.getHeaderView(0);
        // getHasKey();
+        ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
 
 
         FirebaseDynamicLinks.getInstance()
@@ -269,4 +273,30 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public void onUpdateNeeded(final String updateUrl) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("New version available")
+                .setMessage("Please, update app to new version to continue reposting.")
+                .setPositiveButton("Update",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                redirectStore(updateUrl);
+                            }
+                        }).setNegativeButton("No, thanks",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        }).create();
+        dialog.show();
+    }
+
+    private void redirectStore(String updateUrl) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }
