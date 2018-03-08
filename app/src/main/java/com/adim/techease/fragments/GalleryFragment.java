@@ -110,7 +110,7 @@ public class GalleryFragment extends Fragment {
 
                         if (alertDialog!=null)
                             alertDialog.dismiss();
-                        Toast.makeText(getActivity(), "No Images added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Poor Internet Connection", Toast.LENGTH_SHORT).show();
                         Log.e("Volley", String.valueOf(error.getCause()));
 
                     }

@@ -118,6 +118,7 @@ public class AuthOptionScreen extends AppCompatActivity {
                             }
                         });
                         Bundle parameters = new Bundle();
+
                         parameters.putString("fields", "id, first_name, last_name, email,gender, birthday, location"); // Parámetros que pedimos a facebook
                         request.setParameters(parameters);
 
@@ -189,7 +190,7 @@ public class AuthOptionScreen extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response);
                         JSONObject jsonArray = jsonObject.getJSONObject("user");
                              strApiToken = jsonArray.getString("token_id");
-                           String user_id = jsonArray.getString("token_id");
+                           String user_id = jsonArray.getString("user_id");
                             editor.putString("api_token", strApiToken).commit();
                         editor.putString("user_Id", user_id).commit();
 

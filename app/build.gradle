@@ -8,8 +8,8 @@ android {
 
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 13
-        versionName "1.9"
+        versionCode 14
+        versionName "2.0"
 
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -42,6 +42,7 @@ android {
         compile 'com.thefinestartist:finestwebview:1.2.7'
         compile 'com.hbb20:ccp:2.0.3'
         compile 'com.squareup.picasso:picasso:2.4.0'
+        compile 'com.android.support:design:27.0.2'
         compile 'com.android.support:design:27.0.2'
         compile 'de.hdodenhof:circleimageview:2.1.0'
         compile 'com.squareup.retrofit2:retrofit:2.1.0'

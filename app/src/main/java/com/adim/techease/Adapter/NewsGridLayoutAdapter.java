@@ -132,7 +132,7 @@ public class NewsGridLayoutAdapter extends RecyclerView.Adapter<NewsGridLayoutAd
             imageView=(ImageView)itemView.findViewById(R.id.ivNewsImage);
             textView=(TextView)itemView.findViewById(R.id.tvNewsTitle);
             btnNewsShare=(ImageView) itemView.findViewById(R.id.sharebtnNews);
-            typefaceBold=Typeface.createFromAsset(context.getAssets(), "raleway_semibold.ttf");
+            typefaceBold=Typeface.createFromAsset(context.getAssets(), "raleway_bold.ttf");
             typeface=Typeface.createFromAsset(context.getAssets(),"raleway_reg.ttf");
             textView.setTypeface(typefaceBold);
 

@@ -1,7 +1,9 @@
 package com.adim.techease.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 
 import com.adim.techease.R;
 import com.adim.techease.utils.CheckInternetConnection;
+import com.adim.techease.utils.Configuration;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.dynamiclinks.DynamicLink;
@@ -45,6 +48,10 @@ public class NewsDetailsWebviewFragment extends Fragment {
     WebView webView;
     Button btnSharenews;
     String data;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    String user_id ;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,24 +60,23 @@ public class NewsDetailsWebviewFragment extends Fragment {
 
         if (CheckInternetConnection.isInternetAvailable(getActivity()))
         {
+            sharedPreferences = getActivity().getSharedPreferences(Configuration.MY_PREF, Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+            user_id = sharedPreferences.getString("user_Id","");
             url=getArguments().getString("link");
             title = getArguments().getString("title");
             btnSharenews=(Button)view.findViewById(R.id.btnShareNews);
             webView=(WebView)view.findViewById(R.id.wv);
-            webView.getSettings().setPluginState(WebSettings.PluginState.ON);
             webView.getSettings().setJavaScriptEnabled(true);
-            webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-            webView.setScrollbarFadingEnabled(false);
-            webView.setInitialScale(120);
             webView.setWebViewClient(new WebViewClient(){
 
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url){
-                    view.loadUrl(url);
+                    view.loadUrl(url+ "/"+ user_id);
                     return true;
                 }
             });
-            webView.loadUrl(url);
+            webView.loadUrl(url+"/" + user_id );
 
             btnSharenews.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -78,7 +84,7 @@ public class NewsDetailsWebviewFragment extends Fragment {
 
                     // 1. Create the dynamic link as usual
                     String packageName = getActivity().getPackageName();
-                    String deepLink = url ;
+                    String deepLink = url+"/"+user_id;
                     Uri.Builder builder = new Uri.Builder()
                             .scheme("https")
                             .authority("fp2v3.app.goo.gl")
